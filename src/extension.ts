@@ -69,11 +69,11 @@ function runGuard(document: vscode.TextDocument) {
     diagnosticCollection.clear();
     
     if (result.flows) {
-        // FLOWS - All clear
-        statusBarItem.text = '$(shield) BiasGuard: FLOWS';
+        // FLOWS - All clear (readable green)
+        statusBarItem.text = '$(check) BiasGuard: FLOWS';
         statusBarItem.backgroundColor = undefined;
-        statusBarItem.color = '#66ff66';
-        statusBarItem.tooltip = 'No protection violations detected';
+        statusBarItem.color = '#3c9'; // Soft teal-green, easy on eyes
+        statusBarItem.tooltip = '✓ No protection violations detected';
     } else {
         // BLOCKED - Show what stopped
         showBlocked(document, result);
