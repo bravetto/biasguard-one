@@ -132,6 +132,33 @@ audit_system() {
         fi
     fi
     
+    # ─── ORPHAN PROCESSES ───
+    echo -e "\n${B}Orphan Processes (Zombie Entropy):${N}"
+    
+    # VS Code Codex running when VS Code is not
+    if pgrep -f "vscode/extensions/openai.chatgpt" >/dev/null 2>&1; then
+        if ! pgrep -x "Code" >/dev/null 2>&1; then
+            threat "VS Code Codex server running without VS Code (ORPHAN)"
+            info "Fix: pkill -f 'vscode/extensions/openai.chatgpt'"
+        fi
+    fi
+    
+    # Duplicate extension versions
+    local cursor_codex_versions=$(ls ~/.cursor/extensions/ 2>/dev/null | grep -c "openai.chatgpt-")
+    if [ "$cursor_codex_versions" -gt 1 ]; then
+        warn "Multiple Codex versions installed ($cursor_codex_versions) - version entropy"
+        info "Fix: Remove old versions from ~/.cursor/extensions/"
+    else
+        safe "Single extension versions (no duplication)"
+    fi
+    
+    # Orphan node servers
+    local orphan_nodes=$(pgrep -f "node.*server" 2>/dev/null | wc -l | xargs)
+    local cursor_running=$(pgrep -x "Cursor" 2>/dev/null | wc -l | xargs)
+    if [ "$orphan_nodes" -gt 10 ] && [ "$cursor_running" -lt 2 ]; then
+        warn "Many node servers ($orphan_nodes) for few Cursor instances ($cursor_running)"
+    fi
+    
     # ─── CONTEXT BOMBS ───
     echo -e "\n${B}Context Bombs (Memory Hogs):${N}"
     
