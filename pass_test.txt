@@ -1,0 +1,1 @@
+npm install git rev-parse --show-toplevel package.json

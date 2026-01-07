@@ -1,0 +1,62 @@
+{
+  "name": "biasguard-4-2",
+  "displayName": "BiasGuard ONE",
+  "description": "Unified MCP Security Protection - Like Water Flows",
+  "version": "4.2.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "biasguard.exportAudit",
+        "title": "BiasGuard ONE: Export Audit Log"
+      }
+    ],
+    "colors": [
+      {
+        "id": "biasGuard.pass",
+        "description": "Color for passing validation",
+        "defaults": {
+          "dark": "#00ff00",
+          "light": "#008800"
+        }
+      },
+      {
+        "id": "biasGuard.fail",
+        "description": "Color for failing validation",
+        "defaults": {
+          "dark": "#ff0000",
+          "light": "#ff0000"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./out/one.test.js",
+    "test:legacy": "npm run compile && node ./out/policyEngine.test.js",
+    "test:mcp": "npm run compile && node ./out/mcpPolicyRules.test.js",
+    "test:all": "npm run compile && node ./out/one.test.js && node ./out/policyEngine.test.js && node ./out/mcpPolicyRules.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^16.x",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  },
+  "publisher": "biasguard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/local/biasguard"
+  }
+}
