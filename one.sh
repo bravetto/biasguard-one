@@ -1,8 +1,8 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════
 #  ∞ BIASGUARD ONE ∞
-#  THE WAY OF WATER - Zero Dependencies | Zero State | Zero AI
-#  Yield. Redirect. Flow. BEND without BREAKING.
+#  THE AIRLOCK PROTOCOL - Zero Dependencies | Zero State | Zero AI
+#  Containment > Permission. Physics > Policy. Reality > Dreams.
 # ═══════════════════════════════════════════════════════════════════════════
 
 # Colors
@@ -252,6 +252,70 @@ isolation_test() {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
+# PHASE 6: CONTAINMENT CHECK (Airlock Protocol)
+# ═══════════════════════════════════════════════════════════════════════════
+
+containment_check() {
+    header "PHASE 6: CONTAINMENT CHECK (Airlock Protocol)"
+    
+    echo -e "${B}Container Infrastructure:${N}"
+    
+    # Docker available?
+    if command -v docker &>/dev/null; then
+        safe "Docker available (container isolation ready)"
+        # Check if docker is running
+        if docker info &>/dev/null 2>&1; then
+            safe "Docker daemon running"
+        else
+            warn "Docker installed but daemon not running"
+        fi
+    else
+        warn "Docker not installed (container isolation unavailable)"
+        info "Install: brew install --cask docker"
+    fi
+    
+    # Check for existing MCP containers
+    if command -v docker &>/dev/null && docker info &>/dev/null 2>&1; then
+        local mcp_containers=$(docker ps --filter "name=mcp" --format "{{.Names}}" 2>/dev/null | wc -l | tr -d ' ')
+        if [ "$mcp_containers" -gt 0 ]; then
+            safe "MCP containers running in isolation: $mcp_containers"
+        fi
+    fi
+    
+    echo -e "\n${B}Ramdisk Status:${N}"
+    
+    # Check for ramdisk/tmpfs mounts
+    local ramdisk=$(mount 2>/dev/null | grep -E 'tmpfs|ramdisk' | wc -l | tr -d ' ')
+    if [ "$ramdisk" -gt 0 ]; then
+        safe "RAM-based filesystems available: $ramdisk"
+    else
+        info "No ramdisk mounted (VFS would use memory mapping)"
+    fi
+    
+    echo -e "\n${B}Containment Rules:${N}"
+    
+    # Check for containment rules file
+    if [ -f ~/.cursorrules ] && grep -qi "airlock\|containment\|read-only" ~/.cursorrules 2>/dev/null; then
+        safe "Containment rules found in .cursorrules"
+    elif [ -f .cursorrules ] && grep -qi "airlock\|containment\|read-only" .cursorrules 2>/dev/null; then
+        safe "Containment rules found in local .cursorrules"
+    else
+        warn "No containment rules detected"
+        info "Add: containment.rules content to .cursorrules"
+    fi
+    
+    echo -e "\n${B}Airlock Principle:${N}"
+    echo -e "${C}┌─────────────────────────────────────────────────┐${N}"
+    echo -e "${C}│  Agent (Dream) → VFS (Sandbox) → Validation    │${N}"
+    echo -e "${C}│       → Atomic Patch → Human Approval          │${N}"
+    echo -e "${C}│       → Reality (Only approved changes)        │${N}"
+    echo -e "${C}└─────────────────────────────────────────────────┘${N}"
+    echo ""
+    echo -e "${B}The agent never touches reality directly.${N}"
+    echo -e "${B}You are the airlock. You decide what passes.${N}"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════
 # MAIN
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -282,10 +346,14 @@ main() {
             water_check
             isolation_test
             ;;
+        -c|--contain)
+            containment_check
+            ;;
         -f|--full)
             audit_system
             scan_files "${2:-.}"
             water_check
+            containment_check
             ;;
         -i|--isolate)
             isolation_test
@@ -297,7 +365,8 @@ main() {
             echo "  -s, --scan DIR    Scan directory for threats"
             echo "  -a, --audit       System security audit"
             echo "  -w, --water       Way of Water + Isolation tests"
-            echo "  -f, --full DIR    Full analysis"
+            echo "  -c, --contain     Containment/Airlock check"
+            echo "  -f, --full DIR    Full analysis (all phases)"
             echo "  -i, --isolate     Run isolation tests"
             echo "  -h, --help        Help"
             exit 0
