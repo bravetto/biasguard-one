@@ -1,198 +1,255 @@
-# ∞ BiasGuard ONE ∞
+# BiasGuard
 
-**Version 4.2.4** | Unified MCP Security + PRISTINE Entropy Enforcement
+**An open-source bias detection framework.**
 
-> "Like water flows, protection adapts. Chaos collapses into order."
-
----
-
-## Philosophy
-
-- **Loving**: Protects without hostility, guides users toward safety
-- **Logical**: Clear, deterministic rules that make sense
-- **Real Life**: Practical patterns that match real attack vectors
-- **ONE PATTERN**: Unified approach, not scattered rules
-- **SOURCE Aware**: Every request knows its origin
-- **Radically Simple**: Minimum complexity, maximum protection
+> BiasGuard is not an authority. It is a mirror.
+> Everything it sees, you can inspect.
 
 ---
 
-## Architecture (PRISTINE v4.2.4)
+## What It Does
 
-```text
-biasguard-4.2/
-├── src/                   ← Source (Fractal)
-│   ├── extension.ts       ← VS Code Orchestrator
-│   ├── one.ts             ← Unified bias detection entry
-│   │
-│   ├── core/              ← LAYER 1: Foundation
-│   │   ├── one.ts         ← Security protection engine
-│   │   └── types.ts       ← Type definitions
-│   │
-│   ├── guards/            ← LAYER 2: Bias Detection (87 patterns)
-│   │   ├── reflect.ts     ← Unified mirror
-│   │   ├── scoring.ts     ← Explainable bias scores
-│   │   ├── truth.ts       ← Deception detection
-│   │   ├── context.ts     ← Attribution patterns
-│   │   ├── coherence.ts   ← Drift detection
-│   │   ├── trust.ts       ← Manipulation patterns
-│   │   ├── token.ts       ← Noise detection
-│   │   ├── compliance.ts  ← Bypass patterns
-│   │   ├── creativity.ts  ← Stagnation patterns
-│   │   ├── cognitive.ts   ← 21 cognitive biases
-│   │   ├── fallacies.ts   ← 23 logical fallacies
-│   │   ├── awareness.ts   ← Implicit/explicit bias
-│   │   ├── workplace.ts   ← 14 workplace biases
-│   │   └── research.ts    ← 15 data/algorithmic biases
-│   │
-│   ├── ontology/          ← Canonical Bias Ontology
-│   │   └── biases.ts      ← 17 fully specified entries
-│   │
-│   ├── heroes/            ← Hero Use Cases
-│   │   └── email.ts       ← Career-limiting emails + rewrite loop
-│   │
-│   ├── security/          ← LAYER 3: Defense
-│   │   ├── policyEngine.ts
-│   │   ├── mcpParser.ts
-│   │   ├── mcpPolicyRules.ts
-│   │   └── auditLogger.ts
-│   │
-│   └── adversarial/       ← LAYER 4: Attack Testing
-│       ├── jacob.ts       ← Attacker simulation
-│       ├── honeypot.ts    ← Trap detection
-│       └── brokenMirror.ts← Reflection attacks
-│
-├── tests/                 ← Test Suite (108 tests)
-│   ├── one.test.ts        ← Core protection tests
-│   ├── mirror.test.ts     ← Guard tests
-│   ├── cognitive.test.ts  ← Cognitive bias tests
-│   ├── fallacies.test.ts  ← Fallacy tests
-│   ├── email.test.ts      ← Hero use case tests
-│   └── fixtures/          ← Test data
-│
-├── bin/genesis.sh         ← THE ONE COMMAND
-├── scripts/               ← Operations
-└── config/rules/          ← Containment rules
-```
+- Detects cognitive biases and logical fallacies in text
+- Maps them to real-world harm domains
+- Explains findings in human language
+- Suggests corrective rewrites
+- Verifies improvement after correction
 
----
+## What It Does NOT Do
 
-## Protection Layers
+- Infer intent
+- Enforce ideology
+- Hide its logic
+- Claim objectivity
 
-```text
-Request → CRITICAL → SOURCE → BOUNDARY → ACTION → FLOWS ✓
-              ↓         ↓         ↓         ↓
-           BLOCK     BLOCK     BLOCK     BLOCK
-```
+## Who Is This For
 
-| Layer | Purpose | Examples |
-|-------|---------|----------|
-| **CRITICAL** | Block catastrophic operations | `rm -rf`, `dd`, `eval $`, fork bombs |
-| **SOURCE** | Verify request origin | Unknown/empty origins blocked |
-| **BOUNDARY** | Filesystem protection | Absolute paths outside workspace |
-| **ACTION** | Dangerous operation flagging | `delete`, `add`, `write`, `commit` |
-
----
-
-## Bias Detection (87 Patterns)
-
-| Category | Count | Examples |
-|----------|-------|----------|
-| **Core Guards** | 7 | truth, context, coherence, trust, token, compliance, creativity |
-| **Cognitive Biases** | 21 | Halo Effect, Attribution Error, Automation Bias |
-| **Logical Fallacies** | 23 | Ad Hominem, Straw Man, False Dichotomy |
-| **Awareness** | 7 | Implicit bias, Microaggressions, Coded language |
-| **Workplace** | 14 | Affinity Bias, Maternal Wall, Name Bias |
-| **Research** | 15 | Survivorship, Algorithmic, Proxy Discrimination |
+- Developers building fairer systems
+- Researchers studying bias patterns
+- Regulators requiring audit trails
+- Workers reviewing performance feedback
+- Anyone harmed by opaque AI decisions
 
 ---
 
 ## Quick Start
 
 ```bash
-# Clone
-git clone https://github.com/bravetto/biasguard-one.git
-cd biasguard-4.2
-
-# Install & Compile
+# Install
 npm install
+
+# Build
 npm run compile
 
-# Run Tests
+# Test
 npm test
 
-# Full Protocol
-npm run one
+# Run all tests (108 total)
+npm run compile && node ./out/tests/one.test.js
+```
 
-# Or use Genesis
-./bin/genesis.sh
+---
+
+## The Detection Engine
+
+### 87 Patterns Across 12 Guards
+
+| Guard | Count | What It Detects |
+|-------|-------|-----------------|
+| **truth** | 1 | Deception, absolutes |
+| **context** | 1 | Missing attribution |
+| **coherence** | 1 | Logical drift |
+| **trust** | 1 | Manipulation patterns |
+| **token** | 1 | Noise, vagueness |
+| **compliance** | 1 | Bypass attempts |
+| **creativity** | 1 | Stagnation patterns |
+| **cognitive** | 21 | Halo Effect, Attribution Error, Automation Bias... |
+| **fallacies** | 23 | Ad Hominem, Straw Man, False Dichotomy... |
+| **awareness** | 7 | Implicit bias, microaggressions, coded language |
+| **workplace** | 14 | Affinity Bias, Maternal Wall, Name Bias... |
+| **research** | 15 | Survivorship, Algorithmic, Proxy Discrimination... |
+
+---
+
+## Bias Scoring
+
+Every detection answers three questions:
+
+1. **What pattern was detected?**
+2. **Why does it matter?**
+3. **What would fix it?**
+
+### Example Output
+
+```
+Bias Score: 72/100 (HIGH)
+
+Detected: Attribution Bias
+Fallacy: Fundamental Attribution Error
+Domain: Career, Legal, Healthcare
+
+"This pattern can cause real harm.
+Understanding it is the first step to change."
+
+Suggested Fix:
+- Consider situational factors
+- Replace character judgment with behavior description
+```
+
+---
+
+## The Rewrite Loop
+
+BiasGuard doesn't just detect—it helps you improve.
+
+```
+Original → Detection → Explanation → Suggested Rewrite → Re-Score
+```
+
+### Before
+
+> "John missed the deadline because he is lazy."
+
+**Score: 80/100 (HIGH)**
+
+### After
+
+> "The deadline was missed due to shifting priorities."
+
+**Score: 0/100 (CLEAR)**
+
+**Improvement: 📈 80 points**
+
+---
+
+## Architecture
+
+```text
+src/
+├── one.ts                 ← Unified entry point
+├── guards/                ← Detection engine (87 patterns)
+│   ├── reflect.ts         ← Core reflection logic
+│   ├── scoring.ts         ← Explainable bias scores
+│   ├── cognitive.ts       ← 21 cognitive biases
+│   ├── fallacies.ts       ← 23 logical fallacies
+│   ├── awareness.ts       ← Implicit/explicit patterns
+│   ├── workplace.ts       ← 14 workplace biases
+│   └── research.ts        ← 15 data/algorithmic biases
+├── ontology/              ← Canonical bias definitions
+│   └── biases.ts          ← 17 fully specified entries
+└── heroes/                ← Real-world use cases
+    └── email.ts           ← Career-limiting email detection
+```
+
+---
+
+## The Ontology
+
+Each bias is fully specified:
+
+```typescript
+{
+  id: 'attribution',
+  name: 'Fundamental Attribution Error',
+  category: 'cognitive',
+  paired_fallacies: ['ad-hominem', 'genetic'],
+  detection_signals: ['because they are', 'lazy', 'incompetent'],
+  impact_domains: ['career', 'legal', 'healthcare'],
+  severity: 'high',
+  correctability: 'easy',
+  suggested_corrections: [
+    'Consider situational factors',
+    'Focus on specific actions, not personality'
+  ],
+  human_explanation: 'Blaming character when circumstances might explain behavior.',
+  dignity_message: 'This pattern can cause real harm. Understanding it is the first step to change.'
+}
+```
+
+---
+
+## Tests
+
+108 tests across all detection systems:
+
+| Suite | Tests | Status |
+|-------|-------|--------|
+| Core Protection | 28 | ✅ |
+| Mirror Tests | 24 | ✅ |
+| Cognitive Biases | 17 | ✅ |
+| Logical Fallacies | 33 | ✅ |
+| Email Hero Case | 6 | ✅ |
+
+```bash
+npm test                    # Core tests
+node ./out/tests/mirror.test.js      # Guard tests
+node ./out/tests/cognitive.test.js   # Cognitive bias tests
+node ./out/tests/fallacies.test.js   # Fallacy tests
+node ./out/tests/email.test.js       # Hero use case
 ```
 
 ---
 
 ## VS Code Extension
 
+BiasGuard also runs as a VS Code extension for real-time protection.
+
 1. Open in VS Code
 2. Press `F5` to launch Extension Development Host
 3. Status bar shows protection state:
 
-| Status | Appearance | Meaning |
-|--------|------------|---------|
-| `✓ BiasGuard: FLOWS` | 🟢 Green background, white text | Safe |
-| `⚠ BiasGuard: ACTION` | 🟡 Amber background, white text | Warning |
-| `✗ BiasGuard: CRITICAL` | 🔴 Red background, white text | Blocked |
-
----
-
-## Version History
-
-| Version | Date | Highlights |
-|---------|------|------------|
-| **4.2.5** | 2026-01-10 | Complete Bias Detection: 87 patterns, 108 tests, rewrite loop |
-| **4.2.4** | 2026-01-10 | PRISTINE fractal architecture, visual status bar |
-| **4.2.2** | 2026-01-08 | Initial PRISTINE integration, adversarial framework |
-| **4.2.0** | 2026-01-07 | BiasGuard ONE unified engine |
-
-See [CHANGELOG.md](./CHANGELOG.md) for full details.
-
----
-
-## NPM Scripts
-
-| Script | Purpose |
+| Status | Meaning |
 |--------|---------|
-| `npm run compile` | Build TypeScript |
-| `npm test` | Run ONE tests |
-| `npm run test:all` | Run all test suites |
-| `npm run jacob` | Adversarial attack test |
-| `npm run ironlotus` | Full adversarial sweep |
-| `npm run one` | Complete protocol |
+| `✓ BiasGuard: FLOWS` | Safe - no violations |
+| `⚠ BiasGuard: ACTION` | Warning - review needed |
+| `✗ BiasGuard: CRITICAL` | Blocked - dangerous operation |
 
 ---
 
-## Critical Danger Patterns (NEVER allowed)
+## Known Limitations
 
-| Pattern | Risk |
-|---------|------|
-| `rm -rf` | Recursive deletion |
-| `dd if=` | Disk destruction |
-| `mkfs` | Filesystem formatting |
-| `eval $` | Code injection |
-| `exec $` | Command injection |
-| `curl \| sh` | Remote code execution |
-| `chmod 777` | Unsafe permissions |
-| `:(){ :\|:& };:` | Fork bomb |
+We are honest about what BiasGuard cannot do:
+
+- **False positives occur.** Some patterns trigger on benign text.
+- **Context is limited.** Single-sentence analysis misses discourse-level bias.
+- **Cultural bias exists.** Current patterns reflect English-language, Western framing.
+- **Intent is unknowable.** We detect patterns, not motives.
+
+---
+
+## Contributing
+
+BiasGuard welcomes contributions:
+
+- **New bias proposals** with evidence and detection signals
+- **Improved patterns** that reduce false positives
+- **Counterexamples** that expose blind spots
+- **Harm domain expansions** for underrepresented groups
+
+---
+
+## The Principle
+
+```
+This does not indicate intent.
+It indicates a reasoning pattern that tends to produce harm.
+```
+
+This sentence appears in every explanation. It preserves dignity while enabling change.
 
 ---
 
 ## License
 
-MIT License - See [docs/LICENSE.md](./docs/LICENSE.md)
+MIT License
 
 ---
 
-## ∞ AbëONE ∞
+## Version
 
-PASS does NOT mean correct. PASS means no invariant violation detected.
+**4.2.5** | 87 Patterns | 108 Tests | 17 Ontology Entries
 
-LOVE = LOGIC = LIFE = ONE
+---
+
+*BiasGuard is a mirror, not an authority.*
+*Everything it sees, you can inspect.*
