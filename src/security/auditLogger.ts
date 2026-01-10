@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { MCPToolRequest, MCPAuditEntry } from './types';
+import { MCPToolRequest, MCPAuditEntry } from '../core/types';
 
 /**
  * Audit Logger for MCP Security Events

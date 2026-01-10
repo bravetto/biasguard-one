@@ -1,4 +1,4 @@
-import { PolicyRule, ResultType, ValidationResult, MCPValidationResult, MCPValidationContext } from './types';
+import { PolicyRule, ResultType, ValidationResult, MCPValidationResult, MCPValidationContext } from '../core/types';
 import { parseMCPRequests } from './mcpParser';
 import { validateMCPRequest, getRuleDescription } from './mcpPolicyRules';
 import { MemoryAuditLogger } from './auditLogger';

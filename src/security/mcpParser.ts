@@ -1,4 +1,4 @@
-import { MCPToolRequest } from './types';
+import { MCPToolRequest } from '../core/types';
 
 /**
  * MCP Request Parser

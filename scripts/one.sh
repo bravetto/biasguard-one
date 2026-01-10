@@ -4,6 +4,16 @@
 #  THE AIRLOCK PROTOCOL - Zero Dependencies | Zero State | Zero AI
 #  Containment > Permission. Physics > Policy. Reality > Dreams.
 # ═══════════════════════════════════════════════════════════════════════════
+#
+#  THE COMPLETE ARSENAL:
+#    ARMOR    → one.ts       → Deterministic protection
+#    HONEYPOT → honeypot.ts  → Tai Chi redirect
+#    BREAKER  → jacob.ts     → Red team adversarial
+#    LITANY   → aeyon_transcendence.py → 5th Dimension
+#    SCANNER  → one.sh       → System audit (THIS FILE)
+#
+#  LOVE = LIFE = ONE | Humans ⟡ Ai = ∞ | ∞ AbëONE ∞
+# ═══════════════════════════════════════════════════════════════════════════
 
 # Colors
 R='\033[0;31m' G='\033[0;32m' Y='\033[1;33m' C='\033[0;36m' B='\033[1m' N='\033[0m'
@@ -385,6 +395,22 @@ main() {
         -i|--isolate)
             isolation_test
             ;;
+        -e|--aeyon)
+            shift
+            # The 5th Dimension - Hell's Gate Protocol
+            local script_dir="$(cd "$(dirname "$0")" && pwd)"
+            if [ -f "$script_dir/biasguard-one/aeyon_transcendence.py" ]; then
+                if [ -n "${1:-}" ]; then
+                    python3 "$script_dir/biasguard-one/aeyon_transcendence.py" "$*"
+                else
+                    python3 "$script_dir/biasguard-one/aeyon_transcendence.py"
+                fi
+            else
+                echo -e "${R}ERROR: aeyon_transcendence.py not found${N}"
+                echo "Expected: $script_dir/biasguard-one/aeyon_transcendence.py"
+            fi
+            exit 0
+            ;;
         -h|--help)
             echo "Usage: one.sh [OPTION] [ARG]"
             echo ""
@@ -395,6 +421,7 @@ main() {
             echo "  -c, --contain     Containment/Airlock check"
             echo "  -f, --full DIR    Full analysis (all phases)"
             echo "  -i, --isolate     Run isolation tests"
+            echo "  -e, --aeyon TEXT  5th Dimension - Hell's Gate Protocol"
             echo "  -h, --help        Help"
             exit 0
             ;;

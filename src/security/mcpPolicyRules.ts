@@ -1,4 +1,4 @@
-import { MCPPolicyRule, MCPToolRequest, MCPValidationContext } from './types';
+import { MCPPolicyRule, MCPToolRequest, MCPValidationContext } from '../core/types';
 
 /**
  * MCP Security Policy Rules

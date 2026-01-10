@@ -1,34 +1,31 @@
-# Dependencies
+# --- Dependencies ---
 node_modules/
+pnpm-lock.yaml
+yarn.lock
 
-# Build output
+# --- Build Artifacts ---
 out/
 dist/
+build/
 *.vsix
 
-# IDE
-.vscode/*
-!.vscode/extensions.json
-!.vscode/launch.json
-.idea/
-
-# OS
+# --- System Junk ---
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
 
-# Logs
+# --- Secrets & Logs ---
+.env
 *.log
 npm-debug.log*
+audit/
+logs/
 
-# Test artifacts
+# --- Python ---
+__pycache__/
+*.pyc
+venv/
+
+# --- Testing ---
 coverage/
-.nyc_output/
-
-# Environment
-.env
-.env.local
-
-# Temporary
-*.tmp
-*.temp
-.biasguard/

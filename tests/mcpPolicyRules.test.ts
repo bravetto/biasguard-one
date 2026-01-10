@@ -5,10 +5,10 @@
  * the exact GitKraken filesystem access pattern captured in research.
  */
 
-import { validateMCPRequest, mcpPolicyRules, getRuleDescription } from './mcpPolicyRules';
-import { parseMCPRequests, createMCPRequest } from './mcpParser';
-import { evaluateTextWithMCP } from './policyEngine';
-import { MCPToolRequest, MCPValidationContext, ResultType } from './types';
+import { validateMCPRequest, mcpPolicyRules, getRuleDescription } from '../src/security/mcpPolicyRules';
+import { parseMCPRequests, createMCPRequest } from '../src/security/mcpParser';
+import { evaluateTextWithMCP } from '../src/security/policyEngine';
+import { MCPToolRequest, MCPValidationContext, ResultType } from '../src/core/types';
 
 // Test utilities
 let passed = 0;

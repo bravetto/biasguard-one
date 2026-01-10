@@ -7,7 +7,7 @@
  * ∞ AbëONE ∞
  */
 
-import { validate, createRequest, validateText, FlowResult, clearAudit } from './one';
+import { validate, createRequest, validateText, FlowResult, clearAudit } from '../src/core/one';
 
 // =============================================================================
 // Test Utilities - Simple and Clear

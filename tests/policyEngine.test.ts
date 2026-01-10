@@ -1,5 +1,5 @@
-import { evaluateText } from './policyEngine';
-import { ResultType } from './types';
+import { evaluateText } from '../src/security/policyEngine';
+import { ResultType } from '../src/core/types';
 
 // Simple test runner for demos
 const tests: Array<{ name: string; input: string; expected: ResultType; expectedId?: string }> = [

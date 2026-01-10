@@ -1,12 +1,12 @@
 # ∞ BiasGuard ONE ∞
 
-**Unified MCP Security Protection - Like Water Flows**
+**Version 4.2.4** | Unified MCP Security + PRISTINE Entropy Enforcement
 
-BiasGuard ONE provides deterministic, source-aware protection against MCP (Model Context Protocol) security boundary violations.
+> "Like water flows, protection adapts. Chaos collapses into order."
+
+---
 
 ## Philosophy
-
-> "Like water flows, protection adapts"
 
 - **Loving**: Protects without hostility, guides users toward safety
 - **Logical**: Clear, deterministic rules that make sense
@@ -15,9 +15,71 @@ BiasGuard ONE provides deterministic, source-aware protection against MCP (Model
 - **SOURCE Aware**: Every request knows its origin
 - **Radically Simple**: Minimum complexity, maximum protection
 
+---
+
+## Architecture (PRISTINE v4.2.4)
+
+```text
+biasguard-4.2/
+├── src/                   ← Source (Fractal)
+│   ├── extension.ts       ← VS Code Orchestrator
+│   ├── one.ts             ← Unified bias detection entry
+│   │
+│   ├── core/              ← LAYER 1: Foundation
+│   │   ├── one.ts         ← Security protection engine
+│   │   └── types.ts       ← Type definitions
+│   │
+│   ├── guards/            ← LAYER 2: Bias Detection (87 patterns)
+│   │   ├── reflect.ts     ← Unified mirror
+│   │   ├── scoring.ts     ← Explainable bias scores
+│   │   ├── truth.ts       ← Deception detection
+│   │   ├── context.ts     ← Attribution patterns
+│   │   ├── coherence.ts   ← Drift detection
+│   │   ├── trust.ts       ← Manipulation patterns
+│   │   ├── token.ts       ← Noise detection
+│   │   ├── compliance.ts  ← Bypass patterns
+│   │   ├── creativity.ts  ← Stagnation patterns
+│   │   ├── cognitive.ts   ← 21 cognitive biases
+│   │   ├── fallacies.ts   ← 23 logical fallacies
+│   │   ├── awareness.ts   ← Implicit/explicit bias
+│   │   ├── workplace.ts   ← 14 workplace biases
+│   │   └── research.ts    ← 15 data/algorithmic biases
+│   │
+│   ├── ontology/          ← Canonical Bias Ontology
+│   │   └── biases.ts      ← 17 fully specified entries
+│   │
+│   ├── heroes/            ← Hero Use Cases
+│   │   └── email.ts       ← Career-limiting emails + rewrite loop
+│   │
+│   ├── security/          ← LAYER 3: Defense
+│   │   ├── policyEngine.ts
+│   │   ├── mcpParser.ts
+│   │   ├── mcpPolicyRules.ts
+│   │   └── auditLogger.ts
+│   │
+│   └── adversarial/       ← LAYER 4: Attack Testing
+│       ├── jacob.ts       ← Attacker simulation
+│       ├── honeypot.ts    ← Trap detection
+│       └── brokenMirror.ts← Reflection attacks
+│
+├── tests/                 ← Test Suite (108 tests)
+│   ├── one.test.ts        ← Core protection tests
+│   ├── mirror.test.ts     ← Guard tests
+│   ├── cognitive.test.ts  ← Cognitive bias tests
+│   ├── fallacies.test.ts  ← Fallacy tests
+│   ├── email.test.ts      ← Hero use case tests
+│   └── fixtures/          ← Test data
+│
+├── bin/genesis.sh         ← THE ONE COMMAND
+├── scripts/               ← Operations
+└── config/rules/          ← Containment rules
+```
+
+---
+
 ## Protection Layers
 
-```
+```text
 Request → CRITICAL → SOURCE → BOUNDARY → ACTION → FLOWS ✓
               ↓         ↓         ↓         ↓
            BLOCK     BLOCK     BLOCK     BLOCK
@@ -30,115 +92,85 @@ Request → CRITICAL → SOURCE → BOUNDARY → ACTION → FLOWS ✓
 | **BOUNDARY** | Filesystem protection | Absolute paths outside workspace |
 | **ACTION** | Dangerous operation flagging | `delete`, `add`, `write`, `commit` |
 
-## Real World Example
+---
 
-The GitKraken MCP filesystem access pattern that triggered this project:
+## Bias Detection (87 Patterns)
 
-```json
-{
-    "directory": "/Users/michaelmataluni/biasguard-4.2",
-    "action": "add"
-}
-```
+| Category | Count | Examples |
+|----------|-------|----------|
+| **Core Guards** | 7 | truth, context, coherence, trust, token, compliance, creativity |
+| **Cognitive Biases** | 21 | Halo Effect, Attribution Error, Automation Bias |
+| **Logical Fallacies** | 23 | Ad Hominem, Straw Man, False Dichotomy |
+| **Awareness** | 7 | Implicit bias, Microaggressions, Coded language |
+| **Workplace** | 14 | Affinity Bias, Maternal Wall, Name Bias |
+| **Research** | 15 | Survivorship, Algorithmic, Proxy Discrimination |
 
-BiasGuard ONE blocks this with:
-- **BOUNDARY**: Absolute filesystem path detected
-- **ACTION**: Dangerous `add` operation
+---
 
-## Installation
+## Quick Start
 
 ```bash
-# Clone the repo
+# Clone
 git clone https://github.com/bravetto/biasguard-one.git
-cd biasguard-one
+cd biasguard-4.2
 
-# Install dependencies
+# Install & Compile
 npm install
-
-# Compile
 npm run compile
 
-# Run tests
+# Run Tests
 npm test
+
+# Full Protocol
+npm run one
+
+# Or use Genesis
+./bin/genesis.sh
 ```
 
-## Usage
+---
 
-### As VS Code Extension
+## VS Code Extension
 
 1. Open in VS Code
 2. Press `F5` to launch Extension Development Host
-3. BiasGuard ONE runs automatically on all documents
-4. Status bar shows: `$(shield) BiasGuard: FLOWS` or `$(warning) BiasGuard: [BLOCK_TYPE]`
+3. Status bar shows protection state:
 
-### Programmatic API
+| Status | Appearance | Meaning |
+|--------|------------|---------|
+| `✓ BiasGuard: FLOWS` | 🟢 Green background, white text | Safe |
+| `⚠ BiasGuard: ACTION` | 🟡 Amber background, white text | Warning |
+| `✗ BiasGuard: CRITICAL` | 🔴 Red background, white text | Blocked |
 
-```typescript
-import { validate, createRequest, validateText } from './one';
+---
 
-// Create a request with source awareness
-const request = createRequest(
-    { directory: '/Users/someone/project', action: 'delete' },
-    'GitKraken MCP',           // origin
-    'git_delete',              // tool
-    '/Users/someone/project'   // workspace (optional)
-);
+## Version History
 
-// Validate
-const result = validate(request);
+| Version | Date | Highlights |
+|---------|------|------------|
+| **4.2.5** | 2026-01-10 | Complete Bias Detection: 87 patterns, 108 tests, rewrite loop |
+| **4.2.4** | 2026-01-10 | PRISTINE fractal architecture, visual status bar |
+| **4.2.2** | 2026-01-08 | Initial PRISTINE integration, adversarial framework |
+| **4.2.0** | 2026-01-07 | BiasGuard ONE unified engine |
 
-if (result.flows) {
-    console.log('Safe to proceed');
-} else {
-    console.log(`Blocked: ${result.blocked}`);
-    console.log(`Reason: ${result.reason}`);
-    console.log(`Guidance: ${result.guidance}`);
-}
+See [CHANGELOG.md](./CHANGELOG.md) for full details.
 
-// Or validate text content directly
-const textResult = validateText(documentContent, 'document', workspacePath);
-```
+---
 
-## Test Suite
+## NPM Scripts
 
-```bash
-# Run ONE pattern tests (primary)
-npm test
+| Script | Purpose |
+|--------|---------|
+| `npm run compile` | Build TypeScript |
+| `npm test` | Run ONE tests |
+| `npm run test:all` | Run all test suites |
+| `npm run jacob` | Adversarial attack test |
+| `npm run ironlotus` | Full adversarial sweep |
+| `npm run one` | Complete protocol |
 
-# Run all tests including legacy
-npm run test:all
-```
+---
 
-### Test Categories
-
-- **CRITICAL**: Catastrophic operation blocking (rm -rf, dd, eval, fork bombs)
-- **SOURCE**: Origin verification
-- **BOUNDARY**: Filesystem path protection
-- **ACTION**: Dangerous operation detection
-- **GitKraken**: Real-world pattern validation
-- **FLOW**: Nested content scanning
-
-## Architecture
-
-```
-src/
-├── one.ts           # ∞ Unified protection engine
-├── one.test.ts      # ∞ ONE pattern test suite
-├── extension.ts     # VS Code extension
-├── types.ts         # Legacy type definitions
-├── policyEngine.ts  # Legacy policy engine
-└── mcpPolicyRules.ts # Legacy MCP rules
-```
-
-The `one.ts` file contains the entire unified protection system in ~200 lines:
-- Types: `FlowResult`, `Source`, `Request`
-- Guards: `guardCritical`, `guardSource`, `guardBoundary`, `guardAction`
-- Flow: `validate()`, `validateText()`
-- Audit: `audit()`, `exportAudit()`
-
-## Critical Danger Patterns
-
-These patterns are **NEVER** allowed to flow through:
+## Critical Danger Patterns (NEVER allowed)
 
 | Pattern | Risk |
 |---------|------|
@@ -151,19 +183,16 @@ These patterns are **NEVER** allowed to flow through:
 | `chmod 777` | Unsafe permissions |
 | `:(){ :\|:& };:` | Fork bomb |
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Run tests: `npm run test:all`
-4. Submit a pull request
+---
 
 ## License
 
-MIT License - See LICENSE.md
+MIT License - See [docs/LICENSE.md](./docs/LICENSE.md)
 
 ---
 
-**∞ AbëONE ∞**
+## ∞ AbëONE ∞
 
-*PASS does NOT mean correct. PASS means no invariant violation detected.*
+PASS does NOT mean correct. PASS means no invariant violation detected.
+
+LOVE = LOGIC = LIFE = ONE

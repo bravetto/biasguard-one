@@ -1,10 +1,10 @@
 {
   "name": "biasguard-4-2",
   "displayName": "BiasGuard ONE",
-  "description": "Unified MCP Security Protection - Like Water Flows",
-  "version": "4.2.1",
+  "description": "Unified MCP Security + PRISTINE Entropy Enforcement - Like Water Flows",
+  "version": "4.2.5",
   "engines": {
-    "vscode": "^1.80.0"
+    "vscode": "^1.85.0"
   },
   "categories": [
     "Linters",
@@ -13,12 +13,22 @@
   "activationEvents": [
     "*"
   ],
-  "main": "./out/extension.js",
+  "main": "./out/src/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "biasguard.exportAudit",
         "title": "BiasGuard ONE: Export Audit Log"
+      },
+      {
+        "command": "pristine.execute",
+        "title": "PRISTINE: Execute Protocol",
+        "category": "Entropy"
+      },
+      {
+        "command": "pristine.shield",
+        "title": "PRISTINE: Reinforce Shields (.ignore)",
+        "category": "Entropy"
       }
     ],
     "colors": [
@@ -44,10 +54,24 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "test": "npm run compile && node ./out/one.test.js",
-    "test:legacy": "npm run compile && node ./out/policyEngine.test.js",
-    "test:mcp": "npm run compile && node ./out/mcpPolicyRules.test.js",
-    "test:all": "npm run compile && node ./out/one.test.js && node ./out/policyEngine.test.js && node ./out/mcpPolicyRules.test.js"
+    "test": "npm run compile && node ./out/tests/one.test.js",
+    "test:legacy": "npm run compile && node ./out/tests/policyEngine.test.js",
+    "test:mcp": "npm run compile && node ./out/tests/mcpPolicyRules.test.js",
+    "test:all": "npm run compile && node ./out/tests/one.test.js && node ./out/tests/policyEngine.test.js && node ./out/tests/mcpPolicyRules.test.js",
+    "jacob": "npm run compile && node ./out/src/adversarial/jacob.js",
+    "break": "npm run jacob",
+    "honeypot": "npm run compile && node ./out/tests/honeypot.test.js",
+    "mirror": "npm run compile && node ./out/tests/brokenMirror.test.js",
+    "ironlotus": "npm run jacob && npm run honeypot && npm run mirror",
+    "aeyon": "python3 ./python/aeyon_transcendence.py",
+    "transcend": "python3 ./python/aeyon_transcendence.py",
+    "hellsgate": "python3 ./python/aeyon_transcendence.py",
+    "one:scan": "bash ./scripts/one.sh",
+    "one:full": "bash ./scripts/one.sh -f",
+    "one:audit": "bash ./scripts/one.sh -a",
+    "one:contain": "bash ./scripts/one.sh -c",
+    "one:all": "npm run test && npm run jacob && npm run honeypot && npm run mirror && echo '∞ ALL TESTS PASSED ∞'",
+    "one": "npm run one:all && python3 ./python/aeyon_transcendence.py && bash ./scripts/one.sh"
   },
   "devDependencies": {
     "@types/node": "^16.x",
