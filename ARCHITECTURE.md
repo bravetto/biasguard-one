@@ -7,6 +7,7 @@
 ## I. THE PARTIES
 
 ### 1. The Individual (Human Node)
+
 ```
 ┌─────────────────────────────────────────────┐
 │             THE INDIVIDUAL                  │
@@ -21,6 +22,7 @@
 ```
 
 ### 2. The AI System (Decision Engine)
+
 ```
 ┌─────────────────────────────────────────────┐
 │             THE AI SYSTEM                   │
@@ -35,6 +37,7 @@
 ```
 
 ### 3. Institutions (Power Multipliers)
+
 ```
 ┌─────────────────────────────────────────────┐
 │             INSTITUTIONS                    │
@@ -49,6 +52,7 @@
 ```
 
 ### 4. Regulators & Civil Society (Constraint Layer)
+
 ```
 ┌─────────────────────────────────────────────┐
 │        REGULATORS & CIVIL SOCIETY           │
@@ -63,6 +67,7 @@
 ```
 
 ### 5. BiasGuard (The Missing Party)
+
 ```
 ┌─────────────────────────────────────────────┐
 │         BIASGUARD-CLASS TOOLS               │
@@ -176,6 +181,7 @@ User feels: "I wasn't imagining it."
 ```
 
 **Status: IMPLEMENTED**
+
 - 12 Guards
 - 87 Patterns  
 - Scoring system
@@ -195,6 +201,7 @@ Bias becomes ACTIONABLE, not abstract.
 ```
 
 **Status: PARTIALLY IMPLEMENTED**
+
 - `suggestedFix` in scoring
 - Need: Rewrite suggestions
 - Need: Counterfactual generation
@@ -212,6 +219,7 @@ No drama. Just infrastructure.
 ```
 
 **Requires:**
+
 - Chrome Extension (in progress)
 - VS Code Extension (done)
 - API for third-party integration

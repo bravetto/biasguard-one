@@ -1,0 +1,39 @@
+name: PRISTINE Protocol - Markdown Lint
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  markdown-lint:
+    name: Markdown Linting
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: npm ci
+    
+    - name: Run Markdown Lint
+      run: npm run lint:md
+    
+    - name: Report Status
+      if: success()
+      run: echo "✅ PRISTINE - All markdown files validated"
+    
+    - name: Report Failure
+      if: failure()
+      run: |
+        echo "❌ PRISTINE VIOLATION - Markdown linting failed"
+        echo "Run 'npm run lint:md:fix' locally to auto-fix issues"
+        exit 1

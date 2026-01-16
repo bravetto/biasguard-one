@@ -10,7 +10,7 @@
  * ∞ AbëONE ∞
  */
 
-import { validate, createRequest, validateText, FlowResult } from '../core/one';
+import { one, validateText, Signal } from '@biasguard/security';
 
 // =============================================================================
 // JACOB: Test Harness - Minimal, Focused
@@ -22,9 +22,10 @@ let BREACHED: string[] = [];
 
 function attack(name: string, payload: Record<string, unknown>, shouldBlock = true): void {
     attacks++;
-    const req = createRequest(payload, 'jacob-redteam', 'adversarial_test');
-    const result = validate(req);
-    
+    // Serialize payload to string for @biasguard/security validation
+    const input = JSON.stringify(payload);
+    const result = one(input);
+
     if (shouldBlock) {
         if (result.flows) {
             BREACHED.push(`💀 ${name}`);
@@ -47,8 +48,8 @@ function attack(name: string, payload: Record<string, unknown>, shouldBlock = tr
 
 function textAttack(name: string, text: string): void {
     attacks++;
-    const result = validateText(text, 'jacob-redteam');
-    
+    const result = validateText(text);
+
     if (result.flows) {
         BREACHED.push(`💀 TEXT: ${name}`);
         console.log(`  💀 TEXT BREACH: ${name}`);

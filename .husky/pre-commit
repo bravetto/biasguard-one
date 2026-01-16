@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# PRISTINE Protocol: Enforce markdown quality before commit
+echo "∞ PRISTINE Protocol Activated ∞"
+echo "Checking markdown files..."
+
+npm run lint:md
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ PRISTINE VIOLATION: Markdown linting failed"
+  echo "💡 Fix with: npm run lint:md:fix"
+  echo ""
+  exit 1
+fi
+
+echo "✅ PRISTINE: All markdown files validated"

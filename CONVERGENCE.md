@@ -41,6 +41,7 @@ The same mirror appears in four places.
 Same reflection. Different context.
 
 ### 1. VS Code Extension (Current)
+
 **Guards the Code**
 
 ```
@@ -58,6 +59,7 @@ Developer sees, chooses
 ---
 
 ### 2. Chrome Browser Extension
+
 **Guards the Web**
 
 ```
@@ -71,12 +73,14 @@ User sees, chooses
 ```
 
 **Emergence:**
+
 - Content script injects mirror
 - Highlights bias patterns in articles
 - Shows reflection sidebar
 - User controls what to reflect
 
 **File Structure:**
+
 ```
 biasguard-chrome/
 ├── manifest.json
@@ -91,6 +95,7 @@ biasguard-chrome/
 ---
 
 ### 3. Web/LLM Mirror Application
+
 **Guards the AI**
 
 ```
@@ -104,12 +109,14 @@ User sees, chooses
 ```
 
 **Emergence:**
+
 - Web application
 - Paste any LLM output
 - See reflections instantly
 - Compare across models
 
 **File Structure:**
+
 ```
 biasguard-web/
 ├── src/
@@ -124,6 +131,7 @@ biasguard-web/
 ---
 
 ### 4. App Store Phenomenon & MD Reader
+
 **Guards the Reader**
 
 ```
@@ -137,12 +145,14 @@ User sees, chooses
 ```
 
 **Emergence:**
+
 - iOS/Android app
 - Markdown reader with reflection
 - Highlight & annotate bias
 - Share reflections
 
 **File Structure:**
+
 ```
 biasguard-app/
 ├── src/

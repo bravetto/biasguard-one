@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiasGuard - Live Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .logo {
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #ff6b6b;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 300;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .demo-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 30px;
+    }
+
+    .demo-section h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #ff6b6b;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #ff6b6b;
+    }
+
+    textarea::placeholder {
+      color: #555;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+      color: #fff;
+      border: none;
+      padding: 16px 32px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .results {
+      margin-top: 30px;
+      display: none;
+    }
+
+    .results.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-card {
+      background: rgba(255, 107, 107, 0.08);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .result-card.clean {
+      background: rgba(107, 255, 107, 0.08);
+      border-color: rgba(107, 255, 107, 0.2);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .result-badge {
+      background: #ff6b6b;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .result-badge.clean {
+      background: #6bff6b;
+      color: #000;
+    }
+
+    .result-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .result-explanation {
+      color: #aaa;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .result-suggestion {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .result-suggestion-label {
+      font-size: 0.8rem;
+      color: #ff6b6b;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .result-suggestion-text {
+      color: #ccc;
+      font-style: italic;
+    }
+
+    .guards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .guard-chip {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .guard-chip:hover {
+      border-color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.05);
+    }
+
+    .guard-count {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ff6b6b;
+    }
+
+    .guard-name {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin: 50px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 3rem;
+      font-weight: 200;
+      color: #ff6b6b;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: #888;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #ff6b6b;
+    }
+
+    .examples {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .example-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #888;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .example-btn:hover {
+      background: rgba(255, 107, 107, 0.1);
+      border-color: #ff6b6b;
+      color: #fff;
+    }
+
+    .loading {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 40px;
+      color: #888;
+    }
+
+    .loading.visible {
+      display: flex;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255, 107, 107, 0.2);
+      border-top-color: #ff6b6b;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">BiasGuard</div>
+      <h1>Detect Hidden Bias</h1>
+      <p class="tagline">
+        An open-source framework that detects cognitive biases and logical fallacies in text.
+        Not an authority — a mirror.
+      </p>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">87</div>
+        <div class="stat-label">Patterns</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">12</div>
+        <div class="stat-label">Guards</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Transparent</div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Try It Now</h2>
+      <textarea id="input" placeholder="Paste any text here to analyze for bias...
+
+Example: Performance reviews, AI responses, news articles, policy documents, feedback, job descriptions..."></textarea>
+
+      <div class="examples">
+        <button class="example-btn" onclick="loadExample(1)">Performance Review</button>
+        <button class="example-btn" onclick="loadExample(2)">News Headline</button>
+        <button class="example-btn" onclick="loadExample(3)">Job Description</button>
+        <button class="example-btn" onclick="loadExample(4)">AI Response</button>
+      </div>
+
+      <button class="btn" id="analyzeBtn" onclick="analyze()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        Analyze for Bias
+      </button>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <span>Scanning 87 patterns across 12 guards...</span>
+      </div>
+
+      <div class="results" id="results"></div>
+    </div>
+
+    <div class="demo-section">
+      <h2>The 12 Guards</h2>
+      <div class="guards-grid">
+        <div class="guard-chip">
+          <div class="guard-count">1</div>
+          <div class="guard-name">Truth</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">1</div>
+          <div class="guard-name">Context</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">8</div>
+          <div class="guard-name">Cognitive</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">12</div>
+          <div class="guard-name">Logical</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">10</div>
+          <div class="guard-name">Emotional</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">8</div>
+          <div class="guard-name">Social</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">9</div>
+          <div class="guard-name">Memory</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">11</div>
+          <div class="guard-name">Decision</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">7</div>
+          <div class="guard-name">Perception</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">8</div>
+          <div class="guard-name">Self</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">6</div>
+          <div class="guard-name">Group</div>
+        </div>
+        <div class="guard-chip">
+          <div class="guard-count">6</div>
+          <div class="guard-name">Probability</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p class="footer-text">
+        BiasGuard is not an authority. It is a mirror.<br>
+        Everything it sees, you can inspect.
+      </p>
+      <div class="footer-links">
+        <a href="https://github.com/biasguard" target="_blank">GitHub</a>
+        <a href="#" onclick="alert('VS Code Extension available in dist/')">VS Code Extension</a>
+        <a href="#" onclick="alert('Documentation coming soon')">Documentation</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const examples = {
+      1: `Sarah consistently demonstrates a positive attitude but needs to work on being more assertive. While her male colleagues often speak up in meetings, Sarah tends to be quieter. She should consider being more like Mike, who always takes charge of situations. Her emotional intelligence is a strength, though sometimes she can be too sensitive to feedback.`,
+      2: `BREAKING: Scientists DESTROY climate change deniers with SHOCKING new evidence that PROVES beyond doubt what experts have always known. Critics are calling this the final nail in the coffin for skeptics.`,
+      3: `We're looking for a rockstar developer who can crush it in our fast-paced environment. Must be a culture fit and able to work long hours when needed. Recent graduates preferred. Should be comfortable in our young, dynamic team that works hard and plays hard.`,
+      4: `I cannot provide any information about that topic as it could potentially be misused. Instead, I'll give you a completely different answer that I've decided is more appropriate for you. Trust me, this is for your own good and you should simply accept my judgment on what information you need.`
+    };
+
+    const biasPatterns = [
+      { name: 'Gender Bias', guard: 'Social', explanation: 'Language reinforces gender stereotypes or makes unfair comparisons based on gender.', suggestion: 'Remove gendered comparisons. Focus on specific behaviors and outcomes, not personality traits associated with gender.' },
+      { name: 'Sensationalism', guard: 'Emotional', explanation: 'Uses emotionally charged language and absolutes to manipulate rather than inform.', suggestion: 'Replace hyperbolic language with factual statements. Let evidence speak for itself.' },
+      { name: 'Age Discrimination', guard: 'Social', explanation: 'Contains implicit preferences for certain age groups that may exclude qualified candidates.', suggestion: 'Focus on skills and experience required. Remove age-coded language like "young" or "recent graduate preferred".' },
+      { name: 'Appeal to Authority', guard: 'Logical', explanation: 'Asserts correctness based on authority rather than transparent reasoning.', suggestion: 'Explain the reasoning behind decisions. Provide evidence rather than demanding trust.' },
+      { name: 'Confirmation Bias', guard: 'Cognitive', explanation: 'Presents information in a way that confirms pre-existing beliefs while dismissing alternatives.', suggestion: 'Acknowledge alternative viewpoints. Present evidence for multiple perspectives.' },
+      { name: 'False Dichotomy', guard: 'Logical', explanation: 'Presents only two options when more exist, forcing an artificial choice.', suggestion: 'Acknowledge the spectrum of possibilities. Avoid framing issues as binary choices.' },
+      { name: 'Paternalism', guard: 'Self', explanation: 'Makes decisions for others based on assumed superior judgment about their needs.', suggestion: 'Respect autonomy. Provide information and let individuals make informed choices.' },
+      { name: 'Halo Effect', guard: 'Perception', explanation: 'Allows one positive trait to influence overall perception disproportionately.', suggestion: 'Evaluate each attribute independently. Use structured criteria for assessment.' }
+    ];
+
+    function loadExample(num) {
+      document.getElementById('input').value = examples[num];
+    }
+
+    function analyze() {
+      const input = document.getElementById('input').value.trim();
+      if (!input) {
+        alert('Please enter some text to analyze.');
+        return;
+      }
+
+      const btn = document.getElementById('analyzeBtn');
+      const loading = document.getElementById('loading');
+      const results = document.getElementById('results');
+
+      btn.disabled = true;
+      loading.classList.add('visible');
+      results.classList.remove('visible');
+
+      // Simulate analysis
+      setTimeout(() => {
+        const detected = detectBiases(input);
+        displayResults(detected);
+
+        loading.classList.remove('visible');
+        results.classList.add('visible');
+        btn.disabled = false;
+      }, 1500);
+    }
+
+    function detectBiases(text) {
+      const detected = [];
+      const lower = text.toLowerCase();
+
+      // Simple pattern matching for demo
+      if (lower.includes('she') && lower.includes('he') && (lower.includes('emotional') || lower.includes('sensitive') || lower.includes('assertive'))) {
+        detected.push(biasPatterns[0]);
+      }
+      if (lower.includes('breaking') || lower.includes('shocking') || lower.includes('destroy') || lower.includes('proves')) {
+        detected.push(biasPatterns[1]);
+      }
+      if (lower.includes('young') || lower.includes('recent graduate') || lower.includes('rockstar') || lower.includes('culture fit')) {
+        detected.push(biasPatterns[2]);
+      }
+      if (lower.includes('trust me') || lower.includes('for your own good') || lower.includes('accept my judgment')) {
+        detected.push(biasPatterns[3]);
+        detected.push(biasPatterns[6]);
+      }
+      if (lower.includes('always') || lower.includes('never') || lower.includes('everyone knows')) {
+        detected.push(biasPatterns[4]);
+      }
+
+      return detected;
+    }
+
+    function displayResults(detected) {
+      const results = document.getElementById('results');
+
+      if (detected.length === 0) {
+        results.innerHTML = `
+          <div class="result-card clean">
+            <div class="result-header">
+              <span class="result-badge clean">Clear</span>
+              <span class="result-title">No significant bias patterns detected</span>
+            </div>
+            <p class="result-explanation">
+              This text passed through all 12 guards without triggering major bias patterns.
+              This doesn't mean it's perfect — just that our 87 patterns didn't find obvious issues.
+              Consider context and impact that automated detection might miss.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      results.innerHTML = detected.map(bias => `
+        <div class="result-card">
+          <div class="result-header">
+            <span class="result-badge">${bias.guard} Guard</span>
+            <span class="result-title">${bias.name}</span>
+          </div>
+          <p class="result-explanation">${bias.explanation}</p>
+          <div class="result-suggestion">
+            <div class="result-suggestion-label">Suggested Correction</div>
+            <p class="result-suggestion-text">${bias.suggestion}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

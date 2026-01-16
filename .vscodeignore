@@ -1,0 +1,42 @@
+# Build artifacts
+src/**
+tests/**
+*.test.ts
+*.test.js
+tsconfig.json
+
+# Dependencies
+node_modules/**
+core-legacy/node_modules/**
+
+# Development files
+.vscode/**
+.git/**
+.gitignore
+.cursorignore
+
+# Documentation (keep README)
+docs/**
+ARCHITECTURE.md
+CONVERGENCE.md
+VISION.md
+CHANGELOG.md
+
+# Scripts and tools
+scripts/**
+bin/**
+python/**
+
+# Legacy and demo
+one-legacy/**
+demo/**
+
+# Test fixtures
+**/fixtures/**
+**/redteam_trigger.json
+
+# Releases folder
+releases/**
+
+# Config
+config/**

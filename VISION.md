@@ -13,6 +13,7 @@
 BiasGuard is not a blocker. BiasGuard is a **mirror**.
 
 A stateless mirror that reflects:
+
 - What you **see**
 - What you **feel**
 - What you **didn't know had a name**

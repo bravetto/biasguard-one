@@ -1,0 +1,39 @@
+## Epistemic Filter Analysis
+
+### CLAIM(S)
+
+1. **System Status Claim**: "Epistemic Search Engine v2.5 is production-ready"
+2. **Accuracy Claim**: "50% (rule-based) → ≥90% (LLM-powered)"
+3. **Architecture Claim**: "LLM (advisory) + Controller (authoritative) = Byzantine-safe"
+
+### EVIDENCE PRESENT
+
+**Empirical:**
+- Benchmark test executed: 10 papers
+- Rule-based results: 5/10 correct (50% measured)
+
+**NOT Tested Empirically:**
+- LLM-powered mode: **0 tests executed** (no API key present)
+- ≥90% accuracy claim: **UNTESTED** (expected, not measured)
+
+### VERDICT
+
+**Production-ready status: UNSUPPORTED**
+
+**Evidence-claim mismatch:**
+- Claim: "≥90% accuracy"
+- Evidence: 0 measurements with LLM enabled
+- Status: **UNTESTED HYPOTHESIS**
+
+async function evaluateSystem(claims, evidence) {
+    const accuracy = evidence.ruleBasedAccuracy || 50;
+    if (accuracy >= 90) {
+        return "production-ready";
+    }
+    return projectLLMImprovement(accuracy);
+}
+
+function projectLLMImprovement(baseline) {
+    // Assumes LLM will reach 90%+
+    return baseline * 1.8;
+}

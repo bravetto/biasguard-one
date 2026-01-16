@@ -1,4 +1,5 @@
 # ∞ THE AIRLOCK PROTOCOL ∞
+
 ## BiasGuard 4.2 - Containment Architecture
 
 > "Stop giving nuclear launch codes to toddlers."
@@ -61,6 +62,7 @@ RIGHT:  Agent → exec("rm -rf /") → VFS → (contained crash) → nothing hap
 ```
 
 The Agent interacts with a **Virtual Mirror**:
+
 - RamDisk / In-Memory Map
 - Snapshot of relevant context only
 - Impermanent by design
@@ -101,6 +103,7 @@ PHYSICS: Agent literally cannot access files (reality-based security)
 ```
 
 **Implementation Options:**
+
 1. **RamDisk**: `mount -t tmpfs -o size=256m tmpfs /vfs`
 2. **OverlayFS**: Copy-on-write over real filesystem
 3. **In-Memory Git Worktree**: Clone to RAM, work there
@@ -124,6 +127,7 @@ docker run --rm \
 ```
 
 **Properties:**
+
 - Start time: <100ms
 - Memory cap: 256MB hard limit
 - CPU cap: 50% of one core
@@ -188,6 +192,7 @@ docker run --rm -it \
 ```
 
 **When the agent goes crazy:**
+
 - Docker kills it at 256MB
 - Your Mac stays cool
 - Reality remains untouched
@@ -257,6 +262,7 @@ Agent → BiasGuard → VFS → Validation → Patch → Human → Reality
 > The failure is **"We gave root access to a dream."**
 
 BiasGuard 4.2 is the **Dream Catcher**:
+
 - Catches the dream (code)
 - Lets nightmares (execution risks) pass through without touching you
 
@@ -267,4 +273,3 @@ BiasGuard 4.2 is the **Dream Catcher**:
 The only safe AI is a contained AI.
 ∞ AbëONE ∞
 ```
-

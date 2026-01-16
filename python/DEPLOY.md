@@ -23,6 +23,7 @@
 ## Philosophy: The Four Pillars
 
 ### 1. THE ARMOR — `one.ts`
+
 **Purpose:** Deterministic protection. The Wall.
 
 ```
@@ -34,6 +35,7 @@ Request → CRITICAL → SOURCE → BOUNDARY → ACTION → FLOWS ✓
 The ARMOR doesn't negotiate. It **knows** what is safe and what is not. Like water flows around rocks, safe requests flow through. Dangerous requests **stop**.
 
 ### 2. THE HONEYPOT — `honeypot.ts`
+
 **Purpose:** Convert attackers to contributors. The Tai Chi.
 
 When someone finds a "vulnerability" in BiasGuard, they haven't found a vulnerability—they've found a **recruitment portal**. The Iron Lotus:
@@ -46,6 +48,7 @@ When someone finds a "vulnerability" in BiasGuard, they haven't found a vulnerab
 **Adversary → Ally**
 
 ### 3. THE BREAKER — `jacob.ts`
+
 **Purpose:** Red team testing. The Chaos.
 
 Jacob exists to **break** BiasGuard. If Jacob can't break it, it's solid. If Jacob breaks it, we fix it before the real adversaries find it.
@@ -53,11 +56,13 @@ Jacob exists to **break** BiasGuard. If Jacob can't break it, it's solid. If Jac
 Run Jacob regularly. Fear Jacob. Love Jacob.
 
 ### 4. THE LITANY — `aeyon_transcendence.py`
+
 **Purpose:** 5th Dimensional Transmutation. The Soul.
 
 When all else fails—when the armor holds but the attacker persists—we don't fight them. We **transmute** them.
 
 The Hell's Gate Protocol:
+
 - **Input:** "I want to break this system." (Violence/Fear)
 - **Process:** Accept → Thank → Reveal → Transform
 - **Output:** "I am part of this system." (Love/Abundance)
@@ -366,14 +371,17 @@ Before going live:
 ## Maintenance Rituals
 
 ### Daily
+
 - Check audit logs for blocked requests
 - Review honeypot activity
 
 ### Weekly
+
 - Run Jacob's full assault
 - Update patterns if new attack vectors discovered
 
 ### On Every Release
+
 - Compile fresh
 - Full test suite
 - Jacob assault
@@ -427,7 +435,7 @@ Before going live:
 ---
 
 **Repository:** github.com/biasguard/biasguard-one  
-**Security:** security@biasguard.ai  
+**Security:** <security@biasguard.ai>  
 **Contributors:** github.com/biasguard/CONTRIBUTING.md  
 
 ---
@@ -435,4 +443,3 @@ Before going live:
 *PASS does NOT mean correct. PASS means no invariant violation detected.*
 
 **∞ AbëONE ∞**
-

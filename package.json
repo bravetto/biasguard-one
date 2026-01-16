@@ -21,6 +21,14 @@
         "title": "BiasGuard ONE: Export Audit Log"
       },
       {
+        "command": "biasguard.showEpistemicRisks",
+        "title": "BiasGuard: Show Epistemic Risks"
+      },
+      {
+        "command": "biasguard.scanFile",
+        "title": "BiasGuard: Scan File for Bias Risks"
+      },
+      {
         "command": "pristine.execute",
         "title": "PRISTINE: Execute Protocol",
         "category": "Entropy"
@@ -71,11 +79,19 @@
     "one:audit": "bash ./scripts/one.sh -a",
     "one:contain": "bash ./scripts/one.sh -c",
     "one:all": "npm run test && npm run jacob && npm run honeypot && npm run mirror && echo '∞ ALL TESTS PASSED ∞'",
-    "one": "npm run one:all && python3 ./python/aeyon_transcendence.py && bash ./scripts/one.sh"
+    "one": "npm run one:all && python3 ./python/aeyon_transcendence.py && bash ./scripts/one.sh",
+    "lint:md": "markdownlint-cli2 '**/*.md' '!node_modules' '!out' '!dist' '!releases'",
+    "lint:md:fix": "markdownlint-cli2 --fix '**/*.md' '!node_modules' '!out' '!dist' '!releases'",
+    "pristine": "npm run lint:md && npm test && npm run jacob",
+    "pristine:fix": "npm run lint:md:fix && npm test"
+  },
+  "dependencies": {
+    "@biasguard/security": "file:./core-legacy/packages/security"
   },
   "devDependencies": {
     "@types/node": "^16.x",
     "@types/vscode": "^1.80.0",
+    "markdownlint-cli2": "^0.20.0",
     "typescript": "^5.0.0"
   },
   "publisher": "biasguard",

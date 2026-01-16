@@ -66,3 +66,14 @@ export {
     Severity,
     BIAS_FALLACY_PAIRS 
 } from './scoring';
+
+// ═══════════════════════════════════════════════════════════════════
+// EPISTEMIC - Epistemic Certainty Guard (Fails Loudly)
+// ═══════════════════════════════════════════════════════════════════
+export { 
+    scanForBiasRisks, 
+    formatEpistemicRisks, 
+    EpistemicRisk, 
+    EpistemicReflection,
+    BiasType
+} from './epistemic';

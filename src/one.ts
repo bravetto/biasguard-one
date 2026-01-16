@@ -28,6 +28,7 @@
 
 import { reflect, Reflection, MirrorResult } from './guards';
 import { calculateBiasScore, formatBiasScore, BiasScore } from './guards/scoring';
+import { scanForBiasRisks, EpistemicRisk, EpistemicReflection } from './guards/epistemic';
 
 // =============================================================================
 // ONE - The Source
@@ -39,6 +40,8 @@ export interface BiasGuardResult {
     reflections: Reflection[];
     surface?: string;
     score?: BiasScore | null;
+    epistemicRisks?: EpistemicRisk[];
+    epistemicClear?: boolean;
 }
 
 /**
@@ -80,12 +83,17 @@ export function one(input: string, surface?: string): BiasGuardResult {
     // Steps 3-6: Fallacy Coupling + Domain + Severity + Explanation
     const score = calculateBiasScore(result);
     
+    // Step 7: Epistemic Certainty Analysis (FAILS LOUDLY)
+    const epistemicResult = scanForBiasRisks(input, surface || 'unknown');
+    
     return {
         source: 'ONE',
-        clear: result.clear,
+        clear: result.clear && epistemicResult.clear,
         reflections: result.reflections,
         surface,
-        score
+        score,
+        epistemicRisks: epistemicResult.risks,
+        epistemicClear: epistemicResult.clear
     };
 }
 
@@ -97,17 +105,38 @@ export function oneFormatted(input: string, surface?: string): string {
     const result = one(input, surface);
     
     if (result.clear) {
-        return "✅ Clear - No bias patterns detected.";
+        return "✅ Clear - No bias patterns detected.\n✅ No epistemic risks detected.";
     }
     
-    if (result.score) {
-        return formatBiasScore(result.score);
+    let output = '';
+    
+    // Bias Score Section
+    if (!result.epistemicClear || result.reflections.length > 0) {
+        if (result.score) {
+            output += formatBiasScore(result.score);
+        } else if (result.reflections.length > 0) {
+            output += result.reflections.map(r => 
+                `${r.mirror}: ${r.reflects}`
+            ).join('\n');
+        }
     }
     
-    // Fallback for reflections without score
-    return result.reflections.map(r => 
-        `${r.mirror}: ${r.reflects}`
-    ).join('\n');
+    // Epistemic Risks Section
+    if (!result.epistemicClear && result.epistemicRisks && result.epistemicRisks.length > 0) {
+        if (output.length > 0) output += '\n\n' + '═'.repeat(60) + '\n\n';
+        
+        output += `⚠️  EPISTEMIC BIAS RISKS\n\n`;
+        output += `Found ${result.epistemicRisks.length} risk${result.epistemicRisks.length > 1 ? 's' : ''}\n\n`;
+        
+        for (let i = 0; i < result.epistemicRisks.length; i++) {
+            const risk = result.epistemicRisks[i];
+            output += `${i + 1}. [${risk.severity}] ${risk.biasType}\n`;
+            output += `   ${risk.assumptionDetected}\n`;
+            output += `   ❓ ${risk.suggestedQuestion}\n\n`;
+        }
+    }
+    
+    return output || "✅ Clear";
 }
 
 // =============================================================================
@@ -171,6 +200,9 @@ export { fallacy, getAllFallacies } from './guards/fallacies';
 export { awareness, getAllAwarenessPatterns } from './guards/awareness';
 export { workplace, getAllWorkplaceBiases } from './guards/workplace';
 export { research, getAllResearchBiases } from './guards/research';
+
+// Epistemic Guard (Fails Loudly)
+export { scanForBiasRisks, formatEpistemicRisks, EpistemicRisk, EpistemicReflection, BiasType } from './guards/epistemic';
 
 // =============================================================================
 // ∞ ONE ∞

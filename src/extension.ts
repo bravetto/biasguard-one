@@ -10,7 +10,8 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { validateText, exportAudit, FlowResult } from './core/one';
+import { validateText, getAudit, Signal } from '@biasguard/security';
+import { scanForBiasRisks, formatEpistemicRisks, EpistemicRisk } from './guards/epistemic';
 
 // ═══════════════════════════════════════════════════════════════════
 // PRISTINE PROTOCOL - The Entropy Enforcement Engine
@@ -76,9 +77,53 @@ export function activate(context: vscode.ExtensionContext) {
             outputChannel.appendLine('═══════════════════════════════════════════');
             outputChannel.appendLine('  ∞ BiasGuard ONE - Audit Log ∞');
             outputChannel.appendLine('═══════════════════════════════════════════\n');
-            outputChannel.appendLine(exportAudit());
+            outputChannel.appendLine(JSON.stringify(getAudit(), null, 2));
             outputChannel.show();
             vscode.window.showInformationMessage('BiasGuard: Audit exported');
+        })
+    );
+
+    // Command: Show Epistemic Risks
+    context.subscriptions.push(
+        vscode.commands.registerCommand('biasguard.showEpistemicRisks', () => {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                vscode.window.showInformationMessage('No active editor');
+                return;
+            }
+            
+            const text = editor.document.getText();
+            const result = scanForBiasRisks(text, editor.document.fileName);
+            
+            outputChannel.clear();
+            outputChannel.appendLine('═══════════════════════════════════════════');
+            outputChannel.appendLine('  ⚠️  EPISTEMIC BIAS SCAN RESULTS ⚠️');
+            outputChannel.appendLine('═══════════════════════════════════════════\n');
+            outputChannel.appendLine(formatEpistemicRisks(result));
+            outputChannel.show();
+            
+            if (result.clear) {
+                vscode.window.showInformationMessage('✅ No epistemic bias risks detected');
+            } else {
+                const highCount = result.risks.filter(r => r.severity === 'High').length;
+                vscode.window.showWarningMessage(
+                    `Found ${result.risks.length} bias risk${result.risks.length > 1 ? 's' : ''} (${highCount} high severity)`
+                );
+            }
+        })
+    );
+
+    // Command: Scan File for Epistemic Risks
+    context.subscriptions.push(
+        vscode.commands.registerCommand('biasguard.scanFile', () => {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                vscode.window.showInformationMessage('No active editor');
+                return;
+            }
+            
+            runGuard(editor.document);
+            vscode.window.showInformationMessage('BiasGuard: Epistemic scan complete');
         })
     );
 
@@ -158,35 +203,164 @@ export function activate(context: vscode.ExtensionContext) {
 
 function runGuard(document: vscode.TextDocument) {
     const text = document.getText();
-    const workspace = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-    
-    // Validate with ONE pattern
-    const result = validateText(text, 'document', workspace);
+
+    // Phase 1: Validate with @biasguard/security
+    const result = validateText(text);
     
     diagnosticCollection.clear();
     
-    if (result.flows) {
+    // Phase 2: Epistemic Bias Scanning (ALWAYS RUNS - FAILS LOUDLY)
+    const epistemicResult = scanForBiasRisks(text, document.fileName);
+    
+    if (!epistemicResult.clear) {
+        // EPISTEMIC RISKS DETECTED - FAIL LOUDLY
+        showEpistemicRisks(document, epistemicResult.risks);
+        
+        // Also log to output channel
+        outputChannel.clear();
+        outputChannel.appendLine('═══════════════════════════════════════════');
+        outputChannel.appendLine('  ⚠️  EPISTEMIC BIAS RISKS DETECTED ⚠️');
+        outputChannel.appendLine('═══════════════════════════════════════════\n');
+        outputChannel.appendLine(formatEpistemicRisks(epistemicResult));
+        outputChannel.show(true); // Force show
+        
+        // Show notification
+        const highRisks = epistemicResult.risks.filter(r => r.severity === 'High');
+        if (highRisks.length > 0) {
+            vscode.window.showErrorMessage(
+                `BiasGuard: ${highRisks.length} HIGH severity bias risk${highRisks.length > 1 ? 's' : ''} detected!`,
+                'View Details'
+            ).then(selection => {
+                if (selection === 'View Details') {
+                    outputChannel.show();
+                }
+            });
+        } else {
+            vscode.window.showWarningMessage(
+                `BiasGuard: ${epistemicResult.risks.length} bias risk${epistemicResult.risks.length > 1 ? 's' : ''} detected`,
+                'View Details'
+            ).then(selection => {
+                if (selection === 'View Details') {
+                    outputChannel.show();
+                }
+            });
+        }
+    }
+    
+    // Phase 3: Security validation status
+    if (result.flows && epistemicResult.clear) {
         // FLOWS - All clear (FULL GREEN BOX, WHITE TEXT)
         statusBarItem.text = '$(check) BiasGuard: FLOWS';
         statusBarItem.backgroundColor = new vscode.ThemeColor('testing.iconPassed');
         statusBarItem.color = '#ffffff';
-        statusBarItem.tooltip = '✓ System Protected. No violations detected.\n\n∞ Like water flows ∞';
-    } else {
+        statusBarItem.tooltip = '✓ System Protected. No violations detected.\n✓ No epistemic bias risks detected.\n\n∞ Like water flows ∞';
+    } else if (!epistemicResult.clear) {
+        // EPISTEMIC RISKS - Show count
+        const highRisks = epistemicResult.risks.filter(r => r.severity === 'High');
+        statusBarItem.text = `$(warning) BiasGuard: ${epistemicResult.risks.length} Bias Risk${epistemicResult.risks.length > 1 ? 's' : ''}`;
+        statusBarItem.backgroundColor = highRisks.length > 0 
+            ? new vscode.ThemeColor('statusBarItem.errorBackground')
+            : new vscode.ThemeColor('statusBarItem.warningBackground');
+        statusBarItem.color = '#ffffff';
+        statusBarItem.tooltip = `⚠️  ${epistemicResult.risks.length} epistemic bias risk${epistemicResult.risks.length > 1 ? 's' : ''} detected\n${highRisks.length} high severity\n\nClick for details`;
+        statusBarItem.command = 'biasguard.showEpistemicRisks';
+    } else if (!result.flows) {
         // BLOCKED - Show what stopped
         showBlocked(document, result);
     }
 }
 
-function showBlocked(document: vscode.TextDocument, result: FlowResult & { flows: false }) {
-    // CRITICAL = TRUE RED, others = warning amber
-    const isCritical = result.blocked === 'CRITICAL';
+function showEpistemicRisks(document: vscode.TextDocument, risks: EpistemicRisk[]) {
+    const diagnostics: vscode.Diagnostic[] = [];
+    const text = document.getText();
+    const lines = text.split('\n');
     
-    statusBarItem.text = `$(${isCritical ? 'error' : 'warning'}) BiasGuard: ${result.blocked}`;
+    for (const risk of risks) {
+        // Try to find the specific code pattern related to this risk
+        let range: vscode.Range;
+        
+        // Map bias type to search pattern
+        const searchPatterns = getSearchPatternForBiasType(risk.biasType);
+        let found = false;
+        
+        for (const pattern of searchPatterns) {
+            for (let i = 0; i < lines.length; i++) {
+                if (pattern.test(lines[i])) {
+                    const lineLength = lines[i].length;
+                    range = new vscode.Range(i, 0, i, lineLength);
+                    
+                    const severity = risk.severity === 'High' 
+                        ? vscode.DiagnosticSeverity.Error
+                        : risk.severity === 'Medium'
+                        ? vscode.DiagnosticSeverity.Warning
+                        : vscode.DiagnosticSeverity.Information;
+                    
+                    const diagnostic = new vscode.Diagnostic(
+                        range,
+                        `[${risk.biasType}] ${risk.assumptionDetected}\n\nRisk: ${risk.riskIntroduced}\n\n❓ ${risk.suggestedQuestion}`,
+                        severity
+                    );
+                    diagnostic.source = 'BiasGuard Epistemic';
+                    diagnostic.code = risk.biasType;
+                    diagnostics.push(diagnostic);
+                    found = true;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+        
+        // Fallback: mark first line if pattern not found
+        if (!found) {
+            const diagnostic = new vscode.Diagnostic(
+                new vscode.Range(0, 0, 0, Math.min(100, lines[0]?.length || 0)),
+                `[${risk.biasType}] ${risk.assumptionDetected}\n\nRisk: ${risk.riskIntroduced}\n\n❓ ${risk.suggestedQuestion}`,
+                risk.severity === 'High' 
+                    ? vscode.DiagnosticSeverity.Error
+                    : vscode.DiagnosticSeverity.Warning
+            );
+            diagnostic.source = 'BiasGuard Epistemic';
+            diagnostic.code = risk.biasType;
+            diagnostics.push(diagnostic);
+        }
+    }
+    
+    diagnosticCollection.set(document.uri, diagnostics);
+}
+
+function getSearchPatternForBiasType(biasType: string): RegExp[] {
+    switch (biasType) {
+        case 'Absence of Constraints':
+            return [/function\s+\w+\s*\(/, /const\s+\w+\s*=\s*\(/];
+        case 'Unjustified Default':
+            return [/=\s*(?:true|false|\d+|["'][^"']+["']|\[\]|\{\})/];
+        case 'Success Path Only':
+            return [/async\s+function/, /\.then\(/, /await\s+/];
+        case 'Single-Metric Logic':
+            return [/if\s*\(/];
+        case 'Silent Coercion':
+            return [/\|\||&&|\?\?/, /parseInt|parseFloat|Number\(/];
+        case 'Unbounded Behavior':
+            return [/while\s*\(/, /for\s*\(/];
+        case 'Missing Counter-Case':
+            return [/\[\d+\]/, /\.\w+/];
+        case 'Overconfidence':
+            return [/\/\/.*\b(always|never|guaranteed)/i];
+        default:
+            return [/.+/]; // Match any line
+    }
+}
+
+function showBlocked(document: vscode.TextDocument, result: Signal & { flows: false }) {
+    // CRITICAL = TRUE RED, others = warning amber
+    const isCritical = result.guard === 'CRITICAL';
+
+    statusBarItem.text = `$(${isCritical ? 'error' : 'warning'}) BiasGuard: ${result.guard}`;
     statusBarItem.backgroundColor = new vscode.ThemeColor(
         isCritical ? 'statusBarItem.errorBackground' : 'statusBarItem.warningBackground'
     );
     statusBarItem.color = '#ffffff';
-    statusBarItem.tooltip = `${result.reason}\n\n${result.guidance}`;
+    statusBarItem.tooltip = `${result.signal}\n\n${result.guidance}`;
     
     // Find location of issue in document
     const text = document.getText();
@@ -202,23 +376,23 @@ function showBlocked(document: vscode.TextDocument, result: FlowResult & { flows
         
         const diagnostic = new vscode.Diagnostic(
             new vscode.Range(startPos, endPos),
-            `${result.reason}\n\n💡 ${result.guidance}`,
+            `${result.signal}\n\n💡 ${result.guidance}`,
             isCritical ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning
         );
         diagnostic.source = 'BiasGuard ONE';
-        diagnostic.code = result.blocked;
+        diagnostic.code = result.guard;
         diagnostics.push(diagnostic);
     }
-    
+
     // Fallback if no JSON found
     if (diagnostics.length === 0) {
         const diagnostic = new vscode.Diagnostic(
             new vscode.Range(0, 0, 0, Math.min(50, text.length)),
-            `${result.reason}\n\n💡 ${result.guidance}`,
+            `${result.signal}\n\n💡 ${result.guidance}`,
             isCritical ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning
         );
         diagnostic.source = 'BiasGuard ONE';
-        diagnostic.code = result.blocked;
+        diagnostic.code = result.guard;
         diagnostics.push(diagnostic);
     }
     

@@ -44,6 +44,7 @@ Results: 12 passed, 0 failed
 ## Troubleshooting
 
 If `npm test` fails with module errors, run:
+
 ```bash
 npm run compile
 ```

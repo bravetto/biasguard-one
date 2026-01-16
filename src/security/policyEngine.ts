@@ -1,10 +1,24 @@
-import { PolicyRule, ResultType, ValidationResult, MCPValidationResult, MCPValidationContext } from '../core/types';
-import { parseMCPRequests } from './mcpParser';
-import { validateMCPRequest, getRuleDescription } from './mcpPolicyRules';
-import { MemoryAuditLogger } from './auditLogger';
+/**
+ * Policy Engine Types (inline - no external dependencies)
+ * Advisory validation layer for business rules.
+ * Security validation is handled by @biasguard/security.
+ */
 
-// Global audit logger instance
-export const mcpAuditLogger = new MemoryAuditLogger();
+export enum ResultType {
+    PASS = "PASS",
+    FAIL = "FAIL"
+}
+
+export interface ValidationResult {
+    status: ResultType;
+    invariantId?: string;
+}
+
+export interface PolicyRule {
+    id: string;
+    description: string;
+    validate: (text: string) => boolean;
+}
 
 // Helper for case-insensitive check
 const contains = (text: string, term: string): boolean => {
@@ -108,70 +122,10 @@ export function evaluateText(text: string): ValidationResult {
 }
 
 /**
- * Evaluate text for both standard policy rules and MCP security rules
- */
-export function evaluateTextWithMCP(
-    text: string, 
-    context?: MCPValidationContext
-): MCPValidationResult {
-    // First run standard policy evaluation
-    const standardResult = evaluateText(text);
-    if (standardResult.status === ResultType.FAIL) {
-        return {
-            ...standardResult,
-            violations: standardResult.invariantId ? [standardResult.invariantId] : []
-        };
-    }
-    
-    // Then check for MCP requests and validate them
-    const mcpRequests = parseMCPRequests(text);
-    const allViolations: string[] = [];
-    
-    for (const request of mcpRequests) {
-        const violations = validateMCPRequest(request, context);
-        
-        // Log to audit (always, even if no violations)
-        mcpAuditLogger.log(request, violations);
-        
-        if (violations.length > 0) {
-            allViolations.push(...violations);
-        }
-    }
-    
-    if (allViolations.length > 0) {
-        // Return first violation as primary, include all in violations array
-        const firstViolation = allViolations[0];
-        return {
-            status: ResultType.FAIL,
-            invariantId: firstViolation,
-            violations: [...new Set(allViolations)] // deduplicate
-        };
-    }
-    
-    return { 
-        status: ResultType.PASS,
-        violations: []
-    };
-}
-
-/**
- * Get description for a violation ID (standard or MCP)
+ * Get description for a violation ID
  */
 export function getViolationDescription(violationId: string): string {
-    // Check MCP rules first
-    const mcpDesc = getRuleDescription(violationId);
-    if (mcpDesc) return mcpDesc;
-    
-    // Check standard rules
-    const standardRule = rules.find(r => r.id === violationId);
-    if (standardRule) return standardRule.description;
-    
+    const rule = rules.find(r => r.id === violationId);
+    if (rule) return rule.description;
     return `Unknown violation: ${violationId}`;
-}
-
-/**
- * Export audit log as JSON
- */
-export function exportAuditLog(): string {
-    return mcpAuditLogger.toJSON();
 }
