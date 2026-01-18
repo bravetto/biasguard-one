@@ -1,0 +1,107 @@
+{
+  "name": "biasguard-vscode",
+  "displayName": "BiasGuard ONE",
+  "description": "VS Code extension for BiasGuard - Bias detection and epistemic validation",
+  "version": "4.3.0",
+  "publisher": "biasguard",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:biasguard.gate",
+    "onCommand:biasguard.exportAudit",
+    "onCommand:biasguard.showEpistemicRisks",
+    "onCommand:biasguard.scanFile",
+    "onCommand:pristine.execute",
+    "onCommand:pristine.shield",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:python",
+    "onLanguage:json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "biasguard.gate",
+        "title": "BiasGuard: Quality Gate (Verify Selection)"
+      },
+      {
+        "command": "biasguard.exportAudit",
+        "title": "BiasGuard ONE: Export Audit Log"
+      },
+      {
+        "command": "biasguard.showEpistemicRisks",
+        "title": "BiasGuard: Show Epistemic Risks"
+      },
+      {
+        "command": "biasguard.scanFile",
+        "title": "BiasGuard: Scan File for Bias Risks"
+      },
+      {
+        "command": "pristine.execute",
+        "title": "PRISTINE: Execute Protocol",
+        "category": "Entropy"
+      },
+      {
+        "command": "pristine.shield",
+        "title": "PRISTINE: Reinforce Shields (.ignore)",
+        "category": "Entropy"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "biasguard.gate",
+        "key": "ctrl+shift+g",
+        "mac": "cmd+shift+g",
+        "when": "editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "biasguard.gate",
+          "when": "editorHasSelection",
+          "group": "navigation"
+        }
+      ]
+    },
+    "colors": [
+      {
+        "id": "biasGuard.pass",
+        "description": "Color for passing validation",
+        "defaults": {
+          "dark": "#00ff00",
+          "light": "#008800"
+        }
+      },
+      {
+        "id": "biasGuard.fail",
+        "description": "Color for failing validation",
+        "defaults": {
+          "dark": "#ff0000",
+          "light": "#ff0000"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "@biasguard/core": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.0.0"
+  }
+}

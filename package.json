@@ -1,102 +1,37 @@
 {
-  "name": "biasguard-4-2",
-  "displayName": "BiasGuard ONE",
-  "description": "Unified MCP Security + PRISTINE Entropy Enforcement - Like Water Flows",
-  "version": "4.2.5",
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "categories": [
-    "Linters",
-    "Other"
+  "name": "biasguard-monorepo",
+  "version": "4.3.0",
+  "private": true,
+  "description": "BiasGuard Monorepo - Platform-agnostic bias detection and epistemic validation",
+  "workspaces": [
+    "packages/*"
   ],
-  "activationEvents": [
-    "*"
-  ],
-  "main": "./out/src/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "biasguard.exportAudit",
-        "title": "BiasGuard ONE: Export Audit Log"
-      },
-      {
-        "command": "biasguard.showEpistemicRisks",
-        "title": "BiasGuard: Show Epistemic Risks"
-      },
-      {
-        "command": "biasguard.scanFile",
-        "title": "BiasGuard: Scan File for Bias Risks"
-      },
-      {
-        "command": "pristine.execute",
-        "title": "PRISTINE: Execute Protocol",
-        "category": "Entropy"
-      },
-      {
-        "command": "pristine.shield",
-        "title": "PRISTINE: Reinforce Shields (.ignore)",
-        "category": "Entropy"
-      }
-    ],
-    "colors": [
-      {
-        "id": "biasGuard.pass",
-        "description": "Color for passing validation",
-        "defaults": {
-          "dark": "#00ff00",
-          "light": "#008800"
-        }
-      },
-      {
-        "id": "biasGuard.fail",
-        "description": "Color for failing validation",
-        "defaults": {
-          "dark": "#ff0000",
-          "light": "#ff0000"
-        }
-      }
-    ]
-  },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "test": "npm run compile && node ./out/tests/one.test.js",
-    "test:legacy": "npm run compile && node ./out/tests/policyEngine.test.js",
-    "test:mcp": "npm run compile && node ./out/tests/mcpPolicyRules.test.js",
-    "test:all": "npm run compile && node ./out/tests/one.test.js && node ./out/tests/policyEngine.test.js && node ./out/tests/mcpPolicyRules.test.js",
-    "jacob": "npm run compile && node ./out/src/adversarial/jacob.js",
-    "break": "npm run jacob",
-    "honeypot": "npm run compile && node ./out/tests/honeypot.test.js",
-    "mirror": "npm run compile && node ./out/tests/brokenMirror.test.js",
+    "build": "npm run build --workspaces",
+    "build:core": "npm run build -w @biasguard/core",
+    "build:vscode": "npm run compile -w biasguard-vscode",
+    "watch": "npm run watch --workspaces --parallel",
+    "clean": "rm -rf packages/*/dist packages/*/out",
+    "test": "npm run test:core && npm run test:gate",
+    "test:core": "node tests/one.test.js",
+    "test:gate": "node tests/gate.test.js",
+    "test:all": "npm run test && npm run jacob && npm run honeypot && npm run mirror",
+    "jacob": "node packages/core/dist/adversarial/jacob.js",
+    "honeypot": "node tests/honeypot.test.js",
+    "mirror": "node tests/brokenMirror.test.js",
     "ironlotus": "npm run jacob && npm run honeypot && npm run mirror",
-    "aeyon": "python3 ./python/aeyon_transcendence.py",
-    "transcend": "python3 ./python/aeyon_transcendence.py",
-    "hellsgate": "python3 ./python/aeyon_transcendence.py",
-    "one:scan": "bash ./scripts/one.sh",
-    "one:full": "bash ./scripts/one.sh -f",
-    "one:audit": "bash ./scripts/one.sh -a",
-    "one:contain": "bash ./scripts/one.sh -c",
-    "one:all": "npm run test && npm run jacob && npm run honeypot && npm run mirror && echo '∞ ALL TESTS PASSED ∞'",
-    "one": "npm run one:all && python3 ./python/aeyon_transcendence.py && bash ./scripts/one.sh",
-    "lint:md": "markdownlint-cli2 '**/*.md' '!node_modules' '!out' '!dist' '!releases'",
-    "lint:md:fix": "markdownlint-cli2 --fix '**/*.md' '!node_modules' '!out' '!dist' '!releases'",
-    "pristine": "npm run lint:md && npm test && npm run jacob",
-    "pristine:fix": "npm run lint:md:fix && npm test"
-  },
-  "dependencies": {
-    "@biasguard/security": "file:./core-legacy/packages/security"
+    "lint:md": "markdownlint-cli2 '**/*.md' '!node_modules' '!out' '!dist' '!releases' '!packages/*/node_modules'",
+    "lint:md:fix": "markdownlint-cli2 --fix '**/*.md' '!node_modules' '!out' '!dist' '!releases' '!packages/*/node_modules'",
+    "pristine": "npm run lint:md && npm test",
+    "vscode:package": "cd packages/vscode && vsce package"
   },
   "devDependencies": {
-    "@types/node": "^16.x",
-    "@types/vscode": "^1.80.0",
     "markdownlint-cli2": "^0.20.0",
     "typescript": "^5.0.0"
   },
-  "publisher": "biasguard",
   "repository": {
     "type": "git",
     "url": "https://github.com/local/biasguard"
-  }
+  },
+  "license": "MIT"
 }

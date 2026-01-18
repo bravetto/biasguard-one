@@ -1,0 +1,59 @@
+{
+  "name": "@biasguard/core",
+  "version": "1.0.0",
+  "description": "BiasGuard Core - Platform-agnostic bias detection and epistemic validation",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    },
+    "./guards": {
+      "types": "./dist/guards/index.d.ts",
+      "require": "./dist/guards/index.js",
+      "import": "./dist/guards/index.js"
+    },
+    "./guards/*": {
+      "types": "./dist/guards/*.d.ts",
+      "require": "./dist/guards/*.js",
+      "import": "./dist/guards/*.js"
+    },
+    "./adversarial": {
+      "types": "./dist/adversarial/index.d.ts",
+      "require": "./dist/adversarial/index.js",
+      "import": "./dist/adversarial/index.js"
+    },
+    "./ontology": {
+      "types": "./dist/ontology/index.d.ts",
+      "require": "./dist/ontology/index.js",
+      "import": "./dist/ontology/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "watch": "tsc -w -p ./tsconfig.json",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "bias",
+    "detection",
+    "epistemic",
+    "validation",
+    "ai",
+    "llm",
+    "guard"
+  ],
+  "author": "BiasGuard",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

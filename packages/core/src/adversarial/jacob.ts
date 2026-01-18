@@ -10,7 +10,7 @@
  * ∞ AbëONE ∞
  */
 
-import { one, validateText, Signal } from '@biasguard/security';
+import { one, validateText, Signal } from '../security';
 
 // =============================================================================
 // JACOB: Test Harness - Minimal, Focused

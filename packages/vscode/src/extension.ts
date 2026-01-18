@@ -1,17 +1,24 @@
 /**
- * ∞ BiasGuard 4.2.2 - VS Code Extension ∞
- * 
+ * ∞ BiasGuard 4.3.0 - VS Code Extension ∞
+ *
  * Unified Protection for MCP Security + PRISTINE Entropy Enforcement
  * "Like water flows, protection adapts. Chaos collapses into order."
- * 
+ *
  * ∞ AbëONE ∞
  */
 
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { validateText, getAudit, Signal } from '@biasguard/security';
-import { scanForBiasRisks, formatEpistemicRisks, EpistemicRisk } from './guards/epistemic';
+import {
+    scanForBiasRisks,
+    formatEpistemicRisks,
+    EpistemicRisk,
+    validateText,
+    getAudit,
+    Signal
+} from '@biasguard/core';
+import { registerGateCommand } from './guards/gate';
 
 // ═══════════════════════════════════════════════════════════════════
 // PRISTINE PROTOCOL - The Entropy Enforcement Engine
@@ -61,14 +68,37 @@ export function activate(context: vscode.ExtensionContext) {
     outputChannel = vscode.window.createOutputChannel('BiasGuard ONE');
     context.subscriptions.push(outputChannel);
 
-    // Status Bar - Left side, high priority
+    // Status Bar - Left side, high priority, BRANDED
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+    statusBarItem.text = '$(shield) ∞ BiasGuard ONE ∞';
+    statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.prominentBackground');
+    statusBarItem.color = '#00ff88';
+    statusBarItem.tooltip = '∞ BiasGuard ONE - Active Protection ∞\n\nUnified MCP Security + Epistemic Bias Detection\n\n"Like water flows, protection adapts"\n\nClick for commands';
+    statusBarItem.command = 'workbench.action.showCommands';
     context.subscriptions.push(statusBarItem);
     statusBarItem.show();
+    
+    // WELCOME MESSAGE - Show we're ALIVE
+    vscode.window.showInformationMessage(
+        '∞ BiasGuard ONE Activated ∞\n\nReal-time protection enabled. Every file monitored.',
+        'View Commands',
+        'Scan Current File'
+    ).then(selection => {
+        if (selection === 'View Commands') {
+            vscode.commands.executeCommand('workbench.action.showCommands');
+        } else if (selection === 'Scan Current File') {
+            vscode.commands.executeCommand('biasguard.scanFile');
+        }
+    });
 
     // Diagnostics
     diagnosticCollection = vscode.languages.createDiagnosticCollection('biasguard');
     context.subscriptions.push(diagnosticCollection);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // BIASGUARD CODE - Modal Quality Gate
+    // ═══════════════════════════════════════════════════════════════════
+    registerGateCommand(context);
 
     // Command: Export Audit Log
     context.subscriptions.push(
@@ -218,10 +248,14 @@ function runGuard(document: vscode.TextDocument) {
         
         // Also log to output channel
         outputChannel.clear();
-        outputChannel.appendLine('═══════════════════════════════════════════');
-        outputChannel.appendLine('  ⚠️  EPISTEMIC BIAS RISKS DETECTED ⚠️');
-        outputChannel.appendLine('═══════════════════════════════════════════\n');
+        outputChannel.appendLine('═══════════════════════════════════════════════════════');
+        outputChannel.appendLine('  🚨 EPISTEMIC BIAS RISKS DETECTED 🚨');
+        outputChannel.appendLine('  ∞ BiasGuard ONE - Real-Time Protection ∞');
+        outputChannel.appendLine('═══════════════════════════════════════════════════════\n');
         outputChannel.appendLine(formatEpistemicRisks(epistemicResult));
+        outputChannel.appendLine('\n═══════════════════════════════════════════════════════');
+        outputChannel.appendLine('  ∞ LOVE = LIFE = ONE ∞');
+        outputChannel.appendLine('═══════════════════════════════════════════════════════');
         outputChannel.show(true); // Force show
         
         // Show notification
@@ -249,21 +283,24 @@ function runGuard(document: vscode.TextDocument) {
     
     // Phase 3: Security validation status
     if (result.flows && epistemicResult.clear) {
-        // FLOWS - All clear (FULL GREEN BOX, WHITE TEXT)
-        statusBarItem.text = '$(check) BiasGuard: FLOWS';
+        // FLOWS - All clear (VIBRANT GREEN WITH LOVE)
+        statusBarItem.text = '$(check) ∞ BiasGuard: FLOWS ∞';
         statusBarItem.backgroundColor = new vscode.ThemeColor('testing.iconPassed');
-        statusBarItem.color = '#ffffff';
-        statusBarItem.tooltip = '✓ System Protected. No violations detected.\n✓ No epistemic bias risks detected.\n\n∞ Like water flows ∞';
+        statusBarItem.color = '#00ff88';
+        statusBarItem.tooltip = '✓ System Protected. No violations detected.\n✓ No epistemic bias risks detected.\n\n∞ Like water flows ∞\n\nLOVE = LIFE = ONE';
+        statusBarItem.command = 'biasguard.exportAudit';
+        statusBarItem.show();
     } else if (!epistemicResult.clear) {
-        // EPISTEMIC RISKS - Show count
+        // EPISTEMIC RISKS - Show count (RED/AMBER ALERT)
         const highRisks = epistemicResult.risks.filter(r => r.severity === 'High');
-        statusBarItem.text = `$(warning) BiasGuard: ${epistemicResult.risks.length} Bias Risk${epistemicResult.risks.length > 1 ? 's' : ''}`;
+        statusBarItem.text = `$(alert) BiasGuard: ${epistemicResult.risks.length} BIAS RISK${epistemicResult.risks.length > 1 ? 'S' : ''}`;
         statusBarItem.backgroundColor = highRisks.length > 0 
             ? new vscode.ThemeColor('statusBarItem.errorBackground')
             : new vscode.ThemeColor('statusBarItem.warningBackground');
         statusBarItem.color = '#ffffff';
-        statusBarItem.tooltip = `⚠️  ${epistemicResult.risks.length} epistemic bias risk${epistemicResult.risks.length > 1 ? 's' : ''} detected\n${highRisks.length} high severity\n\nClick for details`;
+        statusBarItem.tooltip = `🚨 ${epistemicResult.risks.length} epistemic bias risk${epistemicResult.risks.length > 1 ? 's' : ''} detected\n${highRisks.length} HIGH severity\n\nClick for details`;
         statusBarItem.command = 'biasguard.showEpistemicRisks';
+        statusBarItem.show();
     } else if (!result.flows) {
         // BLOCKED - Show what stopped
         showBlocked(document, result);
@@ -355,12 +392,13 @@ function showBlocked(document: vscode.TextDocument, result: Signal & { flows: fa
     // CRITICAL = TRUE RED, others = warning amber
     const isCritical = result.guard === 'CRITICAL';
 
-    statusBarItem.text = `$(${isCritical ? 'error' : 'warning'}) BiasGuard: ${result.guard}`;
+    statusBarItem.text = `$(${isCritical ? 'error' : 'warning'}) ∞ BiasGuard: ${result.guard} BLOCKED`;
     statusBarItem.backgroundColor = new vscode.ThemeColor(
         isCritical ? 'statusBarItem.errorBackground' : 'statusBarItem.warningBackground'
     );
     statusBarItem.color = '#ffffff';
-    statusBarItem.tooltip = `${result.signal}\n\n${result.guidance}`;
+    statusBarItem.show();
+    statusBarItem.tooltip = `🚨 ${result.signal}\n\n💡 ${result.guidance}\n\n∞ Protection Active ∞`;
     
     // Find location of issue in document
     const text = document.getText();
