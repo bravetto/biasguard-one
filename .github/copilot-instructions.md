@@ -12,7 +12,7 @@
 
 ## Big picture (what matters)
 
-- Single entrypoint: `src/one.ts` — ALL surfaces (vscode, chrome, llm, app) call `one()`.
+- Single entrypoint: `packages/core/src/one.ts` — ALL surfaces (vscode, chrome, llm, app) call `one()`.
 - Core detection lives under `src/guards/` (12 guards, ~87 patterns). Scoring & epistemic checks live in `packages/core/src/` and are re-exported in `src/one.ts`.
 - Adversarial tooling under `src/adversarial/` and `packages/core/dist/adversarial` (Jacob, Honeypot, Broken Mirror).
 - No external DBs/APIs — the system is local, deterministic, and test-driven.
@@ -51,7 +51,7 @@
 
 ## Files to reference when working
 
-- Entrypoint: `src/one.ts` and `packages/core/src/one.ts`
+- Entrypoint: `packages/core/src/one.ts` (single source of truth)
 - Guards: `src/guards/*` and `packages/core/src/guards/*`
 - Epistemic & scoring: `src/guards/epistemic.ts`, `packages/core/src/guards/scoring.ts`
 - Tests: `tests/` and `tests/fixtures/`
