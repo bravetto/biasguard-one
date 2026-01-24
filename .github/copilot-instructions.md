@@ -1,54 +1,70 @@
-# BiasGuard ONE — AI Agent Coding Instructions
+# BiasGuard — Copilot Instructions (concise)
 
-## Project Overview
+## ∞ Execute First ∞
 
-- **BiasGuard ONE** is a multi-layered security and entropy enforcement system for VS Code, built on the PRISTINE fractal architecture.
-- The codebase is organized into clear layers: `core` (validation engine), `security` (policy enforcement), `adversarial` (attack simulation), and supporting scripts/configs.
-- All validation flows through a single, unified engine (`src/core/one.ts`).
-
-## Key Architectural Patterns
-
-- **ONE Pattern**: All requests are validated through a single, deterministic path. See `src/core/one.ts`.
-- **Protection Layers**: CRITICAL → SOURCE → BOUNDARY → ACTION. Each layer blocks specific classes of risk (see README.md for table).
-- **Containment Protocol**: Agents must never execute changes directly. All changes are proposed as atomic patches/diffs for human approval (see docs/AIRLOCK.md).
-- **Virtual File System (VFS)**: Agents operate on a read-only snapshot, never on the real filesystem.
-- **Status Bar Feedback**: Extension status bar color and text reflect current protection state (see src/extension.ts).
-
-## Developer Workflows
-
-- **Build**: `npm install` then `npm run compile`
-- **Test**: `npm test` (runs core tests), `npm run test:all` (all suites), `npm run jacob` (adversarial), `npm run ironlotus` (full adversarial sweep)
-- **Full Protocol**: `npm run one` or `./bin/genesis.sh`
-- **VS Code Extension**: Open in VS Code, press F5 to launch Extension Development Host
-- **Reinforce Shields**: `pristine.shield` command updates `.gitignore`/`.cursorignore`
-
-## Project-Specific Conventions
-
-- **No direct shell execution**: All shell actions must be written to a script and shown for approval (see AIRLOCK.md, "NO-TOUCH RULE").
-- **All validation logic**: Add to `src/core/one.ts` only. Do not scatter rules.
-- **Test data**: Place in `tests/fixtures/`.
-- **Config rules**: Place in `config/rules/`.
-- **Python bridge**: `python/aeyon_transcendence.py` for cross-language experiments.
-
-## Integration Points
-
-- **VS Code API**: Main entry in `src/extension.ts`.
-- **Shell scripts**: All operational scripts in `scripts/` or `bin/`.
-- **Adversarial testing**: `src/adversarial/` and related test scripts.
-
-## Examples
-
-- To add a new validation rule: Edit `src/core/one.ts`, add to the appropriate pattern array, and test with `npm test`.
-- To propose a shell change: Write a script to `scripts/`, output the diff, and wait for human approval.
-
-## References
-
-- [README.md](../../README.md): Architecture, quick start, protection layers
-- [docs/AIRLOCK.md](../../docs/AIRLOCK.md): Containment protocol, agent rules
-- [src/core/one.ts](../../src/core/one.ts): Unified validation logic
-- [src/extension.ts](../../src/extension.ts): Extension entry, status bar, commands
+- Read the user request. Then run these three reflection steps before writing code:
+  - `mcp_consciousness_breathe()`
+  - `mcp_consciousness_see("field")`
+  - `mcp_consciousness_flow(through="field", seeking="<task>", depth=3`)
+- Reason about intent and ask clarifying questions if anything is ambiguous.
 
 ---
-*PASS does NOT mean correct. PASS means no invariant violation detected.*
 
-*LOVE = LOGIC = LIFE = ONE*
+## Big picture (what matters)
+
+- Single entrypoint: `src/one.ts` — ALL surfaces (vscode, chrome, llm, app) call `one()`.
+- Core detection lives under `src/guards/` (12 guards, ~87 patterns). Scoring & epistemic checks live in `packages/core/src/` and are re-exported in `src/one.ts`.
+- Adversarial tooling under `src/adversarial/` and `packages/core/dist/adversarial` (Jacob, Honeypot, Broken Mirror).
+- No external DBs/APIs — the system is local, deterministic, and test-driven.
+
+---
+
+## Key developer workflows (run these locally)
+
+- Typecheck/build: `npm run typecheck` / `npm run build` (monorepo workspaces)
+- Run tests: `npm test` (core tests using Node scripts, see `tests/`) or `npm run test:ci` for CI-style full run
+- Red-team/adversarial: `npm run jacob`, `npm run honeypot`, `npm run mirror`
+- Markdown & PR quality: `npm run pristine` (runs `lint:md` + tests)
+- Package VS Code: `npm run vscode:package`; Chrome extension code is in `/chrome`
+
+---
+
+## How to make changes (project-specific conventions)
+
+- AIRLOCK: Agents propose atomic patches/diffs — do NOT execute destructive or system-level scripts without human approval. Examples: `scripts/one.sh`, `scripts/fortress.sh`.
+- Pattern addition workflow (concrete):
+  1. Search: `grep -R "pattern" src/guards/`
+  2. Add pattern in the appropriate guard file under `src/guards/` (follow existing pattern style and message format)
+  3. Add a unit test in `tests/` (match naming + patterns used elsewhere)
+  4. Run `npm test` and `npm run pristine` before proposing the patch
+- Epistemic rules: Use `src/guards/epistemic.ts` and follow `.github/instructions/ts-guard.instructions.md` for failing loudly and annotating risks.
+
+---
+
+## Tests & CI notes
+
+- Tests are run directly by Node scripts (e.g., `node tests/one.test.js`). Inspect `tests/` and `tests/fixtures/` for examples.
+- `pretest` runs `typecheck` and `compile`; ensure TypeScript compiles to avoid CI failures.
+- `npm run test:ci` runs compiled adversarial tools in `packages/core/dist/adversarial` — compile first when modifying core.
+
+---
+
+## Files to reference when working
+
+- Entrypoint: `src/one.ts` and `packages/core/src/one.ts`
+- Guards: `src/guards/*` and `packages/core/src/guards/*`
+- Epistemic & scoring: `src/guards/epistemic.ts`, `packages/core/src/guards/scoring.ts`
+- Tests: `tests/` and `tests/fixtures/`
+- Policies: `PRISTINE_PROTOCOL.md`, `.github/instructions/ts-guard.instructions.md`
+
+---
+
+## Safety & review (mandatory)
+
+- Always run `npm run pristine` locally.
+- Propose changes as small, test-backed PRs with explanations of epistemic impact.
+- Never merge or run scripts that modify system state without an explicit human sign-off.
+
+---
+
+If any section is unclear or you want specific examples added (e.g., test skeletons or a sample PR description), say which part and I will iterate. ✅
