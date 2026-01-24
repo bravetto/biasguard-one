@@ -1,0 +1,45 @@
+name: CI - Build & Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build core and run pretest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build core package
+        run: npm run build -w biasguard-core
+
+      - name: Run pretest (typecheck + compile)
+        run: npm run pretest
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Report success
+        if: success()
+        run: echo "✅ CI: Build & Test passed"
+
+      - name: Report failure
+        if: failure()
+        run: |
+          echo "❌ CI: Build & Test failed"
+          echo "Check actions logs and run 'npm run pretest' locally to reproduce"
+          exit 1
