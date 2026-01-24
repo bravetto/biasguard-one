@@ -2,8 +2,13 @@
   "name": "biasguard-vscode",
   "displayName": "BiasGuard ONE",
   "description": "VS Code extension for BiasGuard - Bias detection and epistemic validation",
-  "version": "4.3.0",
-  "publisher": "biasguard",
+  "version": "4.3.1",
+  "publisher": "bravetto",
+  "homepage": "https://bravetto.com/biasguard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bravetto/biasguard"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -93,11 +98,12 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
+    "build": "npm run compile",
     "watch": "tsc -watch -p ./",
     "package": "vsce package"
   },
   "dependencies": {
-    "@biasguard/core": "*"
+    "biasguard-core": "*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
