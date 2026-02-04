@@ -5,6 +5,10 @@ tests/**
 *.test.js
 tsconfig.json
 
+# Adversarial/Test code
+src/adversarial/**
+out/src/adversarial/**
+
 # Dependencies
 node_modules/**
 core-legacy/node_modules/**

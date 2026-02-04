@@ -1,0 +1,25 @@
+{
+  "name": "biasguard-chrome",
+  "version": "1.0.0",
+  "description": "BiasGuard Chrome Extension - Real-time bias detection for the web",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack --watch --config webpack.config.js",
+    "dev": "npm run build && npm run serve",
+    "serve": "web-ext run --source-dir=dist",
+    "package": "npm run build && cd dist && zip -r ../biasguard-chrome.zip * -x '*.map'",
+    "icons": "node scripts/generate-icons.js",
+    "test": "node scripts/test-detection.js"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.258",
+    "typescript": "^5.0.0",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "copy-webpack-plugin": "^12.0.2",
+    "web-ext": "^7.9.0",
+    "canvas": "^2.11.2"
+  },
+  "dependencies": {}
+}

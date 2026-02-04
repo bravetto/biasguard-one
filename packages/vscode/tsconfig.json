@@ -11,7 +11,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@biasguard/security": ["../core/dist/security"],
+      "@biasguard/one": ["../core/src/one.ts"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "out"]

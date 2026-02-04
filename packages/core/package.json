@@ -1,5 +1,5 @@
 {
-  "name": "@biasguard/core",
+  "name": "biasguard-core",
   "version": "1.0.0",
   "description": "BiasGuard Core - Platform-agnostic bias detection and epistemic validation",
   "main": "./dist/index.js",

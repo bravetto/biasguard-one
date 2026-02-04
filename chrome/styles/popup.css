@@ -1,0 +1,267 @@
+/* ∞ BiasGuard Chrome - Popup Styles ∞ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 380px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #0A1628 0%, #1A1F2E 100%);
+  color: #E2E8F0;
+}
+
+.popup {
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shield {
+  font-size: 32px;
+  animation: shield-pulse 2s infinite;
+}
+
+@keyframes shield-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #60A5FA;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.disabled {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.status .dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: dot-pulse 2s infinite;
+}
+
+.status.disabled .dot {
+  background: #ef4444;
+  animation: none;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.status .text {
+  color: #22c55e;
+}
+
+.status.disabled .text {
+  color: #ef4444;
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #60A5FA;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Severity */
+.severity {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.severity-item {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px 8px;
+  border-radius: 6px;
+  text-align: center;
+  border: 1px solid;
+}
+
+.severity-item.critical {
+  border-color: rgba(220, 38, 38, 0.5);
+}
+
+.severity-item.high {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.severity-item.medium {
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.severity-item.low {
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.severity-count {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.severity-item.critical .severity-count {
+  color: #dc2626;
+}
+
+.severity-item.high .severity-count {
+  color: #ef4444;
+}
+
+.severity-item.medium .severity-count {
+  color: #f59e0b;
+}
+
+.severity-item.low .severity-count {
+  color: #22c55e;
+}
+
+.severity-label {
+  font-size: 10px;
+  color: #94A3B8;
+  text-transform: uppercase;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-toggle {
+  background: rgba(37, 99, 235, 0.2);
+  border: 1px solid rgba(37, 99, 235, 0.4);
+  color: #60A5FA;
+}
+
+.btn-toggle:hover {
+  background: rgba(37, 99, 235, 0.3);
+  border-color: rgba(37, 99, 235, 0.6);
+}
+
+.btn-scan {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+}
+
+.btn-scan:hover {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: rgba(34, 197, 94, 0.6);
+}
+
+.btn-scan.scanning {
+  animation: scan-pulse 1s;
+}
+
+@keyframes scan-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+}
+
+/* Footer */
+.footer {
+  padding-top: 16px;
+  border-top: 1px solid rgba(37, 99, 235, 0.2);
+  text-align: center;
+}
+
+.tagline {
+  font-size: 11px;
+  color: #64748B;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.links a {
+  font-size: 11px;
+  color: #60A5FA;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.links a:hover {
+  color: #93C5FD;
+  text-decoration: underline;
+}

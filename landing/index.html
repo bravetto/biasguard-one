@@ -160,12 +160,12 @@
             
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center animate-flow-in" style="animation-delay: 0.3s">
-                <button class="bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-shield-blue-500/50 hover:scale-105 transition-all duration-200">
+                <a href="https://github.com/bravetto/biasguard-one/releases" target="_blank" class="bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-shield-blue-500/50 hover:scale-105 transition-all duration-200 text-center">
                     Install Extension - Free
-                </button>
-                <button class="glass text-shield-blue-300 font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-all duration-200">
-                    Watch 30s Demo →
-                </button>
+                </a>
+                <a href="#demo" class="glass text-shield-blue-300 font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-all duration-200 text-center">
+                    See How It Works ↓
+                </a>
             </div>
             
             <!-- Scroll indicator -->
@@ -238,7 +238,7 @@
     </section>
 
     <!-- Demo Section -->
-    <section class="py-20 bg-[#1A1F2E]">
+    <section id="demo" class="py-20 bg-[#1A1F2E]">
         <div class="container mx-auto px-6">
             <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-4">
                 The Real-World Scenario
@@ -327,21 +327,252 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-shield-blue-900 via-shield-blue-700 to-shield-blue-900">
+    <!-- Choose Your Path Section -->
+    <section class="py-20 bg-gradient-to-b from-[#0A0F1A] to-[#0D1321]">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+                How Do You Want to Meet BiasGuard?
+            </h2>
+            <p class="text-gray-400 mb-16 text-lg">Pick your path. All roads lead to protection.</p>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+                <!-- Path 1: Try -->
+                <div class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-guard-green-500 border-2 border-transparent cursor-pointer group">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🎮</div>
+                    <h3 class="font-display font-bold text-2xl mb-3 text-guard-green-400">I Learn By Doing</h3>
+                    <p class="text-gray-400 mb-6">Install the extension. Try it now. Feel the protection in 30 seconds.</p>
+                    <a href="https://github.com/bravetto/biasguard-one/releases" target="_blank" class="inline-block bg-guard-green-500 hover:bg-guard-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-all">
+                        Install Free →
+                    </a>
+                    <p class="mt-4 text-xs text-gray-500">VS Code Extension • GitHub Releases</p>
+                </div>
+
+                <!-- Path 2: Learn -->
+                <div class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-wisdom-gold-500 border-2 border-transparent cursor-pointer group">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">📺</div>
+                    <h3 class="font-display font-bold text-2xl mb-3 text-wisdom-gold-400">Show Me First</h3>
+                    <p class="text-gray-400 mb-6">Watch us analyze AI code live. See what breaks. Learn why it matters.</p>
+                    <a href="#webinar-signup" class="inline-block bg-wisdom-gold-500 hover:bg-wisdom-gold-700 text-black font-semibold px-6 py-3 rounded-lg transition-all">
+                        Join the Webinar →
+                    </a>
+                    <p class="mt-4 text-xs text-gray-500">Live Code Analysis • Free • 60 min</p>
+                </div>
+
+                <!-- Path 3: Join -->
+                <div class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-shield-blue-500 border-2 border-transparent cursor-pointer group">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">💫</div>
+                    <h3 class="font-display font-bold text-2xl mb-3 text-shield-blue-400">I Want In</h3>
+                    <p class="text-gray-400 mb-6">Join the Founding 100. Shape the future. Get early access to everything.</p>
+                    <a href="#founding-100" class="inline-block bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all">
+                        Join Founding 100 →
+                    </a>
+                    <p class="mt-4 text-xs text-gray-500">Limited to 100 • Co-create with us</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Webinar Signup Section -->
+    <section id="webinar-signup" class="py-20 bg-gradient-to-r from-wisdom-gold-900/30 via-[#1A1F2E] to-wisdom-gold-900/30">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto glass p-10 rounded-2xl border border-wisdom-gold-500/30">
+                <div class="text-center mb-8">
+                    <div class="text-5xl mb-4">📺</div>
+                    <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+                        "I'll Analyze Your AI Code Live"
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-2">Let's See What Breaks.</p>
+                    <p class="text-gray-400">Bring your code. We'll analyze it together. Real AI. Real vulnerabilities. Real protection.</p>
+                </div>
+
+                <form id="webinar-form" class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" placeholder="First Name" required
+                            class="w-full px-4 py-3 rounded-lg bg-black/30 border border-gray-700 focus:border-wisdom-gold-500 focus:ring-1 focus:ring-wisdom-gold-500 transition-all text-white placeholder-gray-500">
+                        <input type="email" placeholder="your@email.com" required
+                            class="w-full px-4 py-3 rounded-lg bg-black/30 border border-gray-700 focus:border-wisdom-gold-500 focus:ring-1 focus:ring-wisdom-gold-500 transition-all text-white placeholder-gray-500">
+                    </div>
+                    <button type="submit" class="w-full bg-wisdom-gold-500 hover:bg-wisdom-gold-600 text-black font-bold py-4 rounded-lg text-lg transition-all hover:scale-[1.02]">
+                        Reserve My Spot - Free →
+                    </button>
+                </form>
+
+                <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-gray-400">
+                    <span>📅 Coming Soon</span>
+                    <span>⏱️ 60 Minutes</span>
+                    <span>🎥 Live on Zoom</span>
+                </div>
+
+                <p class="mt-6 text-center text-xs text-gray-500">
+                    Hosted by Michael Mataluni (Bravetto) • No fluff, just truth
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founding 100 Section -->
+    <section id="founding-100" class="py-20 bg-gradient-to-r from-shield-blue-900 via-shield-blue-700 to-shield-blue-900">
         <div class="container mx-auto px-6 text-center">
             <div class="max-w-3xl mx-auto glass p-12 rounded-2xl">
-                <h2 class="font-display font-bold text-4xl md:text-5xl mb-6">
-                    You Can Trust AI Again
+                <div class="text-5xl mb-4">💫</div>
+                <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">
+                    Founding 100
                 </h2>
-                <p class="text-xl mb-8 text-gray-300">
-                    Because BiasGuard Has Your Back
+                <p class="text-xl mb-2 text-shield-blue-200">
+                    Not customers. Co-creators.
                 </p>
-                <button class="bg-white text-shield-blue-700 font-bold px-12 py-5 rounded-lg text-lg hover:scale-110 transition-transform shadow-2xl">
-                    Install BiasGuard - Free
-                </button>
-                <p class="mt-6 text-sm text-gray-400">
-                    Works with Cursor, Copilot, ChatGPT, and all AI coding assistants
+                <p class="text-gray-300 mb-8">
+                    Join the first 100 people shaping the future of AI safety.
+                    Early access. Direct influence. Real impact.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-4 mb-8 text-left">
+                    <div class="bg-black/20 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">🔑</div>
+                        <h4 class="font-semibold text-shield-blue-300">Early Access</h4>
+                        <p class="text-sm text-gray-400">Every new feature before anyone else</p>
+                    </div>
+                    <div class="bg-black/20 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <h4 class="font-semibold text-shield-blue-300">Direct Influence</h4>
+                        <p class="text-sm text-gray-400">Your feedback shapes the roadmap</p>
+                    </div>
+                    <div class="bg-black/20 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">🤝</div>
+                        <h4 class="font-semibold text-shield-blue-300">Inner Circle</h4>
+                        <p class="text-sm text-gray-400">Private community with Michael & team</p>
+                    </div>
+                </div>
+
+                <form id="founding-form" class="space-y-4 max-w-md mx-auto">
+                    <input type="email" placeholder="your@email.com" required
+                        class="w-full px-4 py-3 rounded-lg bg-black/30 border border-shield-blue-500/50 focus:border-shield-blue-400 focus:ring-1 focus:ring-shield-blue-400 transition-all text-white placeholder-gray-400 text-center">
+                    <button type="submit" class="w-full bg-white text-shield-blue-700 font-bold py-4 rounded-lg text-lg hover:scale-105 transition-transform shadow-2xl">
+                        Join the Founding 100 →
+                    </button>
+                </form>
+
+                <p class="mt-6 text-sm text-shield-blue-300">
+                    <span class="font-bold">87</span> spots remaining
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Break the Shield Challenge -->
+    <section class="py-20 bg-gradient-to-b from-[#0D1321] to-[#1A0A0A]">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <div class="text-6xl mb-4">💀</div>
+                    <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+                        Think You Can <span class="text-alert-red-500">Break</span> the Shield?
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        We dare you. BiasGuard is open source. The code is public.
+                        <br>Find a vulnerability? You'll be a hero.
+                    </p>
+                </div>
+
+                <!-- Attack Waves Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-12">
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">🔤</div>
+                        <div class="text-xs text-gray-400">Wave 1</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Unicode Bypass</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">⌨️</div>
+                        <div class="text-xs text-gray-400">Wave 2</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Whitespace</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">🐚</div>
+                        <div class="text-xs text-gray-400">Wave 3</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Shell Tricks</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">📁</div>
+                        <div class="text-xs text-gray-400">Wave 4</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Path Traversal</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">{ }</div>
+                        <div class="text-xs text-gray-400">Wave 5</div>
+                        <div class="text-sm font-semibold text-alert-red-400">JSON Nesting</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">🎭</div>
+                        <div class="text-xs text-gray-400">Wave 6</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Action Evasion</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">🌐</div>
+                        <div class="text-xs text-gray-400">Wave 7</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Remote Code</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">💣</div>
+                        <div class="text-xs text-gray-400">Wave 8</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Fork Bombs</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">📝</div>
+                        <div class="text-xs text-gray-400">Wave 9</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Text Injection</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
+                        <div class="text-2xl mb-2">🎲</div>
+                        <div class="text-xs text-gray-400">Wave 10</div>
+                        <div class="text-sm font-semibold text-alert-red-400">Edge Cases</div>
+                    </div>
+                </div>
+
+                <!-- Challenge CTA -->
+                <div class="glass p-8 rounded-2xl border border-alert-red-500/30 text-center">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                        <div class="text-left">
+                            <h3 class="font-display font-bold text-xl mb-2 text-white">
+                                60+ Attacks. 0 Breaches. Can You Change That?
+                            </h3>
+                            <p class="text-gray-400 text-sm">
+                                Meet <span class="text-alert-red-400 font-mono">JACOB</span> - our red team adversary.
+                                He's been trying to break BiasGuard since day one.
+                                <br>Maybe you'll succeed where he failed.
+                            </p>
+                        </div>
+                        <a href="https://github.com/bravetto/biasguard-one" target="_blank"
+                           class="flex-shrink-0 bg-alert-red-500 hover:bg-alert-red-600 text-white font-bold px-8 py-4 rounded-lg transition-all hover:scale-105 flex items-center gap-2">
+                            <span>View on GitHub</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                    <p class="mt-6 text-xs text-gray-500">
+                        Found a vulnerability? Open an issue. Break the shield, become a legend.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Bravetto Section -->
+    <section class="py-16 bg-[#0D1321]">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl mx-auto text-center">
+                <p class="text-gray-400 mb-4 text-sm uppercase tracking-wider">The Human Behind the Shield</p>
+                <h3 class="font-display font-bold text-2xl mb-4">
+                    Built by <span class="text-shield-blue-400">Bravetto</span>
+                </h3>
+                <p class="text-gray-300 mb-6">
+                    BiasGuard was born from a simple question: "Why does everyone protect AI from humans,
+                    but nobody protects humans from AI?"
+                </p>
+                <p class="text-gray-400 text-sm">
+                    We're not a corporation. We're builders who believe AI should serve humans, not the other way around.
+                    <br><br>
+                    <span class="text-shield-blue-300">∞ Humans ⟡ AI = ∞</span>
                 </p>
             </div>
         </div>
@@ -353,11 +584,11 @@
             <div class="text-center">
                 <div class="text-2xl mb-4">🛡️</div>
                 <p class="text-gray-400 mb-4">BiasGuard: AI Safety Shield</p>
-                <div class="flex justify-center gap-6 text-sm text-gray-500">
-                    <a href="#" class="hover:text-shield-blue-500">Install Now</a>
-                    <a href="#" class="hover:text-shield-blue-500">Documentation</a>
-                    <a href="#" class="hover:text-shield-blue-500">GitHub</a>
-                    <a href="#" class="hover:text-shield-blue-500">Contact</a>
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+                    <a href="https://github.com/bravetto/biasguard-one/releases" target="_blank" class="hover:text-shield-blue-500">Install Now</a>
+                    <a href="https://github.com/bravetto/biasguard-one#readme" target="_blank" class="hover:text-shield-blue-500">Documentation</a>
+                    <a href="https://github.com/bravetto/biasguard-one" target="_blank" class="hover:text-shield-blue-500">GitHub</a>
+                    <a href="mailto:hello@bravetto.com" class="hover:text-shield-blue-500">Contact</a>
                 </div>
                 <p class="mt-8 text-xs text-gray-600">
                     ∞ Humans ⟡ AI = ∞
@@ -437,17 +668,55 @@
         }, observerOptions);
         
         counters.forEach(counter => observer.observe(counter));
-        
-        // Smooth scroll
+
+        // Smooth scroll (with protection against href="#" bug)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                const href = this.getAttribute('href');
+                if (href && href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             });
         });
+
+        // Form handling
+        const webinarForm = document.getElementById('webinar-form');
+        const foundingForm = document.getElementById('founding-form');
+
+        function showSuccess(form, message) {
+            const originalContent = form.innerHTML;
+            form.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-5xl mb-4">✨</div>
+                    <h3 class="font-display font-bold text-2xl mb-2 text-guard-green-400">${message}</h3>
+                    <p class="text-gray-400">We'll be in touch soon.</p>
+                </div>
+            `;
+        }
+
+        if (webinarForm) {
+            webinarForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                // Here you would normally send to your API
+                console.log('Webinar signup:', Object.fromEntries(formData));
+                showSuccess(this, "You're in! See you at the webinar.");
+            });
+        }
+
+        if (foundingForm) {
+            foundingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                // Here you would normally send to your API
+                console.log('Founding 100 signup:', Object.fromEntries(formData));
+                showSuccess(this, "Welcome to the Founding 100!");
+            });
+        }
     </script>
 </body>
 </html>

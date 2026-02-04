@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiasGuard</title>
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <div class="popup">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <span class="shield">🛡️</span>
+        <span class="title">BiasGuard</span>
+      </div>
+      <div class="status" id="status">
+        <span class="dot"></span>
+        <span class="text">Active</span>
+      </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-value" id="totalScans">0</div>
+        <div class="stat-label">Pages Scanned</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalDetections">0</div>
+        <div class="stat-label">Patterns Detected</div>
+      </div>
+    </div>
+    
+    <!-- Severity Breakdown -->
+    <div class="severity">
+      <div class="severity-item critical">
+        <span class="severity-count" id="critical">0</span>
+        <span class="severity-label">Critical</span>
+      </div>
+      <div class="severity-item high">
+        <span class="severity-count" id="high">0</span>
+        <span class="severity-label">High</span>
+      </div>
+      <div class="severity-item medium">
+        <span class="severity-count" id="medium">0</span>
+        <span class="severity-label">Medium</span>
+      </div>
+      <div class="severity-item low">
+        <span class="severity-count" id="low">0</span>
+        <span class="severity-label">Low</span>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn-toggle" id="toggle">
+        <span class="btn-icon">⏸️</span>
+        <span class="btn-text">Pause Protection</span>
+      </button>
+      
+      <button class="btn-scan" id="scanNow">
+        <span class="btn-icon">🔍</span>
+        <span class="btn-text">Scan This Page</span>
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p class="tagline">BiasGuard is not an authority.<br>It is a mirror.</p>
+      <div class="links">
+        <a href="#" id="about">About</a>
+        <a href="#" id="settings">Settings</a>
+        <a href="https://github.com/biasguard" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+  
+  <script src="dist/popup.js"></script>
+</body>
+</html>

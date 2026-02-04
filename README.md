@@ -7,6 +7,36 @@
 
 ---
 
+## 🚀 Quick Start for Users
+
+**Want to use BiasGuard in VS Code? Start here:**
+
+### Install the Extension
+
+1. **Download**: Get `biasguard-4.2.5-production.vsix` from releases
+2. **Install**: Drag the `.vsix` file onto VS Code (or use `Extensions: Install from VSIX...`)
+3. **Verify**: Look for **"✓ BiasGuard: FLOWS"** in the status bar
+
+### What You Get
+
+- ⚡ **Real-time epistemic bias detection** - Catches hidden assumptions in your code as you type
+- 🛡️ **MCP security validation** - Protects against AI-generated policy violations
+- 📊 **Instant feedback** - Status bar shows protection state, click for details
+
+### First Steps
+
+1. Open any code file in VS Code
+2. Look at the **status bar** (bottom-left):
+   - **Green "FLOWS"** = No issues detected
+   - **Amber warning** = Review recommended
+   - **Red critical** = Action required
+3. Run command: **"BiasGuard: Scan File for Bias Risks"** to see what's detected
+4. Read **[USER_GUIDE.md](USER_GUIDE.md)** for full documentation
+
+**That's it.** BiasGuard runs automatically. No configuration needed.
+
+---
+
 ## What It Does
 
 - Detects cognitive biases and logical fallacies in text
@@ -236,6 +266,103 @@ It indicates a reasoning pattern that tends to produce harm.
 ```
 
 This sentence appears in every explanation. It preserves dignity while enabling change.
+
+---
+
+## 🛡️ Why It Matters: Real Stories
+
+### The Developer Who Saw Themselves
+
+**Sarah, 28, Backend Engineer**
+
+Her AI assistant suggests: *"Just run `npm install && npm start`"*
+
+**Without BiasGuard:** Sarah runs it. Installs 847 packages. One has a backdoor. Her API keys are gone by morning.
+
+**With BiasGuard:**
+
+```
+⚠️  Epistemic Bias: CERTAINTY INFLATION
+   "Just run" assumes success. Assumes safety.
+
+   Question to ask: "What could go wrong?"
+```
+
+Sarah stops. Checks the repo. Creates a test environment first.
+
+**The shift:** She didn't get blocked. She got *reflected*. She saw her own assumption: *"If it sounds confident, it must be safe."*
+
+---
+
+### The Junior Dev Who Found Their Voice
+
+**Marcus, 23, First Dev Job**
+
+Senior dev says: *"This approach is obviously wrong. Anyone with experience would know that."*
+
+**Without BiasGuard:** Marcus thinks: *"I'm stupid. I don't belong here."*
+
+**With BiasGuard:**
+
+```
+🔍 WORKPLACE BIAS: Authority Gradient
+   Pattern: "obviously" + "anyone" + "experience"
+   Creates power dynamics that prevent questioning.
+
+🔍 COGNITIVE BIAS: False Consensus Effect
+   "Anyone would know" assumes agreement without evidence.
+```
+
+Marcus replies: *"Can you walk me through the tradeoffs?"*
+
+The senior dev pauses. Realizes they were asserting, not explaining.
+
+**The shift:** Marcus stays. The team gets better. The culture shifts.
+
+---
+
+### The Hiring Manager Who Saw The Pattern
+
+**Jennifer, 41, Engineering Manager**
+
+She keeps thinking: *"This Stanford candidate just feels more qualified than this bootcamp grad."*
+
+**With BiasGuard:**
+
+```
+⚠️  WORKPLACE BIAS: Halo Effect
+   "Prestigious school" creates glow that colors all attributes.
+
+⚠️  WORKPLACE BIAS: Affinity Bias
+   "Feels more qualified" often means "reminds me of myself"
+
+❓ Try: List 5 specific skills. Score both. Remove names and schools.
+```
+
+Jennifer creates a blind scoring system. Hires the bootcamp grad.
+
+**The shift:** Best hire of the year. The pattern was broken.
+
+---
+
+## The Philosophy
+
+```
+Traditional Security:    Block → Frustration → Workaround
+BiasGuard:              Reflect → Awareness → Transformation
+```
+
+BiasGuard doesn't protect systems FROM people.
+
+**BiasGuard protects people FROM THEMSELVES.**
+
+From blind spots. From assumptions. From inherited patterns.
+
+Every guard is a mirror.
+Every reflection is an invitation.
+Every detection is a question:
+
+*"What pattern are you running that you can't see?"*
 
 ---
 

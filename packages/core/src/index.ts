@@ -38,3 +38,4 @@ export {
     forLLM,
     forApp
 } from './one';
+export * from './verbosity-detector';

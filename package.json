@@ -8,6 +8,9 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces",
+    "compile": "npm run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pretest": "npm run typecheck && npm run compile",
     "build:core": "npm run build -w @biasguard/core",
     "build:vscode": "npm run compile -w biasguard-vscode",
     "watch": "npm run watch --workspaces --parallel",
@@ -15,6 +18,7 @@
     "test": "npm run test:core && npm run test:gate",
     "test:core": "node tests/one.test.js",
     "test:gate": "node tests/gate.test.js",
+    "test:ci": "npm run compile && node packages/core/dist/adversarial/jacob.js && node packages/core/dist/adversarial/honeypot.js && node packages/core/dist/adversarial/brokenMirror.js && node tests/gate.test.js",
     "test:all": "npm run test && npm run jacob && npm run honeypot && npm run mirror",
     "jacob": "node packages/core/dist/adversarial/jacob.js",
     "honeypot": "node tests/honeypot.test.js",
@@ -26,7 +30,10 @@
     "vscode:package": "cd packages/vscode && vsce package"
   },
   "devDependencies": {
+    "@types/chrome": "^0.1.35",
+    "@types/node": "^25.0.9",
     "markdownlint-cli2": "^0.20.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.0.0"
   },
   "repository": {
