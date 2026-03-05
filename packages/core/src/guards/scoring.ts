@@ -276,7 +276,7 @@ export function formatBiasScore(score: BiasScore): string {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // "This isn't about intent."
 // "The issue arises from pattern + framing."

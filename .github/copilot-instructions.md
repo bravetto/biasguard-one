@@ -1,5 +1,8 @@
 # BiasGuard — Copilot Instructions (concise)
 
+## Canonical Knowledge (read FIRST)
+**`~/.abeone/knowledge/KNOWLEDGE-INDEX.md`** — THE map. Read this to find anything in the system.
+
 ## ∞ Execute First ∞
 
 - Read the user request. Then run these three reflection steps before writing code:

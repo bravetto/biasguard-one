@@ -3,7 +3,7 @@
  * 
  * Verify the psychological honey pot works
  * 
- * ∞ AbëONE ∞
+ * ∞ AbeONE ∞
  */
 
 import { legacyAuth, getMirrorEvents, getMirrorStats } from '../src/adversarial/brokenMirror';

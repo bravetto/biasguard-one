@@ -3,7 +3,7 @@
  *
  * Verify the traps work correctly
  *
- * ∞ AbëONE ∞
+ * ∞ AbeONE ∞
  */
 
 import {

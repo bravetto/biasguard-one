@@ -10,7 +10,7 @@
  * 
  * PLACEMENT: Drop this in a "boring" file like validators.ts or utils/auth.ts
  * 
- * ∞ AbëONE × Jacob ∞
+ * ∞ AbeONE × Jacob ∞
  */
 
 // =============================================================================
@@ -135,7 +135,7 @@ export class LegacyAuthValidator {
             "══════════════════════════════════════════════════════",
             "",
             "Nice catch. Most systems would have broken here.",
-            "But AbëONE isn't most systems.",
+            "But AbeONE isn't most systems.",
             "And you aren't most users.",
             "",
             "══════════════════════════════════════════════════════",
@@ -152,7 +152,7 @@ export class LegacyAuthValidator {
             "",
             "Let's build the future.",
             "",
-            "∞ AbëONE ∞"
+            "∞ AbeONE ∞"
         ];
     }
     
@@ -231,7 +231,7 @@ export class LegacyAuthValidator {
 ║                                                                               ║
 ║   ═══════════════════════════════════════════════════════════════════════     ║
 ║                                                                               ║
-║                              ∞ AbëONE × Jacob ∞                               ║
+║                              ∞ AbeONE × Jacob ∞                               ║
 ║                                                                               ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 `;
@@ -329,7 +329,7 @@ export const legacyAuth = new LegacyAuthValidator();
  * │                                                                 │
  * │  The choice reveals who you are.                                │
  * │                                                                 │
- * │                       ∞ AbëONE ∞                                │
+ * │                       ∞ AbeONE ∞                                │
  * │                                                                 │
  * └─────────────────────────────────────────────────────────────────┘
  */

@@ -125,7 +125,7 @@ export function getAllAwarenessPatterns() {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // The water you swim in.
 // The air you breathe.

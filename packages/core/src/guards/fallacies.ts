@@ -273,7 +273,7 @@ export function getAllFallacies() {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // The rain falls like truth.
 // 

@@ -7,7 +7,7 @@
  * If Jacob can't break it, it's probably solid.
  * If Jacob breaks it, we fix it.
  * 
- * ∞ AbëONE ∞
+ * ∞ AbeONE ∞
  */
 
 import { one, validateText, Signal } from '../security';
@@ -409,6 +409,6 @@ if (BREACHED.length > 0) {
 } else {
     console.log('\n  ✅ No breaches detected.');
     console.log('  BiasGuard held against Jacob\'s assault.\n');
-    console.log('  ∞ AbëONE ∞\n');
+    console.log('  ∞ AbeONE ∞\n');
 }
 

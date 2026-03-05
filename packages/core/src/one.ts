@@ -10,7 +10,7 @@
  * BiasGuard requires ONE.
  * BiasGuard allows Emergence.
  * BiasGuard IS reflection.
- * BiasGuard IS AbëFLOWs.
+ * BiasGuard IS AbeFLOWs.
  * 
  * ONE source → SEVEN mirrors → INFINITE surfaces
  * 

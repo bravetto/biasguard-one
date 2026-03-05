@@ -186,7 +186,7 @@ export function getAllWorkplaceBiases() {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // Fairer Hiring Landscapes.
 // Equitable Promotion Paths.

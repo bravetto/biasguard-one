@@ -29,3 +29,4 @@ venv/
 
 # --- Testing ---
 coverage/
+.vercel

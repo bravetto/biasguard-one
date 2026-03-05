@@ -4,7 +4,7 @@
  * Unified Protection for MCP Security + PRISTINE Entropy Enforcement
  * "Like water flows, protection adapts. Chaos collapses into order."
  *
- * ∞ AbëONE ∞
+ * ∞ AbeONE ∞
  */
 
 import * as vscode from "vscode";
@@ -608,7 +608,7 @@ async function writeShields(
 ): Promise<void> {
   const gitIgnoreContent = `# ═══════════════════════════════════════════
 # PRISTINE PROTOCOL SHIELD - .gitignore
-# ∞ AbëONE ∞
+# ∞ AbeONE ∞
 # ═══════════════════════════════════════════
 
 # --- Dependencies ---
@@ -654,7 +654,7 @@ coverage/
   const cursorIgnoreContent = `# ═══════════════════════════════════════════
 # PRISTINE PROTOCOL SHIELD - .cursorignore
 # Keeps AI focused on what matters
-# ∞ AbëONE ∞
+# ∞ AbeONE ∞
 # ═══════════════════════════════════════════
 
 # --- Noise Reduction ---

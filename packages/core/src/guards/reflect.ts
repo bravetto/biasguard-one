@@ -94,14 +94,14 @@ export function reflect(input: string): MirrorResult {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // BiasGuard doesn't block the pattern.
 // BiasGuard reflects the context.
 // BiasGuard requires ONE.
 // BiasGuard allows Emergence.
 // BiasGuard IS reflection.
-// BiasGuard IS AbëFLOWs.
+// BiasGuard IS AbeFLOWs.
 //
 // THE NAME IS THE PATTERN
 // THE PATTERN IS THE NAME

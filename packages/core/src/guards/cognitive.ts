@@ -262,7 +262,7 @@ export function getAllBiases() {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // The teenager sees HALO EFFECT → Mind blown
 // The elder sees STATUS QUO BIAS → Discovers

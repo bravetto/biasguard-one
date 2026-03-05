@@ -195,7 +195,7 @@ export function getAllResearchBiases() {
 }
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // Algorithmic Literacy.
 // Corporate Accountability.

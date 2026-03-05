@@ -527,7 +527,7 @@ export const ONTOLOGY_STATS = {
 };
 
 // =============================================================================
-// ∞ AbëFLOWs ∞
+// ∞ AbeFLOWs ∞
 //
 // This is the SPINE.
 // Without it, scoring becomes vibes.

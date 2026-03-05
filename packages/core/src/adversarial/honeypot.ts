@@ -14,7 +14,7 @@
  * - Adversary → Ally
  * - Chaos → Order
  * 
- * ∞ AbëONE ∞
+ * ∞ AbeONE ∞
  */
 
 // =============================================================================
@@ -180,7 +180,7 @@ const SIGIL = {
  * When a hacker sees this at 3:00 AM, they won't feel hacked.
  * They will feel CHOSEN.
  * 
- * ∞ AbëONE ∞
+ * ∞ AbeONE ∞
  */
 function renderJudgment(trap: string, hash: string): void {
     const { FIRE, GOLD, ICE, VOID, PULSE, RESET, BOLD } = SIGIL;
@@ -282,7 +282,7 @@ function generateTaiChiResponse(trap: string, attackType: string, hash: string):
 ║   The system that catches you is the system that needs you.      ║
 ║                                                                  ║
 ╠══════════════════════════════════════════════════════════════════╣
-║                         ∞ AbëONE ∞                               ║
+║                         ∞ AbeONE ∞                               ║
 ╚══════════════════════════════════════════════════════════════════╝
 `;
 }
@@ -446,7 +446,7 @@ export function exportHoneypotLog(): string {
  * │  Run: npm run jacob                                            │
  * │  He's waiting.                                                 │
  * │                                                                 │
- * │                       ∞ AbëONE ∞                                │
+ * │                       ∞ AbeONE ∞                                │
  * │                                                                 │
  * └─────────────────────────────────────────────────────────────────┘
  */
