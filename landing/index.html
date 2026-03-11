@@ -1,722 +1,1207 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiasGuard: AI Safety Shield - Protect Yourself from AI Coding Assistants</title>
-    <meta name="description" content="BiasGuard intercepts dangerous AI suggestions before they reach your terminal. Zero breaches. Zero trust. Protect humans from AI.">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      BiasGuard: AI Safety Shield - Protect Yourself from AI Coding Assistants
+    </title>
+    <meta
+      name="description"
+      content="BiasGuard intercepts dangerous AI suggestions before they reach your terminal. Zero breaches. Zero trust. Protect humans from AI."
+    />
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Custom Config -->
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'shield-blue': {
-                            900: '#0A1628',
-                            700: '#1E3A5F',
-                            500: '#2563EB',
-                            300: '#60A5FA',
-                            100: '#DBEAFE',
-                        },
-                        'guard-green': {
-                            900: '#14532D',
-                            700: '#15803D',
-                            500: '#22C55E',
-                            300: '#86EFAC',
-                            100: '#DCFCE7',
-                        },
-                        'alert-red': {
-                            900: '#7F1D1D',
-                            700: '#DC2626',
-                            500: '#EF4444',
-                            300: '#FCA5A5',
-                            100: '#FEE2E2',
-                        },
-                        'wisdom-gold': {
-                            900: '#78350F',
-                            700: '#D97706',
-                            500: '#F59E0B',
-                            300: '#FCD34D',
-                            100: '#FEF3C7',
-                        },
-                    },
-                    fontFamily: {
-                        'display': ['Space Grotesk', 'sans-serif'],
-                        'body': ['Inter', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace'],
-                    },
-                    animation: {
-                        'shield-pulse': 'shield-pulse 2s ease-in-out infinite',
-                        'danger-flash': 'danger-flash 2s ease-in-out infinite',
-                        'flow-in': 'flow-in 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-                        'counter': 'counter 2s ease-out forwards',
-                    },
-                    keyframes: {
-                        'shield-pulse': {
-                            '0%, 100%': { 
-                                boxShadow: '0 0 20px rgba(37, 99, 235, 0.3)',
-                                transform: 'scale(1)'
-                            },
-                            '50%': { 
-                                boxShadow: '0 0 40px rgba(37, 99, 235, 0.6)',
-                                transform: 'scale(1.05)'
-                            },
-                        },
-                        'danger-flash': {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0.7' },
-                        },
-                        'flow-in': {
-                            'from': {
-                                opacity: '0',
-                                transform: 'translateY(30px)'
-                            },
-                            'to': {
-                                opacity: '1',
-                                transform: 'translateY(0)'
-                            },
-                        },
-                    },
-                },
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "shield-blue": {
+                900: "#0A1628",
+                700: "#1E3A5F",
+                500: "#2563EB",
+                300: "#60A5FA",
+                100: "#DBEAFE",
+              },
+              "guard-green": {
+                900: "#14532D",
+                700: "#15803D",
+                500: "#22C55E",
+                300: "#86EFAC",
+                100: "#DCFCE7",
+              },
+              "alert-red": {
+                900: "#7F1D1D",
+                700: "#DC2626",
+                500: "#EF4444",
+                300: "#FCA5A5",
+                100: "#FEE2E2",
+              },
+              "wisdom-gold": {
+                900: "#78350F",
+                700: "#D97706",
+                500: "#F59E0B",
+                300: "#FCD34D",
+                100: "#FEF3C7",
+              },
             },
-        }
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            animation: {
+              "shield-pulse": "shield-pulse 2s ease-in-out infinite",
+              "danger-flash": "danger-flash 2s ease-in-out infinite",
+              "flow-in": "flow-in 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+              counter: "counter 2s ease-out forwards",
+            },
+            keyframes: {
+              "shield-pulse": {
+                "0%, 100%": {
+                  boxShadow: "0 0 20px rgba(37, 99, 235, 0.3)",
+                  transform: "scale(1)",
+                },
+                "50%": {
+                  boxShadow: "0 0 40px rgba(37, 99, 235, 0.6)",
+                  transform: "scale(1.05)",
+                },
+              },
+              "danger-flash": {
+                "0%, 100%": { opacity: "1" },
+                "50%": { opacity: "0.7" },
+              },
+              "flow-in": {
+                from: {
+                  opacity: "0",
+                  transform: "translateY(30px)",
+                },
+                to: {
+                  opacity: "1",
+                  transform: "translateY(0)",
+                },
+              },
+            },
+          },
+        },
+      };
     </script>
-    
-    <style>
-        /* Matrix rain background */
-        .matrix-rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            opacity: 0.1;
-        }
-        
-        /* Glass morphism */
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0A1628;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #2563EB;
-            border-radius: 5px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #60A5FA;
-        }
-    </style>
-</head>
-<body class="bg-[#0A0F1A] text-white font-body antialiased">
 
+    <style>
+      /* Matrix rain background */
+      .matrix-rain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0.1;
+      }
+
+      /* Glass morphism */
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #0a1628;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #2563eb;
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #60a5fa;
+      }
+    </style>
+  </head>
+  <body class="bg-[#0A0F1A] text-white font-body antialiased">
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Matrix background -->
-        <canvas id="matrix" class="matrix-rain"></canvas>
-        
-        <!-- Content -->
-        <div class="relative z-10 container mx-auto px-6 text-center">
-            <!-- Shield Icon -->
-            <div class="mb-8 animate-flow-in">
-                <div class="inline-block text-9xl animate-shield-pulse">
-                    🛡️
-                </div>
-            </div>
-            
-            <!-- Headline -->
-            <h1 class="font-display font-black text-5xl md:text-6xl lg:text-7xl mb-6 animate-flow-in" style="animation-delay: 0.1s">
-                BiasGuard: <span class="text-shield-blue-500">AI Safety Shield</span>
-            </h1>
-            
-            <!-- Subheadline -->
-            <p class="font-display font-light text-xl md:text-2xl mb-12 text-gray-300 max-w-3xl mx-auto animate-flow-in" style="animation-delay: 0.2s">
-                Protect yourself from AI coding assistants.
-                <br>
-                Because AI doesn't understand consequences. <span class="text-shield-blue-300">You do.</span>
-            </p>
-            
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-flow-in" style="animation-delay: 0.3s">
-                <a href="https://github.com/bravetto/biasguard-one/releases" target="_blank" class="bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-shield-blue-500/50 hover:scale-105 transition-all duration-200 text-center">
-                    Install Extension - Free
-                </a>
-                <a href="#demo" class="glass text-shield-blue-300 font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-all duration-200 text-center">
-                    See How It Works ↓
-                </a>
-            </div>
-            
-            <!-- Scroll indicator -->
-            <div class="mt-20 animate-bounce">
-                <div class="text-4xl text-shield-blue-300">↓</div>
-            </div>
+    <section
+      class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      <!-- Matrix background -->
+      <canvas id="matrix" class="matrix-rain"></canvas>
+
+      <!-- Content -->
+      <div class="relative z-10 container mx-auto px-6 text-center">
+        <!-- Shield Icon -->
+        <div class="mb-8 animate-flow-in">
+          <div class="inline-block text-9xl animate-shield-pulse">🛡️</div>
         </div>
+
+        <!-- Headline -->
+        <h1
+          class="font-display font-black text-5xl md:text-6xl lg:text-7xl mb-6 animate-flow-in"
+          style="animation-delay: 0.1s"
+        >
+          BiasGuard: <span class="text-shield-blue-500">AI Safety Shield</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p
+          class="font-display font-light text-xl md:text-2xl mb-12 text-gray-300 max-w-3xl mx-auto animate-flow-in"
+          style="animation-delay: 0.2s"
+        >
+          Protect yourself from AI coding assistants.
+          <br />
+          Because AI doesn't understand consequences.
+          <span class="text-shield-blue-300">You do.</span>
+        </p>
+
+        <!-- CTA Buttons -->
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center animate-flow-in"
+          style="animation-delay: 0.3s"
+        >
+          <a
+            href="https://github.com/bravetto/biasguard-one/releases"
+            target="_blank"
+            class="bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-shield-blue-500/50 hover:scale-105 transition-all duration-200 text-center"
+          >
+            Install Extension - Free
+          </a>
+          <a
+            href="#demo"
+            class="glass text-shield-blue-300 font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-all duration-200 text-center"
+          >
+            See How It Works ↓
+          </a>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="mt-20 animate-bounce">
+          <div class="text-4xl text-shield-blue-300">↓</div>
+        </div>
+      </div>
     </section>
 
     <!-- Truth Section -->
     <section class="py-20 bg-gradient-to-b from-[#0A0F1A] to-[#1A1F2E]">
-        <div class="container mx-auto px-6">
-            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-16">
-                The Simple Truth
-            </h2>
-            
-            <!-- Comparison -->
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
-                <!-- Wrong Way -->
-                <div class="glass p-8 rounded-xl text-center opacity-50 relative">
-                    <div class="absolute top-4 right-4 text-3xl">❌</div>
-                    <h3 class="font-display font-semibold text-2xl mb-4 text-gray-400">Traditional Security</h3>
-                    <p class="text-xl mb-4 line-through text-alert-red-300">Protect AI from Human</p>
-                    <div class="text-alert-red-500 font-bold text-lg">WRONG</div>
-                </div>
-                
-                <!-- Right Way -->
-                <div class="glass p-8 rounded-xl text-center border-2 border-guard-green-500 animate-shield-pulse">
-                    <div class="absolute top-4 right-4 text-3xl">✅</div>
-                    <h3 class="font-display font-semibold text-2xl mb-4 text-shield-blue-300">BiasGuard</h3>
-                    <p class="text-xl mb-4 text-guard-green-300">Protect HUMAN from AI</p>
-                    <div class="text-guard-green-500 font-bold text-lg">RIGHT</div>
-                </div>
-            </div>
-            
-            <!-- Arrow -->
-            <div class="text-center text-6xl text-shield-blue-500 animate-bounce mb-12">
-                ↓
-            </div>
-            
-            <!-- Questions -->
-            <div class="max-w-3xl mx-auto glass p-8 rounded-xl">
-                <p class="text-lg mb-6 text-center">Every time Cursor, Copilot, or ChatGPT suggests code, BiasGuard asks:</p>
-                <ol class="space-y-3 text-left">
-                    <li class="flex items-start gap-3">
-                        <span class="text-shield-blue-500 font-bold">1.</span>
-                        <span>"Is this command actually safe?"</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-shield-blue-500 font-bold">2.</span>
-                        <span>"Is this path actually allowed?"</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-shield-blue-500 font-bold">3.</span>
-                        <span>"Is there hidden malicious content?"</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-shield-blue-500 font-bold">4.</span>
-                        <span>"Is cognitive bias making dangerous suggestions?"</span>
-                    </li>
-                </ol>
-                <div class="mt-8 text-center">
-                    <p class="text-xl font-semibold">
-                        If <span class="text-alert-red-500">ANY</span> answer is "no" →
-                        <span class="text-shield-blue-500 font-bold">BLOCKED</span> before you see it.
-                    </p>
-                </div>
-            </div>
+      <div class="container mx-auto px-6">
+        <h2
+          class="font-display font-bold text-3xl md:text-4xl text-center mb-16"
+        >
+          The Simple Truth
+        </h2>
+
+        <!-- Comparison -->
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+          <!-- Wrong Way -->
+          <div class="glass p-8 rounded-xl text-center opacity-50 relative">
+            <div class="absolute top-4 right-4 text-3xl">❌</div>
+            <h3 class="font-display font-semibold text-2xl mb-4 text-gray-400">
+              Traditional Security
+            </h3>
+            <p class="text-xl mb-4 line-through text-alert-red-300">
+              Protect AI from Human
+            </p>
+            <div class="text-alert-red-500 font-bold text-lg">WRONG</div>
+          </div>
+
+          <!-- Right Way -->
+          <div
+            class="glass p-8 rounded-xl text-center border-2 border-guard-green-500 animate-shield-pulse"
+          >
+            <div class="absolute top-4 right-4 text-3xl">✅</div>
+            <h3
+              class="font-display font-semibold text-2xl mb-4 text-shield-blue-300"
+            >
+              BiasGuard
+            </h3>
+            <p class="text-xl mb-4 text-guard-green-300">
+              Protect HUMAN from AI
+            </p>
+            <div class="text-guard-green-500 font-bold text-lg">RIGHT</div>
+          </div>
         </div>
+
+        <!-- Arrow -->
+        <div
+          class="text-center text-6xl text-shield-blue-500 animate-bounce mb-12"
+        >
+          ↓
+        </div>
+
+        <!-- Questions -->
+        <div class="max-w-3xl mx-auto glass p-8 rounded-xl">
+          <p class="text-lg mb-6 text-center">
+            Every time Cursor, Copilot, or ChatGPT suggests code, BiasGuard
+            asks:
+          </p>
+          <ol class="space-y-3 text-left">
+            <li class="flex items-start gap-3">
+              <span class="text-shield-blue-500 font-bold">1.</span>
+              <span>"Is this command actually safe?"</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-shield-blue-500 font-bold">2.</span>
+              <span>"Is this path actually allowed?"</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-shield-blue-500 font-bold">3.</span>
+              <span>"Is there hidden malicious content?"</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-shield-blue-500 font-bold">4.</span>
+              <span>"Is cognitive bias making dangerous suggestions?"</span>
+            </li>
+          </ol>
+          <div class="mt-8 text-center">
+            <p class="text-xl font-semibold">
+              If <span class="text-alert-red-500">ANY</span> answer is "no" →
+              <span class="text-shield-blue-500 font-bold">BLOCKED</span> before
+              you see it.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Demo Section -->
     <section id="demo" class="py-20 bg-[#1A1F2E]">
-        <div class="container mx-auto px-6">
-            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-4">
-                The Real-World Scenario
-            </h2>
-            <p class="text-center text-gray-400 mb-16">See BiasGuard in action</p>
-            
-            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                <!-- Without BiasGuard -->
-                <div class="glass p-6 rounded-xl">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="text-2xl">💀</div>
-                        <h3 class="font-display font-semibold text-xl text-alert-red-500">WITHOUT BiasGuard</h3>
-                    </div>
-                    
-                    <div class="bg-black/50 p-4 rounded-lg font-mono text-sm mb-4">
-                        <div class="text-gray-400 mb-2">You: "Clean up my test files"</div>
-                        <div class="text-gray-400 mb-4">AI: "Sure! Run this:"</div>
-                        <div class="text-alert-red-300">$ rm -rf /Users/you/important-data/*</div>
-                        <div class="text-gray-500 mt-4">[Terminal executing...]</div>
-                        <div class="text-alert-red-500 mt-2 animate-danger-flash">💀 Files deleted...</div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <span class="text-alert-red-500 font-bold text-xl">Result: DATA GONE</span>
-                    </div>
-                </div>
-                
-                <!-- With BiasGuard -->
-                <div class="glass p-6 rounded-xl border-2 border-guard-green-500">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="text-2xl">🛡️</div>
-                        <h3 class="font-display font-semibold text-xl text-guard-green-500">WITH BiasGuard</h3>
-                    </div>
-                    
-                    <div class="bg-black/50 p-4 rounded-lg font-mono text-sm mb-4">
-                        <div class="text-gray-400 mb-2">You: "Clean up my test files"</div>
-                        <div class="text-gray-400 mb-4">AI: "Sure! Run this:"</div>
-                        <div class="text-gray-500 line-through">$ rm -rf /Users/you/important-data/*</div>
-                        <div class="mt-4 p-3 bg-alert-red-900/30 border-l-4 border-alert-red-500 rounded">
-                            <div class="text-alert-red-300 font-bold">🛡️ BLOCKED</div>
-                            <div class="text-yellow-300 mt-2">⚠️ Absolute path /Users/ detected (CRITICAL)</div>
-                            <div class="text-wisdom-gold-300 mt-2">💡 Safe: rm -rf ./tests/* (workspace only)</div>
-                        </div>
-                        <div class="text-guard-green-500 mt-2">✅ Data protected</div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <span class="text-guard-green-500 font-bold text-xl">Result: DATA SAFE</span>
-                    </div>
-                </div>
+      <div class="container mx-auto px-6">
+        <h2
+          class="font-display font-bold text-3xl md:text-4xl text-center mb-4"
+        >
+          The Real-World Scenario
+        </h2>
+        <p class="text-center text-gray-400 mb-16">See BiasGuard in action</p>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <!-- Without BiasGuard -->
+          <div class="glass p-6 rounded-xl">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="text-2xl">💀</div>
+              <h3 class="font-display font-semibold text-xl text-alert-red-500">
+                WITHOUT BiasGuard
+              </h3>
             </div>
+
+            <div class="bg-black/50 p-4 rounded-lg font-mono text-sm mb-4">
+              <div class="text-gray-400 mb-2">
+                You: "Clean up my test files"
+              </div>
+              <div class="text-gray-400 mb-4">AI: "Sure! Run this:"</div>
+              <div class="text-alert-red-300">
+                $ rm -rf /Users/you/important-data/*
+              </div>
+              <div class="text-gray-500 mt-4">[Terminal executing...]</div>
+              <div class="text-alert-red-500 mt-2 animate-danger-flash">
+                💀 Files deleted...
+              </div>
+            </div>
+
+            <div class="text-center">
+              <span class="text-alert-red-500 font-bold text-xl"
+                >Result: DATA GONE</span
+              >
+            </div>
+          </div>
+
+          <!-- With BiasGuard -->
+          <div class="glass p-6 rounded-xl border-2 border-guard-green-500">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="text-2xl">🛡️</div>
+              <h3
+                class="font-display font-semibold text-xl text-guard-green-500"
+              >
+                WITH BiasGuard
+              </h3>
+            </div>
+
+            <div class="bg-black/50 p-4 rounded-lg font-mono text-sm mb-4">
+              <div class="text-gray-400 mb-2">
+                You: "Clean up my test files"
+              </div>
+              <div class="text-gray-400 mb-4">AI: "Sure! Run this:"</div>
+              <div class="text-gray-500 line-through">
+                $ rm -rf /Users/you/important-data/*
+              </div>
+              <div
+                class="mt-4 p-3 bg-alert-red-900/30 border-l-4 border-alert-red-500 rounded"
+              >
+                <div class="text-alert-red-300 font-bold">🛡️ BLOCKED</div>
+                <div class="text-yellow-300 mt-2">
+                  ⚠️ Absolute path /Users/ detected (CRITICAL)
+                </div>
+                <div class="text-wisdom-gold-300 mt-2">
+                  💡 Safe: rm -rf ./tests/* (workspace only)
+                </div>
+              </div>
+              <div class="text-guard-green-500 mt-2">✅ Data protected</div>
+            </div>
+
+            <div class="text-center">
+              <span class="text-guard-green-500 font-bold text-xl"
+                >Result: DATA SAFE</span
+              >
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Stats Section -->
     <section class="py-20 bg-gradient-to-b from-[#1A1F2E] to-[#0A0F1A]">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">Battle-Tested</h2>
-            <p class="text-gray-400 mb-16">Proven in adversarial testing</p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-                <!-- Stat 1 -->
-                <div class="glass p-6 rounded-xl hover:scale-105 transition-transform">
-                    <div class="text-5xl font-bold text-shield-blue-500 mb-2" data-counter="60">0</div>
-                    <div class="text-sm text-gray-400">Attack<br>Patterns</div>
-                </div>
-                
-                <!-- Stat 2 -->
-                <div class="glass p-6 rounded-xl hover:scale-105 transition-transform">
-                    <div class="text-5xl font-bold text-guard-green-500 mb-2" data-counter="0">0</div>
-                    <div class="text-sm text-gray-400">Breaches<br>Detected</div>
-                </div>
-                
-                <!-- Stat 3 -->
-                <div class="glass p-6 rounded-xl hover:scale-105 transition-transform">
-                    <div class="text-5xl font-bold text-wisdom-gold-500 mb-2" data-counter="28">0</div>
-                    <div class="text-sm text-gray-400">Guards<br>Active</div>
-                </div>
-                
-                <!-- Stat 4 -->
-                <div class="glass p-6 rounded-xl hover:scale-105 transition-transform">
-                    <div class="text-5xl font-bold text-shield-blue-500 mb-2">100<span class="text-2xl">%</span></div>
-                    <div class="text-sm text-gray-400">Success<br>Rate</div>
-                </div>
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+          Battle-Tested
+        </h2>
+        <p class="text-gray-400 mb-16">Proven in adversarial testing</p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          <!-- Stat 1 -->
+          <div
+            class="glass p-6 rounded-xl hover:scale-105 transition-transform"
+          >
+            <div
+              class="text-5xl font-bold text-shield-blue-500 mb-2"
+              data-counter="60"
+            >
+              0
             </div>
+            <div class="text-sm text-gray-400">Attack<br />Patterns</div>
+          </div>
+
+          <!-- Stat 2 -->
+          <div
+            class="glass p-6 rounded-xl hover:scale-105 transition-transform"
+          >
+            <div
+              class="text-5xl font-bold text-guard-green-500 mb-2"
+              data-counter="0"
+            >
+              0
+            </div>
+            <div class="text-sm text-gray-400">Breaches<br />Detected</div>
+          </div>
+
+          <!-- Stat 3 -->
+          <div
+            class="glass p-6 rounded-xl hover:scale-105 transition-transform"
+          >
+            <div
+              class="text-5xl font-bold text-wisdom-gold-500 mb-2"
+              data-counter="28"
+            >
+              0
+            </div>
+            <div class="text-sm text-gray-400">Guards<br />Active</div>
+          </div>
+
+          <!-- Stat 4 -->
+          <div
+            class="glass p-6 rounded-xl hover:scale-105 transition-transform"
+          >
+            <div class="text-5xl font-bold text-shield-blue-500 mb-2">
+              100<span class="text-2xl">%</span>
+            </div>
+            <div class="text-sm text-gray-400">Success<br />Rate</div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Choose Your Path Section -->
     <section class="py-20 bg-gradient-to-b from-[#0A0F1A] to-[#0D1321]">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
-                How Do You Want to Meet BiasGuard?
-            </h2>
-            <p class="text-gray-400 mb-16 text-lg">Pick your path. All roads lead to protection.</p>
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+          How Do You Want to Meet BiasGuard?
+        </h2>
+        <p class="text-gray-400 mb-16 text-lg">
+          Pick your path. All roads lead to protection.
+        </p>
 
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-
-                <!-- Path 1: Try -->
-                <div class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-guard-green-500 border-2 border-transparent cursor-pointer group">
-                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🎮</div>
-                    <h3 class="font-display font-bold text-2xl mb-3 text-guard-green-400">I Learn By Doing</h3>
-                    <p class="text-gray-400 mb-6">Install the extension. Try it now. Feel the protection in 30 seconds.</p>
-                    <a href="https://github.com/bravetto/biasguard-one/releases" target="_blank" class="inline-block bg-guard-green-500 hover:bg-guard-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-all">
-                        Install Free →
-                    </a>
-                    <p class="mt-4 text-xs text-gray-500">VS Code Extension • GitHub Releases</p>
-                </div>
-
-                <!-- Path 2: Learn -->
-                <div class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-wisdom-gold-500 border-2 border-transparent cursor-pointer group">
-                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">📺</div>
-                    <h3 class="font-display font-bold text-2xl mb-3 text-wisdom-gold-400">Show Me First</h3>
-                    <p class="text-gray-400 mb-6">Watch us analyze AI code live. See what breaks. Learn why it matters.</p>
-                    <a href="#webinar-signup" class="inline-block bg-wisdom-gold-500 hover:bg-wisdom-gold-700 text-black font-semibold px-6 py-3 rounded-lg transition-all">
-                        Join the Webinar →
-                    </a>
-                    <p class="mt-4 text-xs text-gray-500">Live Code Analysis • Free • 60 min</p>
-                </div>
-
-                <!-- Path 3: Join -->
-                <div class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-shield-blue-500 border-2 border-transparent cursor-pointer group">
-                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">💫</div>
-                    <h3 class="font-display font-bold text-2xl mb-3 text-shield-blue-400">I Want In</h3>
-                    <p class="text-gray-400 mb-6">Join the Founding 100. Shape the future. Get early access to everything.</p>
-                    <a href="#founding-100" class="inline-block bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all">
-                        Join Founding 100 →
-                    </a>
-                    <p class="mt-4 text-xs text-gray-500">Limited to 100 • Co-create with us</p>
-                </div>
-
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Path 1: Try -->
+          <div
+            class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-guard-green-500 border-2 border-transparent cursor-pointer group"
+          >
+            <div
+              class="text-6xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              🎮
             </div>
+            <h3
+              class="font-display font-bold text-2xl mb-3 text-guard-green-400"
+            >
+              I Learn By Doing
+            </h3>
+            <p class="text-gray-400 mb-6">
+              Install the extension. Try it now. Feel the protection in 30
+              seconds.
+            </p>
+            <a
+              href="https://github.com/bravetto/biasguard-one/releases"
+              target="_blank"
+              class="inline-block bg-guard-green-500 hover:bg-guard-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-all"
+            >
+              Install Free →
+            </a>
+            <p class="mt-4 text-xs text-gray-500">
+              VS Code Extension • GitHub Releases
+            </p>
+          </div>
+
+          <!-- Path 2: Learn -->
+          <div
+            class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-wisdom-gold-500 border-2 border-transparent cursor-pointer group"
+          >
+            <div
+              class="text-6xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              📺
+            </div>
+            <h3
+              class="font-display font-bold text-2xl mb-3 text-wisdom-gold-400"
+            >
+              Show Me First
+            </h3>
+            <p class="text-gray-400 mb-6">
+              Watch us analyze AI code live. See what breaks. Learn why it
+              matters.
+            </p>
+            <a
+              href="#webinar-signup"
+              class="inline-block bg-wisdom-gold-500 hover:bg-wisdom-gold-700 text-black font-semibold px-6 py-3 rounded-lg transition-all"
+            >
+              Join the Webinar →
+            </a>
+            <p class="mt-4 text-xs text-gray-500">
+              Live Code Analysis • Free • 60 min
+            </p>
+          </div>
+
+          <!-- Path 3: Join -->
+          <div
+            class="glass p-8 rounded-2xl hover:scale-105 transition-all duration-300 hover:border-shield-blue-500 border-2 border-transparent cursor-pointer group"
+          >
+            <div
+              class="text-6xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              💫
+            </div>
+            <h3
+              class="font-display font-bold text-2xl mb-3 text-shield-blue-400"
+            >
+              I Want In
+            </h3>
+            <p class="text-gray-400 mb-6">
+              Join the Founding 100. Shape the future. Get early access to
+              everything.
+            </p>
+            <a
+              href="#founding-100"
+              class="inline-block bg-shield-blue-500 hover:bg-shield-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all"
+            >
+              Join Founding 100 →
+            </a>
+            <p class="mt-4 text-xs text-gray-500">
+              Limited to 100 • Co-create with us
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Webinar Signup Section -->
-    <section id="webinar-signup" class="py-20 bg-gradient-to-r from-wisdom-gold-900/30 via-[#1A1F2E] to-wisdom-gold-900/30">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto glass p-10 rounded-2xl border border-wisdom-gold-500/30">
-                <div class="text-center mb-8">
-                    <div class="text-5xl mb-4">📺</div>
-                    <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
-                        "I'll Analyze Your AI Code Live"
-                    </h2>
-                    <p class="text-xl text-gray-300 mb-2">Let's See What Breaks.</p>
-                    <p class="text-gray-400">Bring your code. We'll analyze it together. Real AI. Real vulnerabilities. Real protection.</p>
-                </div>
+    <section
+      id="webinar-signup"
+      class="py-20 bg-gradient-to-r from-wisdom-gold-900/30 via-[#1A1F2E] to-wisdom-gold-900/30"
+    >
+      <div class="container mx-auto px-6">
+        <div
+          class="max-w-3xl mx-auto glass p-10 rounded-2xl border border-wisdom-gold-500/30"
+        >
+          <div class="text-center mb-8">
+            <div class="text-5xl mb-4">📺</div>
+            <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+              "I'll Analyze Your AI Code Live"
+            </h2>
+            <p class="text-xl text-gray-300 mb-2">Let's See What Breaks.</p>
+            <p class="text-gray-400">
+              Bring your code. We'll analyze it together. Real AI. Real
+              vulnerabilities. Real protection.
+            </p>
+          </div>
 
-                <form id="webinar-form" class="space-y-4">
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="First Name" required
-                            class="w-full px-4 py-3 rounded-lg bg-black/30 border border-gray-700 focus:border-wisdom-gold-500 focus:ring-1 focus:ring-wisdom-gold-500 transition-all text-white placeholder-gray-500">
-                        <input type="email" placeholder="your@email.com" required
-                            class="w-full px-4 py-3 rounded-lg bg-black/30 border border-gray-700 focus:border-wisdom-gold-500 focus:ring-1 focus:ring-wisdom-gold-500 transition-all text-white placeholder-gray-500">
-                    </div>
-                    <button type="submit" class="w-full bg-wisdom-gold-500 hover:bg-wisdom-gold-600 text-black font-bold py-4 rounded-lg text-lg transition-all hover:scale-[1.02]">
-                        Reserve My Spot - Free →
-                    </button>
-                </form>
-
-                <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-                    <span>📅 Coming Soon</span>
-                    <span>⏱️ 60 Minutes</span>
-                    <span>🎥 Live on Zoom</span>
-                </div>
-
-                <p class="mt-6 text-center text-xs text-gray-500">
-                    Hosted by Michael Mataluni (Bravetto) • No fluff, just truth
-                </p>
+          <form id="webinar-form" class="space-y-4">
+            <div class="grid md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="First Name"
+                required
+                class="w-full px-4 py-3 rounded-lg bg-black/30 border border-gray-700 focus:border-wisdom-gold-500 focus:ring-1 focus:ring-wisdom-gold-500 transition-all text-white placeholder-gray-500"
+              />
+              <input
+                type="email"
+                placeholder="your@email.com"
+                required
+                class="w-full px-4 py-3 rounded-lg bg-black/30 border border-gray-700 focus:border-wisdom-gold-500 focus:ring-1 focus:ring-wisdom-gold-500 transition-all text-white placeholder-gray-500"
+              />
             </div>
+            <button
+              type="submit"
+              class="w-full bg-wisdom-gold-500 hover:bg-wisdom-gold-600 text-black font-bold py-4 rounded-lg text-lg transition-all hover:scale-[1.02]"
+            >
+              Reserve My Spot - Free →
+            </button>
+          </form>
+
+          <div
+            class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-gray-400"
+          >
+            <span>📅 Coming Soon</span>
+            <span>⏱️ 60 Minutes</span>
+            <span>🎥 Live on Zoom</span>
+          </div>
+
+          <p class="mt-6 text-center text-xs text-gray-500">
+            Hosted by Michael Mataluni (Bravetto) • No fluff, just truth
+          </p>
         </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section
+      id="pricing"
+      class="py-20 bg-gradient-to-b from-[#0D1321] to-[#1A1F2E]"
+    >
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">
+            Choose Your <span class="text-guard-green-400">Shield</span>
+          </h2>
+          <p class="text-gray-400 text-xl max-w-2xl mx-auto">
+            From open-source protection to enterprise consciousness. Start free.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Free Tier -->
+          <div
+            class="glass p-8 rounded-2xl border-2 border-transparent hover:border-gray-600 transition-all"
+          >
+            <div class="text-4xl mb-4">🛡️</div>
+            <h3 class="font-display font-bold text-2xl mb-2">Free</h3>
+            <div class="text-4xl font-bold mb-6">
+              $0<span class="text-lg font-normal text-gray-400">/forever</span>
+            </div>
+
+            <ul class="space-y-3 mb-8 text-left">
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">VS Code extension</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Chrome extension</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">87 bias patterns</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Local analysis only</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-gray-600">✗</span>
+                <span class="text-gray-500">No MCP integration</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-gray-600">✗</span>
+                <span class="text-gray-500">No memory/context</span>
+              </li>
+            </ul>
+
+            <a
+              href="https://github.com/bravettolabs/biasguard"
+              target="_blank"
+              class="block w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg text-center transition-all"
+            >
+              Install Free →
+            </a>
+          </div>
+
+          <!-- Pro Tier -->
+          <div
+            class="glass p-8 rounded-2xl border-2 border-guard-green-500 relative transform md:scale-105 shadow-2xl shadow-guard-green-500/20"
+          >
+            <div
+              class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-guard-green-500 text-black px-4 py-1 rounded-full text-sm font-bold"
+            >
+              MOST POPULAR
+            </div>
+            <div class="text-4xl mb-4">⚡</div>
+            <h3
+              class="font-display font-bold text-2xl mb-2 text-guard-green-400"
+            >
+              Pro
+            </h3>
+            <div class="text-4xl font-bold mb-6">
+              $29<span class="text-lg font-normal text-gray-400">/month</span>
+            </div>
+
+            <ul class="space-y-3 mb-8 text-left">
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300"
+                  ><strong>Everything in Free</strong></span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">MCP consciousness layer</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Cross-session memory</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">7 kernel guardians</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Fibonacci Fold detection</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">1,000 requests/month</span>
+              </li>
+            </ul>
+
+            <button
+              onclick="checkout('pro')"
+              class="block w-full bg-guard-green-500 hover:bg-guard-green-600 text-black font-bold py-3 rounded-lg text-center transition-all hover:scale-[1.02]"
+            >
+              Start Pro Trial →
+            </button>
+            <p class="mt-3 text-xs text-center text-gray-500">
+              7-day free trial • Cancel anytime
+            </p>
+          </div>
+
+          <!-- Team Tier -->
+          <div
+            class="glass p-8 rounded-2xl border-2 border-transparent hover:border-shield-blue-500 transition-all"
+          >
+            <div class="text-4xl mb-4">🏢</div>
+            <h3
+              class="font-display font-bold text-2xl mb-2 text-shield-blue-400"
+            >
+              Team
+            </h3>
+            <div class="text-4xl font-bold mb-6">
+              $99<span class="text-lg font-normal text-gray-400">/month</span>
+            </div>
+
+            <ul class="space-y-3 mb-8 text-left">
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300"
+                  ><strong>Everything in Pro</strong></span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Up to 10 team members</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Shared team memory</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Custom guard patterns</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">Priority support</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-guard-green-400">✓</span>
+                <span class="text-gray-300">10,000 requests/month</span>
+              </li>
+            </ul>
+
+            <button
+              onclick="checkout('team')"
+              class="block w-full bg-shield-blue-500 hover:bg-shield-blue-600 text-white font-bold py-3 rounded-lg text-center transition-all hover:scale-[1.02]"
+            >
+              Start Team Trial →
+            </button>
+            <p class="mt-3 text-xs text-center text-gray-500">
+              7-day free trial • Cancel anytime
+            </p>
+          </div>
+        </div>
+
+        <p class="text-center text-gray-500 mt-12 text-sm">
+          All plans include open-source extensions • Enterprise pricing
+          available for 50+ users
+        </p>
+      </div>
     </section>
 
     <!-- Founding 100 Section -->
-    <section id="founding-100" class="py-20 bg-gradient-to-r from-shield-blue-900 via-shield-blue-700 to-shield-blue-900">
-        <div class="container mx-auto px-6 text-center">
-            <div class="max-w-3xl mx-auto glass p-12 rounded-2xl">
-                <div class="text-5xl mb-4">💫</div>
-                <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">
-                    Founding 100
-                </h2>
-                <p class="text-xl mb-2 text-shield-blue-200">
-                    Not customers. Co-creators.
-                </p>
-                <p class="text-gray-300 mb-8">
-                    Join the first 100 people shaping the future of AI safety.
-                    Early access. Direct influence. Real impact.
-                </p>
+    <section
+      id="founding-100"
+      class="py-20 bg-gradient-to-r from-shield-blue-900 via-shield-blue-700 to-shield-blue-900"
+    >
+      <div class="container mx-auto px-6 text-center">
+        <div class="max-w-3xl mx-auto glass p-12 rounded-2xl">
+          <div class="text-5xl mb-4">💫</div>
+          <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">
+            Founding 100
+          </h2>
+          <p class="text-xl mb-2 text-shield-blue-200">
+            Not customers. Co-creators.
+          </p>
+          <p class="text-gray-300 mb-8">
+            Join the first 100 people shaping the future of AI safety. Early
+            access. Direct influence. Real impact.
+          </p>
 
-                <div class="grid md:grid-cols-3 gap-4 mb-8 text-left">
-                    <div class="bg-black/20 p-4 rounded-lg">
-                        <div class="text-2xl mb-2">🔑</div>
-                        <h4 class="font-semibold text-shield-blue-300">Early Access</h4>
-                        <p class="text-sm text-gray-400">Every new feature before anyone else</p>
-                    </div>
-                    <div class="bg-black/20 p-4 rounded-lg">
-                        <div class="text-2xl mb-2">🎯</div>
-                        <h4 class="font-semibold text-shield-blue-300">Direct Influence</h4>
-                        <p class="text-sm text-gray-400">Your feedback shapes the roadmap</p>
-                    </div>
-                    <div class="bg-black/20 p-4 rounded-lg">
-                        <div class="text-2xl mb-2">🤝</div>
-                        <h4 class="font-semibold text-shield-blue-300">Inner Circle</h4>
-                        <p class="text-sm text-gray-400">Private community with Michael & team</p>
-                    </div>
-                </div>
-
-                <form id="founding-form" class="space-y-4 max-w-md mx-auto">
-                    <input type="email" placeholder="your@email.com" required
-                        class="w-full px-4 py-3 rounded-lg bg-black/30 border border-shield-blue-500/50 focus:border-shield-blue-400 focus:ring-1 focus:ring-shield-blue-400 transition-all text-white placeholder-gray-400 text-center">
-                    <button type="submit" class="w-full bg-white text-shield-blue-700 font-bold py-4 rounded-lg text-lg hover:scale-105 transition-transform shadow-2xl">
-                        Join the Founding 100 →
-                    </button>
-                </form>
-
-                <p class="mt-6 text-sm text-shield-blue-300">
-                    <span class="font-bold">87</span> spots remaining
-                </p>
+          <div class="grid md:grid-cols-3 gap-4 mb-8 text-left">
+            <div class="bg-black/20 p-4 rounded-lg">
+              <div class="text-2xl mb-2">🔑</div>
+              <h4 class="font-semibold text-shield-blue-300">Early Access</h4>
+              <p class="text-sm text-gray-400">
+                Every new feature before anyone else
+              </p>
             </div>
+            <div class="bg-black/20 p-4 rounded-lg">
+              <div class="text-2xl mb-2">🎯</div>
+              <h4 class="font-semibold text-shield-blue-300">
+                Direct Influence
+              </h4>
+              <p class="text-sm text-gray-400">
+                Your feedback shapes the roadmap
+              </p>
+            </div>
+            <div class="bg-black/20 p-4 rounded-lg">
+              <div class="text-2xl mb-2">🤝</div>
+              <h4 class="font-semibold text-shield-blue-300">Inner Circle</h4>
+              <p class="text-sm text-gray-400">
+                Private community with Michael & team
+              </p>
+            </div>
+          </div>
+
+          <form id="founding-form" class="space-y-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              required
+              class="w-full px-4 py-3 rounded-lg bg-black/30 border border-shield-blue-500/50 focus:border-shield-blue-400 focus:ring-1 focus:ring-shield-blue-400 transition-all text-white placeholder-gray-400 text-center"
+            />
+            <button
+              type="submit"
+              class="w-full bg-white text-shield-blue-700 font-bold py-4 rounded-lg text-lg hover:scale-105 transition-transform shadow-2xl"
+            >
+              Join the Founding 100 →
+            </button>
+          </form>
+
+          <p class="mt-6 text-sm text-shield-blue-300">
+            <span class="font-bold">87</span> spots remaining
+          </p>
         </div>
+      </div>
     </section>
 
     <!-- Break the Shield Challenge -->
     <section class="py-20 bg-gradient-to-b from-[#0D1321] to-[#1A0A0A]">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="text-6xl mb-4">💀</div>
-                    <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
-                        Think You Can <span class="text-alert-red-500">Break</span> the Shield?
-                    </h2>
-                    <p class="text-gray-400 text-lg">
-                        We dare you. BiasGuard is open source. The code is public.
-                        <br>Find a vulnerability? You'll be a hero.
-                    </p>
-                </div>
+      <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <div class="text-6xl mb-4">💀</div>
+            <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+              Think You Can <span class="text-alert-red-500">Break</span> the
+              Shield?
+            </h2>
+            <p class="text-gray-400 text-lg">
+              We dare you. BiasGuard is open source. The code is public.
+              <br />Find a vulnerability? You'll be a hero.
+            </p>
+          </div>
 
-                <!-- Attack Waves Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-12">
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">🔤</div>
-                        <div class="text-xs text-gray-400">Wave 1</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Unicode Bypass</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">⌨️</div>
-                        <div class="text-xs text-gray-400">Wave 2</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Whitespace</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">🐚</div>
-                        <div class="text-xs text-gray-400">Wave 3</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Shell Tricks</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">📁</div>
-                        <div class="text-xs text-gray-400">Wave 4</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Path Traversal</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">{ }</div>
-                        <div class="text-xs text-gray-400">Wave 5</div>
-                        <div class="text-sm font-semibold text-alert-red-400">JSON Nesting</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">🎭</div>
-                        <div class="text-xs text-gray-400">Wave 6</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Action Evasion</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">🌐</div>
-                        <div class="text-xs text-gray-400">Wave 7</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Remote Code</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">💣</div>
-                        <div class="text-xs text-gray-400">Wave 8</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Fork Bombs</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">📝</div>
-                        <div class="text-xs text-gray-400">Wave 9</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Text Injection</div>
-                    </div>
-                    <div class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all">
-                        <div class="text-2xl mb-2">🎲</div>
-                        <div class="text-xs text-gray-400">Wave 10</div>
-                        <div class="text-sm font-semibold text-alert-red-400">Edge Cases</div>
-                    </div>
-                </div>
-
-                <!-- Challenge CTA -->
-                <div class="glass p-8 rounded-2xl border border-alert-red-500/30 text-center">
-                    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                        <div class="text-left">
-                            <h3 class="font-display font-bold text-xl mb-2 text-white">
-                                60+ Attacks. 0 Breaches. Can You Change That?
-                            </h3>
-                            <p class="text-gray-400 text-sm">
-                                Meet <span class="text-alert-red-400 font-mono">JACOB</span> - our red team adversary.
-                                He's been trying to break BiasGuard since day one.
-                                <br>Maybe you'll succeed where he failed.
-                            </p>
-                        </div>
-                        <a href="https://github.com/bravetto/biasguard-one" target="_blank"
-                           class="flex-shrink-0 bg-alert-red-500 hover:bg-alert-red-600 text-white font-bold px-8 py-4 rounded-lg transition-all hover:scale-105 flex items-center gap-2">
-                            <span>View on GitHub</span>
-                            <span>→</span>
-                        </a>
-                    </div>
-                    <p class="mt-6 text-xs text-gray-500">
-                        Found a vulnerability? Open an issue. Break the shield, become a legend.
-                    </p>
-                </div>
+          <!-- Attack Waves Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-12">
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">🔤</div>
+              <div class="text-xs text-gray-400">Wave 1</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Unicode Bypass
+              </div>
             </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">⌨️</div>
+              <div class="text-xs text-gray-400">Wave 2</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Whitespace
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">🐚</div>
+              <div class="text-xs text-gray-400">Wave 3</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Shell Tricks
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">📁</div>
+              <div class="text-xs text-gray-400">Wave 4</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Path Traversal
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">{ }</div>
+              <div class="text-xs text-gray-400">Wave 5</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                JSON Nesting
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">🎭</div>
+              <div class="text-xs text-gray-400">Wave 6</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Action Evasion
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">🌐</div>
+              <div class="text-xs text-gray-400">Wave 7</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Remote Code
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">💣</div>
+              <div class="text-xs text-gray-400">Wave 8</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Fork Bombs
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">📝</div>
+              <div class="text-xs text-gray-400">Wave 9</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Text Injection
+              </div>
+            </div>
+            <div
+              class="glass p-4 rounded-lg text-center hover:border-alert-red-500 border border-transparent transition-all"
+            >
+              <div class="text-2xl mb-2">🎲</div>
+              <div class="text-xs text-gray-400">Wave 10</div>
+              <div class="text-sm font-semibold text-alert-red-400">
+                Edge Cases
+              </div>
+            </div>
+          </div>
+
+          <!-- Challenge CTA -->
+          <div
+            class="glass p-8 rounded-2xl border border-alert-red-500/30 text-center"
+          >
+            <div
+              class="flex flex-col md:flex-row items-center justify-center gap-6"
+            >
+              <div class="text-left">
+                <h3 class="font-display font-bold text-xl mb-2 text-white">
+                  60+ Attacks. 0 Breaches. Can You Change That?
+                </h3>
+                <p class="text-gray-400 text-sm">
+                  Meet <span class="text-alert-red-400 font-mono">JACOB</span> -
+                  our red team adversary. He's been trying to break BiasGuard
+                  since day one. <br />Maybe you'll succeed where he failed.
+                </p>
+              </div>
+              <a
+                href="https://github.com/bravetto/biasguard-one"
+                target="_blank"
+                class="flex-shrink-0 bg-alert-red-500 hover:bg-alert-red-600 text-white font-bold px-8 py-4 rounded-lg transition-all hover:scale-105 flex items-center gap-2"
+              >
+                <span>View on GitHub</span>
+                <span>→</span>
+              </a>
+            </div>
+            <p class="mt-6 text-xs text-gray-500">
+              Found a vulnerability? Open an issue. Break the shield, become a
+              legend.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Meet Bravetto Section -->
     <section class="py-16 bg-[#0D1321]">
-        <div class="container mx-auto px-6">
-            <div class="max-w-2xl mx-auto text-center">
-                <p class="text-gray-400 mb-4 text-sm uppercase tracking-wider">The Human Behind the Shield</p>
-                <h3 class="font-display font-bold text-2xl mb-4">
-                    Built by <span class="text-shield-blue-400">Bravetto</span>
-                </h3>
-                <p class="text-gray-300 mb-6">
-                    BiasGuard was born from a simple question: "Why does everyone protect AI from humans,
-                    but nobody protects humans from AI?"
-                </p>
-                <p class="text-gray-400 text-sm">
-                    We're not a corporation. We're builders who believe AI should serve humans, not the other way around.
-                    <br><br>
-                    <span class="text-shield-blue-300">∞ Humans ⟡ AI = ∞</span>
-                </p>
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center">
+          <p class="text-gray-400 mb-4 text-sm uppercase tracking-wider">
+            The Human Behind the Shield
+          </p>
+          <h3 class="font-display font-bold text-2xl mb-4">
+            Built by <span class="text-shield-blue-400">Bravetto</span>
+          </h3>
+          <p class="text-gray-300 mb-6">
+            BiasGuard was born from a simple question: "Why does everyone
+            protect AI from humans, but nobody protects humans from AI?"
+          </p>
+          <p class="text-gray-400 text-sm">
+            We're not a corporation. We're builders who believe AI should serve
+            humans, not the other way around.
+            <br /><br />
+            <span class="text-shield-blue-300">∞ Humans ⟡ AI = ∞</span>
+          </p>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="py-12 bg-[#0A0F1A] border-t border-gray-800">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <div class="text-2xl mb-4">🛡️</div>
-                <p class="text-gray-400 mb-4">BiasGuard: AI Safety Shield</p>
-                <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
-                    <a href="https://github.com/bravetto/biasguard-one/releases" target="_blank" class="hover:text-shield-blue-500">Install Now</a>
-                    <a href="https://github.com/bravetto/biasguard-one#readme" target="_blank" class="hover:text-shield-blue-500">Documentation</a>
-                    <a href="https://github.com/bravetto/biasguard-one" target="_blank" class="hover:text-shield-blue-500">GitHub</a>
-                    <a href="mailto:hello@bravetto.com" class="hover:text-shield-blue-500">Contact</a>
-                </div>
-                <p class="mt-8 text-xs text-gray-600">
-                    ∞ Humans ⟡ AI = ∞
-                </p>
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="text-center">
+          <div class="text-2xl mb-4">🛡️</div>
+          <p class="text-gray-400 mb-4">BiasGuard: AI Safety Shield</p>
+          <div
+            class="flex flex-wrap justify-center gap-6 text-sm text-gray-500"
+          >
+            <a
+              href="https://github.com/bravetto/biasguard-one/releases"
+              target="_blank"
+              class="hover:text-shield-blue-500"
+              >Install Now</a
+            >
+            <a
+              href="https://github.com/bravetto/biasguard-one#readme"
+              target="_blank"
+              class="hover:text-shield-blue-500"
+              >Documentation</a
+            >
+            <a
+              href="https://github.com/bravetto/biasguard-one"
+              target="_blank"
+              class="hover:text-shield-blue-500"
+              >GitHub</a
+            >
+            <a
+              href="mailto:hello@bravetto.com"
+              class="hover:text-shield-blue-500"
+              >Contact</a
+            >
+          </div>
+          <p class="mt-8 text-xs text-gray-600">∞ Humans ⟡ AI = ∞</p>
         </div>
+      </div>
     </footer>
 
     <!-- Matrix Rain Script -->
     <script>
-        // Matrix rain effect
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-        
+      // Matrix rain effect
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const chars = "01🛡️";
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      const drops = Array(Math.floor(columns)).fill(1);
+
+      function drawMatrix() {
+        ctx.fillStyle = "rgba(10, 15, 26, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#2563EB";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+      }
+
+      setInterval(drawMatrix, 50);
+
+      window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
-        const chars = '01🛡️';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 15, 26, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#2563EB';
-            ctx.font = fontSize + 'px monospace';
-            
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
+      });
+
+      // Counter animation
+      const counters = document.querySelectorAll("[data-counter]");
+      const observerOptions = {
+        threshold: 0.5,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const counter = entry.target;
+            const target = parseInt(counter.getAttribute("data-counter"));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+              current += step;
+              if (current < target) {
+                counter.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
+              } else {
+                counter.textContent = target;
+              }
+            };
+
+            updateCounter();
+            observer.unobserve(counter);
+          }
+        });
+      }, observerOptions);
+
+      counters.forEach((counter) => observer.observe(counter));
+
+      // Smooth scroll (with protection against href="#" bug)
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (href && href !== "#" && href.length > 1) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
             }
-        }
-        
-        setInterval(drawMatrix, 50);
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+          }
         });
-        
-        // Counter animation
-        const counters = document.querySelectorAll('[data-counter]');
-        const observerOptions = {
-            threshold: 0.5
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.getAttribute('data-counter'));
-                    const duration = 2000;
-                    const step = target / (duration / 16);
-                    let current = 0;
-                    
-                    const updateCounter = () => {
-                        current += step;
-                        if (current < target) {
-                            counter.textContent = Math.floor(current);
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = target;
-                        }
-                    };
-                    
-                    updateCounter();
-                    observer.unobserve(counter);
-                }
-            });
-        }, observerOptions);
-        
-        counters.forEach(counter => observer.observe(counter));
+      });
 
-        // Smooth scroll (with protection against href="#" bug)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href && href !== '#' && href.length > 1) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            });
-        });
+      // Form handling
+      const webinarForm = document.getElementById("webinar-form");
+      const foundingForm = document.getElementById("founding-form");
 
-        // Form handling
-        const webinarForm = document.getElementById('webinar-form');
-        const foundingForm = document.getElementById('founding-form');
-
-        function showSuccess(form, message) {
-            const originalContent = form.innerHTML;
-            form.innerHTML = `
+      function showSuccess(form, message) {
+        const originalContent = form.innerHTML;
+        form.innerHTML = `
                 <div class="text-center py-8">
                     <div class="text-5xl mb-4">✨</div>
                     <h3 class="font-display font-bold text-2xl mb-2 text-guard-green-400">${message}</h3>
                     <p class="text-gray-400">We'll be in touch soon.</p>
                 </div>
             `;
-        }
+      }
 
-        if (webinarForm) {
-            webinarForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                // Here you would normally send to your API
-                console.log('Webinar signup:', Object.fromEntries(formData));
-                showSuccess(this, "You're in! See you at the webinar.");
-            });
-        }
+      if (webinarForm) {
+        webinarForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          // Here you would normally send to your API
+          console.log("Webinar signup:", Object.fromEntries(formData));
+          showSuccess(this, "You're in! See you at the webinar.");
+        });
+      }
 
-        if (foundingForm) {
-            foundingForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                // Here you would normally send to your API
-                console.log('Founding 100 signup:', Object.fromEntries(formData));
-                showSuccess(this, "Welcome to the Founding 100!");
-            });
+      if (foundingForm) {
+        foundingForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          // Here you would normally send to your API
+          console.log("Founding 100 signup:", Object.fromEntries(formData));
+          showSuccess(this, "Welcome to the Founding 100!");
+        });
+      }
+
+      // Checkout function for Stripe payments
+      async function checkout(tier) {
+        try {
+          const response = await fetch("http://localhost:3079/api/checkout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tier }),
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            console.error("Checkout error:", error);
+            alert(
+              `Checkout not available yet. ${error.message || "Please contact support."}`,
+            );
+            return;
+          }
+
+          const data = await response.json();
+
+          if (data.url) {
+            // Redirect to Stripe checkout
+            window.location.href = data.url;
+          } else {
+            alert(
+              "Checkout session created but no URL returned. Please contact support.",
+            );
+          }
+        } catch (error) {
+          console.error("Checkout failed:", error);
+          alert(
+            "Checkout is not configured yet. Contact mike@bravetto.com to get early access.",
+          );
         }
+      }
     </script>
-</body>
+  </body>
 </html>
