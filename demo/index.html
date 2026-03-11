@@ -483,7 +483,7 @@ Example: Performance reviews, AI responses, news articles, policy documents, fee
       document.getElementById('input').value = examples[num];
     }
 
-    function analyze() {
+    async function analyze() {
       const input = document.getElementById('input').value.trim();
       if (!input) {
         alert('Please enter some text to analyze.');
@@ -498,15 +498,30 @@ Example: Performance reviews, AI responses, news articles, policy documents, fee
       loading.classList.add('visible');
       results.classList.remove('visible');
 
-      // Simulate analysis
-      setTimeout(() => {
-        const detected = detectBiases(input);
-        displayResults(detected);
+      try {
+        // Call real BiasGuard API
+        const response = await fetch('http://localhost:3078/api/bias', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: input })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        displayResults(result);
 
         loading.classList.remove('visible');
         results.classList.add('visible');
+      } catch (err) {
+        console.error('Analysis failed:', err);
+        alert('Analysis failed. Make sure the BiasGuard API is running on localhost:3078.');
+        loading.classList.remove('visible');
+      } finally {
         btn.disabled = false;
-      }, 1500);
+      }
     }
 
     function detectBiases(text) {
@@ -534,10 +549,10 @@ Example: Performance reviews, AI responses, news articles, policy documents, fee
       return detected;
     }
 
-    function displayResults(detected) {
+    function displayResults(result) {
       const results = document.getElementById('results');
 
-      if (detected.length === 0) {
+      if (result.clear) {
         results.innerHTML = `
           <div class="result-card clean">
             <div class="result-header">
@@ -554,19 +569,41 @@ Example: Performance reviews, AI responses, news articles, policy documents, fee
         return;
       }
 
-      results.innerHTML = detected.map(bias => `
+      // Display reflections from real BiasGuard engine
+      const reflections = result.reflections || [];
+      results.innerHTML = reflections.map(reflection => `
         <div class="result-card">
           <div class="result-header">
-            <span class="result-badge">${bias.guard} Guard</span>
-            <span class="result-title">${bias.name}</span>
+            <span class="result-badge">${reflection.mirror} Guard</span>
+            <span class="result-title">${reflection.fallacyName || reflection.awarenessName || reflection.biasName || 'Pattern Detected'}</span>
           </div>
-          <p class="result-explanation">${bias.explanation}</p>
-          <div class="result-suggestion">
-            <div class="result-suggestion-label">Suggested Correction</div>
-            <p class="result-suggestion-text">${bias.suggestion}</p>
-          </div>
+          <p class="result-explanation">${reflection.reflects}</p>
+          ${result.score && result.score.suggestedFix ? `
+            <div class="result-suggestion">
+              <div class="result-suggestion-label">Suggested Correction</div>
+              <p class="result-suggestion-text">${result.score.suggestedFix}</p>
+            </div>
+          ` : ''}
         </div>
       `).join('');
+
+      // Add epistemic risks if any
+      const epistemicRisks = result.epistemic_risks || [];
+      if (epistemicRisks.length > 0) {
+        results.innerHTML += epistemicRisks.map(risk => `
+          <div class="result-card">
+            <div class="result-header">
+              <span class="result-badge">Epistemic Risk</span>
+              <span class="result-title">${risk.biasType}</span>
+            </div>
+            <p class="result-explanation">${risk.assumptionDetected}</p>
+            <div class="result-suggestion">
+              <div class="result-suggestion-label">Consider This Question</div>
+              <p class="result-suggestion-text">${risk.suggestedQuestion}</p>
+            </div>
+          </div>
+        `).join('');
+      }
     }
   </script>
 </body>
