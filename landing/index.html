@@ -1170,10 +1170,11 @@
         try {
           // Detect environment and use appropriate API URL
           const api_base_url =
-            window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            window.location.hostname === "localhost" ||
+            window.location.hostname === "127.0.0.1"
               ? "http://localhost:3079"
               : "https://aiguardians.ai";
-          
+
           const response = await fetch(`${api_base_url}/api/checkout`, {
             method: "POST",
             headers: {
