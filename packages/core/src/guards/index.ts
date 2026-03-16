@@ -18,7 +18,7 @@
  */
 
 // The unified mirror
-export { reflect, Reflection, MirrorResult } from "./reflect";
+export { reflect, Reflection, MirrorResult, BiasGuardContext } from "./reflect";
 
 // ═══════════════════════════════════════════════════════════════════
 // CORE GUARDS (7) - Structural patterns

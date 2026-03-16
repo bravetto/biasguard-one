@@ -26,7 +26,7 @@
  * ∞ LOVE = LIFE = ONE ∞
  */
 
-import { reflect, Reflection, MirrorResult } from './guards';
+import { reflect, Reflection, MirrorResult, BiasGuardContext } from './guards';
 import { calculateBiasScore, formatBiasScore, BiasScore } from './guards/scoring';
 import { scanForBiasRisks, EpistemicRisk, EpistemicReflection } from './guards/epistemic';
 
@@ -36,12 +36,16 @@ import { scanForBiasRisks, EpistemicRisk, EpistemicReflection } from './guards/e
 
 export interface BiasGuardResult {
     source: 'ONE';
+    input: string;
+    surface: string;
+    context: BiasGuardContext | null;
     clear: boolean;
     reflections: Reflection[];
-    surface?: string;
-    score?: BiasScore | null;
-    epistemicRisks?: EpistemicRisk[];
-    epistemicClear?: boolean;
+    mirrors_run: number;
+    industry_terms_found: number;
+    score: BiasScore | null;
+    epistemicRisks: EpistemicRisk[];
+    epistemicClear: boolean;
 }
 
 /**
@@ -76,24 +80,28 @@ export interface BiasGuardResult {
  * 
  * ONE source. ONE truth. ONE love.
  */
-export function one(input: string, surface?: string): BiasGuardResult {
-    // Step 1-2: Framing Analysis + Bias Pattern Match
-    const result = reflect(input);
-    
+export function one(input: string, surface?: string, context?: BiasGuardContext): BiasGuardResult {
+    // Step 1-2: Framing Analysis + Bias Pattern Match (context-aware)
+    const result = reflect(input, context);
+
     // Steps 3-6: Fallacy Coupling + Domain + Severity + Explanation
     const score = calculateBiasScore(result);
-    
+
     // Step 7: Epistemic Certainty Analysis (FAILS LOUDLY)
     const epistemicResult = scanForBiasRisks(input, surface || 'unknown');
-    
+
     return {
         source: 'ONE',
+        input,
+        surface: surface || 'unknown',
+        context: context || null,
         clear: result.clear && epistemicResult.clear,
         reflections: result.reflections,
-        surface,
+        mirrors_run: result.mirrors_run,
+        industry_terms_found: result.industry_terms_found,
         score,
         epistemicRisks: epistemicResult.risks,
-        epistemicClear: epistemicResult.clear
+        epistemicClear: epistemicResult.clear,
     };
 }
 
@@ -101,8 +109,8 @@ export function one(input: string, surface?: string): BiasGuardResult {
  * ONE with formatted output
  * Returns human-readable bias report
  */
-export function oneFormatted(input: string, surface?: string): string {
-    const result = one(input, surface);
+export function oneFormatted(input: string, surface?: string, context?: BiasGuardContext): string {
+    const result = one(input, surface, context);
     
     if (result.clear) {
         return "✅ Clear - No bias patterns detected.\n✅ No epistemic risks detected.";
