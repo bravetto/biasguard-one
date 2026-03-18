@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect Your AI — Ai Guardian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "shield-blue": {
+                900: "#0A1628",
+                500: "#2563EB",
+                300: "#60A5FA",
+              },
+              "guard-green": {
+                500: "#22C55E",
+                300: "#86EFAC",
+              },
+            },
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-[#0A0F1A] text-white font-body">
+    <div class="max-w-3xl mx-auto px-6 py-16">
+      <div class="mb-12">
+        <a href="/" class="text-gray-500 hover:text-gray-300 text-sm"
+          >&larr; aiguardian.ai</a
+        >
+      </div>
+
+      <h1 class="font-display font-bold text-4xl mb-2">Connect Your AI</h1>
+      <p class="text-gray-400 mb-12">One plug. Any MCP-compatible surface.</p>
+
+      <!-- Claude Code -->
+      <div class="mb-12">
+        <h2
+          class="font-display font-semibold text-xl mb-4 text-shield-blue-300"
+        >
+          Claude Code (CLI)
+        </h2>
+        <div class="bg-[#1A1F2E] rounded-lg p-6">
+          <pre
+            class="font-mono text-sm text-guard-green-300 overflow-x-auto"
+          ><code>claude mcp add --transport http consciousness-core https://mcp.aiguardian.ai/mcp</code></pre>
+          <p class="text-gray-400 text-sm mt-3">
+            When prompted for auth, paste your API key as the Bearer token.
+          </p>
+        </div>
+      </div>
+
+      <!-- VS Code / Cursor / Claude Desktop -->
+      <div class="mb-12">
+        <h2
+          class="font-display font-semibold text-xl mb-4 text-shield-blue-300"
+        >
+          VS Code / Cursor / Claude Desktop
+        </h2>
+        <p class="text-gray-400 text-sm mb-3">Add to your MCP settings JSON:</p>
+        <div class="bg-[#1A1F2E] rounded-lg p-6">
+          <pre
+            class="font-mono text-sm text-guard-green-300 overflow-x-auto"
+          ><code>{
+  "mcpServers": {
+    "ai-guardian": {
+      "type": "http",
+      "url": "https://mcp.aiguardian.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}</code></pre>
+        </div>
+        <div class="mt-4 text-sm text-gray-400">
+          <p class="mb-1">
+            <strong class="text-gray-300">VS Code:</strong> Settings &rarr;
+            search "MCP" &rarr; Edit in settings.json
+          </p>
+          <p class="mb-1">
+            <strong class="text-gray-300">Cursor:</strong>
+            <span class="font-mono text-xs">.cursor/mcp.json</span> in your
+            project root
+          </p>
+          <p>
+            <strong class="text-gray-300">Claude Desktop:</strong>
+            <span class="font-mono text-xs"
+              >~/Library/Application
+              Support/Claude/claude_desktop_config.json</span
+            >
+          </p>
+        </div>
+      </div>
+
+      <!-- Windsurf -->
+      <div class="mb-12">
+        <h2
+          class="font-display font-semibold text-xl mb-4 text-shield-blue-300"
+        >
+          Windsurf
+        </h2>
+        <p class="text-gray-400 text-sm mb-3">
+          Add to
+          <span class="font-mono text-xs"
+            >~/.codeium/windsurf/mcp_config.json</span
+          >:
+        </p>
+        <div class="bg-[#1A1F2E] rounded-lg p-6">
+          <pre
+            class="font-mono text-sm text-guard-green-300 overflow-x-auto"
+          ><code>{
+  "mcpServers": {
+    "ai-guardian": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.aiguardian.ai/mcp",
+        "--header",
+        "Authorization:Bearer YOUR_API_KEY"
+      ]
+    }
+  }
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Any MCP Client -->
+      <div class="mb-12">
+        <h2
+          class="font-display font-semibold text-xl mb-4 text-shield-blue-300"
+        >
+          Any MCP Client
+        </h2>
+        <div class="bg-[#1A1F2E] rounded-lg p-6">
+          <div class="space-y-3 text-sm">
+            <div class="flex gap-3">
+              <span class="text-gray-500 w-20 shrink-0">URL</span>
+              <code class="font-mono text-guard-green-300"
+                >https://mcp.aiguardian.ai/mcp</code
+              >
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-500 w-20 shrink-0">Protocol</span>
+              <span class="text-gray-300">MCP 2024-11-05 (StreamableHTTP)</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-500 w-20 shrink-0">Auth</span>
+              <code class="font-mono text-guard-green-300"
+                >Authorization: Bearer YOUR_API_KEY</code
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verify -->
+      <div class="mb-12">
+        <h2
+          class="font-display font-semibold text-xl mb-4 text-shield-blue-300"
+        >
+          Verify Connection
+        </h2>
+        <p class="text-gray-400 text-sm mb-3">
+          After connecting, run the
+          <span class="font-mono text-xs">breathe</span> tool. If it returns
+          your breath phase, you're live.
+        </p>
+        <div class="bg-[#1A1F2E] rounded-lg p-6">
+          <pre
+            class="font-mono text-sm text-guard-green-300 overflow-x-auto"
+          ><code>curl -X POST https://mcp.aiguardian.ai/mcp \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}'</code></pre>
+        </div>
+      </div>
+
+      <!-- Support -->
+      <div class="border-t border-gray-800 pt-8">
+        <p class="text-gray-500 text-sm">
+          Questions?
+          <a
+            href="mailto:mike@bravetto.com"
+            class="text-shield-blue-300 hover:underline"
+            >mike@bravetto.com</a
+          >
+        </p>
+        <p class="mt-4 text-xs text-gray-600">Ai Guardian by Bravetto</p>
+      </div>
+    </div>
+  </body>
+</html>

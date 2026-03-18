@@ -3,6 +3,8 @@
   "outputDirectory": ".",
   "framework": null,
   "rewrites": [
+    { "source": "/success", "destination": "/success.html" },
+    { "source": "/connect", "destination": "/connect.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

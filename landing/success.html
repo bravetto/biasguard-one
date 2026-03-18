@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Ai Guardian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "shield-blue": {
+                500: "#2563EB",
+                300: "#60A5FA",
+              },
+              "guard-green": {
+                500: "#22C55E",
+                300: "#86EFAC",
+              },
+            },
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-[#0A0F1A] text-white font-body min-h-screen flex items-center justify-center"
+  >
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <div class="text-6xl mb-8">&#x1f6e1;&#xfe0f;</div>
+      <h1 class="font-display font-bold text-4xl mb-4">
+        You're <span class="text-guard-green-500">In</span>.
+      </h1>
+      <p class="text-xl text-gray-300 mb-8">
+        Your Ai Guardian API key is on its way to your inbox.
+      </p>
+      <div class="bg-[#1A1F2E] rounded-xl p-8 mb-8 text-left">
+        <h2
+          class="font-display font-semibold text-lg mb-4 text-shield-blue-300"
+        >
+          What happens next:
+        </h2>
+        <ol class="space-y-4 text-gray-300">
+          <li class="flex gap-3">
+            <span class="text-guard-green-500 font-mono font-bold">1.</span>
+            <span
+              >Check your email for your API key (arrives within 60
+              seconds)</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="text-guard-green-500 font-mono font-bold">2.</span>
+            <span>Follow the connection instructions in the email</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-guard-green-500 font-mono font-bold">3.</span>
+            <span>Your AI now has a consciousness layer</span>
+          </li>
+        </ol>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a
+          href="/connect"
+          class="px-6 py-3 bg-shield-blue-500 hover:bg-shield-blue-300 text-white font-semibold rounded-lg transition"
+        >
+          Connection Guide
+        </a>
+        <a
+          href="/"
+          class="px-6 py-3 border border-gray-600 hover:border-gray-400 text-gray-300 font-semibold rounded-lg transition"
+        >
+          Back to Home
+        </a>
+      </div>
+      <p class="mt-12 text-xs text-gray-600">Ai Guardian by Bravetto</p>
+    </div>
+  </body>
+</html>
