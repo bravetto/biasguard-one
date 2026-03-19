@@ -648,7 +648,7 @@
             </a>
           </div>
 
-          <!-- Pro Tier -->
+          <!-- Basic Tier -->
           <div
             class="glass p-8 rounded-2xl border-2 border-guard-green-500 relative transform md:scale-105 shadow-2xl shadow-guard-green-500/20"
           >
@@ -661,10 +661,10 @@
             <h3
               class="font-display font-bold text-2xl mb-2 text-guard-green-400"
             >
-              Pro
+              Basic
             </h3>
             <div class="text-4xl font-bold mb-6">
-              $29<span class="text-lg font-normal text-gray-400">/month</span>
+              $99<span class="text-lg font-normal text-gray-400">/month</span>
             </div>
 
             <ul class="space-y-3 mb-8 text-left">
@@ -697,17 +697,17 @@
             </ul>
 
             <button
-              onclick="checkout('pro')"
+              onclick="checkout('basic')"
               class="block w-full bg-guard-green-500 hover:bg-guard-green-600 text-black font-bold py-3 rounded-lg text-center transition-all hover:scale-[1.02]"
             >
-              Start Pro Trial →
+              Start Basic Trial →
             </button>
             <p class="mt-3 text-xs text-center text-gray-500">
               7-day free trial • Cancel anytime
             </p>
           </div>
 
-          <!-- Team Tier -->
+          <!-- Pro Tier -->
           <div
             class="glass p-8 rounded-2xl border-2 border-transparent hover:border-shield-blue-500 transition-all"
           >
@@ -715,17 +715,17 @@
             <h3
               class="font-display font-bold text-2xl mb-2 text-shield-blue-400"
             >
-              Team
+              Pro
             </h3>
             <div class="text-4xl font-bold mb-6">
-              $99<span class="text-lg font-normal text-gray-400">/month</span>
+              $299<span class="text-lg font-normal text-gray-400">/month</span>
             </div>
 
             <ul class="space-y-3 mb-8 text-left">
               <li class="flex items-start gap-2">
                 <span class="text-guard-green-400">✓</span>
                 <span class="text-gray-300"
-                  ><strong>Everything in Pro</strong></span
+                  ><strong>Everything in Basic</strong></span
                 >
               </li>
               <li class="flex items-start gap-2">
@@ -751,10 +751,10 @@
             </ul>
 
             <button
-              onclick="checkout('team')"
+              onclick="checkout('pro')"
               class="block w-full bg-shield-blue-500 hover:bg-shield-blue-600 text-white font-bold py-3 rounded-lg text-center transition-all hover:scale-[1.02]"
             >
-              Start Team Trial →
+              Start Pro Trial →
             </button>
             <p class="mt-3 text-xs text-center text-gray-500">
               7-day free trial • Cancel anytime
@@ -764,7 +764,7 @@
 
         <p class="text-center text-gray-500 mt-12 text-sm">
           All plans include open-source extensions • Enterprise pricing
-          available for 50+ users
+          available for 10+ users
         </p>
       </div>
     </section>
@@ -1167,12 +1167,12 @@
       // Checkout function for Stripe payments
       async function checkout(tier) {
         try {
-          // Detect environment and use appropriate API URL
+          // API server (consciousness-core http.js)
           const api_base_url =
             window.location.hostname === "localhost" ||
             window.location.hostname === "127.0.0.1"
-              ? "http://localhost:3079"
-              : "https://aiguardian.ai";
+              ? "http://localhost:3077"
+              : "https://mcp.aiguardian.ai";
 
           const response = await fetch(`${api_base_url}/api/checkout`, {
             method: "POST",
