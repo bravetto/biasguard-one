@@ -110,12 +110,15 @@ const RESEARCH_PATTERNS = [
     },
     
     // ALGORITHMIC BIAS - System encoding bias
+    // calibrated 2026-03-19: requires AI term + decision-making verb in proximity
+    // "AI evaluates loan applications" = YES (algorithmic bias risk)
+    // "the platform uses machine learning" = NO (neutral description)
     {
         id: 'algorithmic',
         name: 'Algorithmic Bias',
-        pattern: /\b(algorithm|AI|model|prediction|automated|machine learning|trained on|data.?driven|the system)\b/i,
-        reflects: "Algorithmic Bias: AI systems inherit biases from their training data and designers. What assumptions are encoded?",
-        example: "The algorithm predicts..."
+        pattern: /\b(algorithm|AI|automated system|machine learning|neural network)\b.{0,50}\b(predict|determin|evaluat|scor|rank|classif|select|reject|filter|screen|assess|decid|diagnos|sentenc|approv|deny|flag)|trained on.{0,30}(biased|historical|skewed|incomplete|unrepresentative)|data.driven.{0,20}(decision|hiring|lending|screening|policing)/i,
+        reflects: "Algorithmic Bias: AI systems making decisions about people inherit biases from their training data and designers. What assumptions are encoded in this decision?",
+        example: "The algorithm predicts which candidates will succeed"
     },
     
     // PROXY DISCRIMINATION - Hidden variables
