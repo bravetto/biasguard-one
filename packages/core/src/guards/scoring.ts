@@ -98,6 +98,27 @@ export const SEVERITY_SCORES: Record<Severity, number> = {
     critical: 100
 };
 
+// context weight: pure arithmetic from industry_term flag.
+// weight = 1.0 - (0.75 * flag). flag 0 = 1.0. flag 1 = 0.25.
+function context_weight(industry_term: boolean): number {
+    return 1.0 - (0.75 * Number(industry_term));
+}
+
+// score → severity: lookup table. deterministic.
+const SCORE_TO_SEVERITY: [number, Severity][] = [[75, 'critical'], [50, 'high'], [25, 'medium'], [0, 'low']];
+
+function score_to_severity(score: number): Severity {
+    return (SCORE_TO_SEVERITY.find(([threshold]) => score >= threshold) as [number, Severity])[1];
+}
+
+// severity → correctability: lookup table. no ternary.
+const CORRECTABILITY: Record<Severity, 'easy' | 'moderate' | 'systemic'> = {
+    low: 'easy',
+    medium: 'easy',
+    high: 'moderate',
+    critical: 'systemic',
+};
+
 // Pattern → Severity mapping
 const SEVERITY_MAP: Record<string, Severity> = {
     // Critical - Structural discrimination
@@ -167,46 +188,45 @@ export interface BiasScore {
 // SCORING FUNCTION
 // =============================================================================
 
-export function calculateBiasScore(result: MirrorResult): BiasScore | null {
-    if (result.clear || result.reflections.length === 0) {
-        return null; // No bias detected
-    }
-    
-    // Find primary bias (highest severity)
-    let primaryReflection = result.reflections[0];
-    let maxSeverity: Severity = 'low';
-    
-    for (const reflection of result.reflections) {
-        const biasId = extractBiasId(reflection);
-        const severity = SEVERITY_MAP[biasId] || 'low';
-        if (SEVERITY_SCORES[severity] > SEVERITY_SCORES[maxSeverity]) {
-            maxSeverity = severity;
-            primaryReflection = reflection;
-        }
-    }
-    
-    const primaryBiasId = extractBiasId(primaryReflection);
-    const pairing = BIAS_FALLACY_PAIRS[primaryBiasId];
-    
-    // Calculate composite score
-    const baseScore = SEVERITY_SCORES[maxSeverity];
-    const countBonus = Math.min(result.reflections.length * 5, 25); // Multiple biases increase score
-    const finalScore = Math.min(baseScore + countBonus, 100);
-    
-    // Determine correctability
-    const correctability = maxSeverity === 'critical' ? 'systemic' :
-                          maxSeverity === 'high' ? 'moderate' : 'easy';
-    
+// pure function. always returns BiasScore. never null. never undefined.
+// same input = same output. no mutation. no side effects. stateless.
+export function calculateBiasScore(result: MirrorResult): BiasScore {
+    // zero reflections = score 0, severity low, clear. always a value, never null.
+    const reflections = result.reflections;
+    const count = reflections.length;
+
+    // score each reflection: raw severity * context weight. reduce to highest.
+    const scored = reflections.map(r => {
+        const bias_id = extractBiasId(r);
+        const raw = SEVERITY_SCORES[SEVERITY_MAP[bias_id] || 'low'];
+        const weighted = Math.round(raw * context_weight(!!r.industry_term));
+        return { reflection: r, weighted, severity: score_to_severity(weighted) };
+    });
+
+    // primary = highest weighted score. reduce, no mutation.
+    const primary = scored.reduce((max, cur) =>
+        cur.weighted > max.weighted ? cur : max,
+        { reflection: reflections[0] || { mirror: 'none', sees: '', reflects: '', clarity: 0 } as Reflection, weighted: 0, severity: 'low' as Severity }
+    );
+
+    const base_score = primary.weighted;
+    const count_bonus = Math.min(count * 5, 25);
+    const final_score = Math.min(base_score + count_bonus, 100);
+    const final_severity = score_to_severity(final_score);
+
+    const primary_bias_id = extractBiasId(primary.reflection);
+    const pairing = BIAS_FALLACY_PAIRS[primary_bias_id];
+
     return {
-        score: finalScore,
-        severity: maxSeverity,
-        primaryBias: primaryReflection.mirror,
+        score: final_score,
+        severity: final_severity,
+        primaryBias: primary.reflection.mirror,
         relatedFallacies: pairing?.fallacies || [],
         aiRisk: pairing?.aiRisk || 'Potential for biased outcomes',
         impactDomains: pairing?.impactDomain || [],
-        correctability,
-        suggestedFix: generateSuggestedFix(primaryReflection, correctability),
-        dignityMessage: generateDignityMessage(maxSeverity),
+        correctability: CORRECTABILITY[final_severity],
+        suggestedFix: generateSuggestedFix(primary.reflection, CORRECTABILITY[final_severity]),
+        dignityMessage: generateDignityMessage(final_severity),
     };
 }
 
