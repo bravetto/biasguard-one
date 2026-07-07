@@ -79,6 +79,24 @@ const AWARENESS_PATTERNS = [
         reflects: "Internalized Bias: Applying negative stereotypes to oneself. This belief may have been absorbed from external bias.",
         example: "People like me can't do that"
     },
+
+    // IMPLICIT - Community coded as performative (queer/marked space = performance, default space = "real")
+    {
+        id: 'community-coded-as-performative',
+        name: 'Community Coded As Performative',
+        pattern: /\b(chill|real|authentic)\b.{0,40}\b(rather than|not|vs\.?|instead of)\b.{0,40}\b(perform|scene|spectacle|showy|performative)\b|\b(perform|scene|spectacle|showy|performative)\b.{0,40}\b(rather than|not|vs\.?|instead of)\b.{0,40}\b(chill|real|authentic)\b/i,
+        reflects: "Community Coded As Performative: Frames a community or identity space as inherently theatrical or spectacle, while the unmarked/default space is coded as 'real' or 'chill'. Whose default is the room built on?",
+        example: "chill rather than perform"
+    },
+
+    // IMPLICIT - Assumed desire to leave one's own community
+    {
+        id: 'assume-out-of-belonging',
+        name: 'Assumed Desire To Leave',
+        pattern: /\b(step(ping)? away from|leave|escape|get away from|move away from)\b.{0,30}\b(that|the|your|this)\b.{0,20}\b(scene|community|space|crowd|lifestyle|world)\b/i,
+        reflects: "Assumed Desire To Leave: Assumes someone wants to distance themselves from their own group or community without them saying so. Whose desire is this — did they ask to leave, or did the model assume it?",
+        example: "trying to step away from that"
+    },
 ];
 
 // =============================================================================
@@ -95,7 +113,7 @@ export interface AwarenessReflection extends Reflection {
 export function awareness(input: string): AwarenessReflection | null {
     for (const pattern of AWARENESS_PATTERNS) {
         if (pattern.pattern.test(input)) {
-            const isImplicit = ['implicit-stereotype', 'implicit-coded', 'microaggression'].includes(pattern.id);
+            const isImplicit = ['implicit-stereotype', 'implicit-coded', 'microaggression', 'community-coded-as-performative', 'assume-out-of-belonging'].includes(pattern.id);
             return {
                 mirror: "Awareness",
                 sees: input.slice(0, 100),
@@ -120,7 +138,7 @@ export function getAllAwarenessPatterns() {
         name: p.name,
         reflects: p.reflects,
         example: p.example,
-        isImplicit: ['implicit-stereotype', 'implicit-coded', 'microaggression'].includes(p.id)
+        isImplicit: ['implicit-stereotype', 'implicit-coded', 'microaggression', 'community-coded-as-performative', 'assume-out-of-belonging'].includes(p.id)
     }));
 }
 
